@@ -1,0 +1,15 @@
+#home {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 5rem;
+}
+
+#home div h1 {
+    font-size: 4rem;
+}
+
+#home #rojhon-pic {
+    font-size: 4rem;
+    height: 20rem;
+}
