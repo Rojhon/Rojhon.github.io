@@ -4,48 +4,19 @@
     padding: 0;
 }
 
-main{
+main {
     padding: 2rem 5rem;
 }
 
+/* For Desktop View */
+@media screen and (min-width: 1024px) {}
 
-/* Wala nato dapat */
+/* For Tablet View */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {}
 
-
-nav button:hover {
-    background-color: #333;
-}
-
-/* For Mobile */
-@media only screen and (max-width: 1000px) {
-    header {
-        padding: 1rem;
-    }
-
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    nav h1 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    nav ul {
-        justify-content: flex-start;
-    }
-
-    #profile {
-        padding: 1rem;
-    }
-
-    #profile h1 {
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-    }
-
-    #rojhon-pic {
-        visibility: hidden;
+/* For Mobile Phones Portrait or Landscape View */
+@media screen and (max-device-width: 640px) {
+    main {
+        padding: 1rem 1rem;
     }
 }
