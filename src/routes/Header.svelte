@@ -7,7 +7,7 @@
 <header>
 	<div class="corner">
 		<a href="https://www.linkedin.com/in/rojhon-buenaventura-684577229/" target="_blank">
-			<img src={logo} alt="SvelteKit" />
+			<img src={logo} alt="LinkedIn" />
 		</a>
 	</div>
 
