@@ -5,14 +5,14 @@
   align-items: center;
 }
 
+.content h1 {
+  width: 70%;
+}
+
 .content .word {
   margin-top: 2rem;
   width: 70%;
   /* height: 10%; */
-}
-
-.content .word h2 span {
-  margin-left: 4rem;
 }
 
 .content .btn {
@@ -20,7 +20,7 @@
 }
 
 .content .btn a {
-  display: inline-block;
+  display: block;
   text-decoration: none;
   padding: 0.5rem 4rem;
   background: none;
