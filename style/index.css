@@ -1,0 +1,35 @@
+.content {
+  margin-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content .word {
+  margin-top: 2rem;
+  width: 70%;
+  /* height: 10%; */
+}
+
+.content .word h2 span {
+  margin-left: 4rem;
+}
+
+.content .btn {
+  margin-top: 2rem;
+}
+
+.content .btn a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.5rem 4rem;
+  background: none;
+  border: solid white;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.content .btn a:hover {
+  color: black;
+  background-color: white;
+}

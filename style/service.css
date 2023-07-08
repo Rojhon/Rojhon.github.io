@@ -1,0 +1,92 @@
+.content {
+  margin-top: 5.8rem;
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content .main-content {
+  position: relative;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.content .main-content .word {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.content .main-content .card {
+  position: relative;
+  width: 20rem;
+  height: 25rem;
+  margin: 1rem;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* .content .main-content .card1 {
+  background: rgb(206, 206, 0);
+}
+
+.content .main-content .card2 {
+  background: rgb(206, 206, 0);
+}
+
+.content .main-content .card3 {
+  background: rgb(206, 206, 0);
+} */
+
+.content .main-content .card1:hover {
+  transition: 0.2s linear;
+  cursor: pointer;
+  transform: scale(1.08);
+}
+
+.content .main-content .card2:hover {
+  transition: 0.2s linear;
+  cursor: pointer;
+  transform: scale(1.08);
+}
+
+.content .main-content .card3:hover {
+  transition: 0.2s linear;
+  cursor: pointer;
+  transform: scale(1.08);
+}
+
+.content .main-content .card .product-content {
+  padding: 1rem;
+  position: absolute;
+  background: yellow;
+  top: 0;
+}
+
+.content .main-content .card .product-content h2,
+p {
+  background: yellow;
+  color: black;
+  margin-bottom: 2rem;
+}
+
+.content .main-content .card span {
+  margin-left: 2rem;
+}
+
+@media (max-width: 1200px) {
+  .content {
+    margin-top: 6rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .content {
+    margin-top: 5.5rem;
+  }
+}
