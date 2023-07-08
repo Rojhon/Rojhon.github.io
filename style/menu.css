@@ -31,7 +31,7 @@
   overflow: hidden;
 }
 
-.content .main-content .card1 {
+/* .content .main-content .card1 {
   background-image: url("../images/Products/1\ \(1\).jpg");
   background-size: cover;
 }
@@ -49,37 +49,7 @@
 .content .main-content .card4 {
   background-image: url("../images/Products/1\ \(4\).jpg");
   background-size: cover;
-}
-
-.content .main-content .card5 {
-  background-image: url("../images/Products/1\ \(5\).jpg");
-  background-size: cover;
-}
-
-.content .main-content .card6 {
-  background-image: url("../images/Products/1\ \(6\).jpg");
-  background-size: cover;
-}
-
-.content .main-content .card7 {
-  background-image: url("../images/Products/1\ \(7\).jpg");
-  background-size: cover;
-}
-
-.content .main-content .card8 {
-  background-image: url("../images/Products/1\ \(8\).jpg");
-  background-size: cover;
-}
-
-.content .main-content .card9 {
-  background-image: url("../images/Products/1\ \(9\).jpg");
-  background-size: cover;
-}
-
-.content .main-content .card10 {
-  background-image: url("../images/Products/1\ \(10\).jpg");
-  background-size: cover;
-}
+} */
 
 .content .main-content .card1:hover {
   transition: 0.2s linear;
@@ -105,76 +75,22 @@
   transform: scale(1.08);
 }
 
-.content .main-content .card5:hover {
-  transition: 0.2s linear;
-  cursor: pointer;
-  transform: scale(1.08);
-}
-
-.content .main-content .card6:hover {
-  transition: 0.2s linear;
-  cursor: pointer;
-  transform: scale(1.08);
-}
-
-.content .main-content .card7:hover {
-  transition: 0.2s linear;
-  cursor: pointer;
-  transform: scale(1.08);
-}
-
-.content .main-content .card8:hover {
-  transition: 0.2s linear;
-  cursor: pointer;
-  transform: scale(1.08);
-}
-
-.content .main-content .card9:hover {
-  transition: 0.2s linear;
-  cursor: pointer;
-  transform: scale(1.08);
-}
-
-.content .main-content .card10:hover {
-  transition: 0.2s linear;
-  cursor: pointer;
-  transform: scale(1.08);
-}
-
 .content .main-content .card .product-content {
   padding: 1rem;
   position: absolute;
+  background: yellow;
   top: 0;
 }
 
-.content .main-content .card .product-content h2 {
+.content .main-content .card .product-content h2, p {
   margin-bottom: 2rem;
+  background: yellow;
+  color: black;
 }
 
 .content .main-content .card .product-content p span {
   margin-left: 2rem;
 }
-
-.content .main-content .card .btn {
-  position: absolute;
-  display: flex;
-  bottom: 2rem;
-  right: 2rem;
-}
-
-.content .main-content .card .btn button {
-  padding: 0.5rem 4rem;
-  margin-left: 4rem;
-  background-color: rgb(6, 182, 0);
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.content .main-content .card .btn button:hover {
-  background-color: rgb(5, 161, 0);
-}
-
 @media (max-width: 1200px) {
   .content {
     margin-top: 6rem;
