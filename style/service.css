@@ -1,0 +1,161 @@
+.content {
+  margin-top: 5.8rem;
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content .main-content {
+  position: relative;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.content .main-content .word {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.content .main-content .card {
+  position: relative;
+  width: 20rem;
+  height: 25rem;
+  margin: 1rem;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.content .main-content .card1 {
+  background-image: url("../images/pexels-rene-asmussen-1581384.jpg");
+  background-size: cover;
+}
+
+.content .main-content .card2 {
+  background-image: url("../images/pexels-lina-kivaka-3395282.jpg");
+  background-size: cover;
+}
+
+.content .main-content .card3 {
+  background-image: url("../images/pexels-cottonbro-4604668.jpg");
+  background-size: cover;
+}
+
+.content .main-content .card1:hover {
+  transition: 0.2s linear;
+  cursor: pointer;
+  transform: scale(1.08);
+}
+
+.content .main-content .card2:hover {
+  transition: 0.2s linear;
+  cursor: pointer;
+  transform: scale(1.08);
+}
+
+.content .main-content .card3:hover {
+  transition: 0.2s linear;
+  cursor: pointer;
+  transform: scale(1.08);
+}
+
+.content .main-content .card .product-content {
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+}
+
+.content .main-content .card .product-content h2 {
+  margin-bottom: 2rem;
+}
+
+/* .content .main-content .card .product-content p span {
+  margin-left: 2rem;
+} */
+
+.content .main-content .card span {
+  margin-left: 2rem;
+}
+
+.content .main-content .card .btn {
+  position: absolute;
+  bottom: 2rem;
+  right: 3.55rem;
+}
+
+.content .main-content .card .btn a {
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 4rem;
+  margin-left: 4rem;
+  background-color: rgb(6, 182, 0);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.content .main-content .card .btn a:hover {
+  background-color: rgb(5, 161, 0);
+}
+
+.content .header-content {
+  margin: 4rem 2rem 3rem 2rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.content .header-content .hc-words {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.content .header-content .hc-words h1 {
+  text-align: center;
+}
+
+.content .header-content .hc-words span {
+  margin-left: 4rem;
+}
+
+.content .header-content #hc-img {
+  width: 30%;
+  height: auto;
+}
+
+.content .header-content #hc-img:hover {
+  transition: 0.2s linear;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .content {
+    margin-top: 6rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .content {
+    margin-top: 5.5rem;
+  }
+
+  .content .header-content #hc-img {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .content .header-content .hc-words {
+    width: 80%;
+  }
+  .content .header-content #hc-img {
+    display: none;
+  }
+}

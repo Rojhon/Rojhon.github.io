@@ -1,0 +1,115 @@
+.content {
+  margin-top: 5.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content .main-content {
+  position: relative;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.content .main-content .word {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.content .main-content .card {
+  padding: 1rem;
+  position: relative;
+  width: 20rem;
+  height: 25rem;
+  margin: 1rem;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.content .main-content .card .product-content h3,
+h1,
+h2 {
+  margin-bottom: 1rem;
+}
+
+.content .main-content .card .btn button {
+  margin-top: 0.8rem;
+  padding: 0.5rem 4rem;
+  margin-left: 2rem;
+  background-color: rgb(6, 182, 0);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.content .main-content .card .btn button:hover {
+  background-color: rgb(5, 161, 0);
+}
+
+.content2 {
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content2 .main-content {
+  position: relative;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.content2 .main-content .word {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.content2 .main-content .card {
+  padding: 1rem;
+  position: relative;
+  width: 20rem;
+  height: 25rem;
+  margin: 2rem;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.content2 .main-content .card1 {
+  background-image: url("../images/Restaurant/pexels-adrien-olichon-3534750.jpg");
+  background-size: cover;
+}
+
+.content2 .main-content .card2 {
+  background-image: url("../images/Restaurant/pexels-aleksandra-platonova-2263510.jpg");
+  background-size: cover;
+}
+
+.content2 .main-content .card3 {
+  background-image: url("../images/Restaurant/pexels-maria-orlova-4913313.jpg");
+  background-size: cover;
+}
+
+.content2 .main-content .card4 {
+  background-image: url("../images/Restaurant/pexels-mehmet-suat-3252051.jpg");
+  background-size: cover;
+}
+
+.content2 .main-content .card5 {
+  background-image: url("../images/Restaurant/pexels-olya-kobruseva-4676640.jpg");
+  background-size: cover;
+}
+
+.content2 .main-content .card6 {
+  background-image: url("../images/Restaurant/pexels-rene-asmussen-2504911.jpg");
+  background-size: cover;
+}
