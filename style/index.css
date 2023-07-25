@@ -1,35 +1,89 @@
-.content {
-  margin-top: 10rem;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: #ff7777;
+  color: #00303b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+header {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
-
-.content h1 {
-  width: 70%;
-}
-
-.content .word {
-  margin-top: 2rem;
-  width: 70%;
-  /* height: 10%; */
-}
-
-.content .btn {
-  margin-top: 2rem;
-}
-
-.content .btn a {
-  display: block;
-  text-decoration: none;
-  padding: 0.5rem 4rem;
-  background: none;
-  border: solid white;
-  margin: 0.5rem;
+header ul {
+  display: flex;
+  list-style: none;
+  padding: 1rem;
+  border: 0.5rem solid #00303b;
+  border-radius: 1rem;
+  width: 50%;
+  background-color: #f1f2da;
   cursor: pointer;
 }
-
-.content .btn a:hover {
-  color: black;
-  background-color: white;
+header ul li {
+  background-color: #f1f2da;
+  margin: 1rem;
 }
+header ul li a {
+  text-decoration: none;
+}
+header ul li a h1 {
+  background-color: #f1f2da;
+}
+header ul li:hover {
+  text-decoration: underline;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+main .card {
+  padding: 1rem;
+  border: 0.5rem solid #00303b;
+  border-radius: 1rem;
+  width: 50%;
+  background-color: #f1f2da;
+  margin-bottom: 1rem;
+}
+main #section1 h1 {
+  background-color: #f1f2da;
+  font-size: 5rem;
+}
+main #section1 p {
+  background-color: #f1f2da;
+  font-size: 2rem;
+}
+main #section1 img {
+  width: 10rem;
+}
+main #section2 h1 {
+  background-color: #f1f2da;
+}
+main #section2 hr {
+  height: 0.2rem;
+  background-color: #00303b;
+  margin-bottom: 1rem;
+}
+main #section2 ul {
+  padding: 2rem;
+  background-color: #ffce96;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+main #section2 ul li {
+  font-size: 1.5rem;
+  background-color: #ffce96;
+}
+main #section2 ul li a {
+  background-color: #ffce96;
+}/*# sourceMappingURL=index.css.map */
