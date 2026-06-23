@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wheel of Fortune</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    width:100%;
+    text-align:center;
+}
+
+h1{
+    color:#facc15;
+    margin-bottom:20px;
+}
+
+.coin-box{
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+.wheel-wrapper{
+    position:relative;
+    width:400px;
+    height:400px;
+    margin:auto;
+}
+
+.pointer{
+    position:absolute;
+    top:-20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:0;
+    height:0;
+    border-left:20px solid transparent;
+    border-right:20px solid transparent;
+    border-top:40px solid #facc15;
+    z-index:10;
+}
+
+canvas{
+    background:white;
+    border-radius:50%;
+    box-shadow:0 0 30px rgba(255,255,255,.2);
+}
+
+button{
+    margin-top:25px;
+    padding:14px 30px;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    cursor:pointer;
+    background:#22c55e;
+    color:white;
+    font-weight:bold;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.result{
+    margin-top:20px;
+    font-size:24px;
+    min-height:40px;
+}
+
+.history{
+    margin-top:30px;
+    background:#111827;
+    padding:20px;
+    border-radius:15px;
+}
+
+.history h3{
+    margin-bottom:10px;
+}
+
+.history ul{
+    list-style:none;
+}
+
+.history li{
+    padding:5px 0;
+}
+
+@media(max-width:500px){
+
+    .wheel-wrapper{
+        width:300px;
+        height:300px;
+    }
+
+    canvas{
+        width:300px;
+        height:300px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🎡 Wheel of Fortune</h1>
+
+    <div class="coin-box">
+        💰 Coins: <span id="coins">1000</span>
+    </div>
+
+    <div class="wheel-wrapper">
+
+        <div class="pointer"></div>
+
+        <canvas id="wheel" width="400" height="400"></canvas>
+
+    </div>
+
+    <button onclick="spinWheel()">
+        🎲 Spin (50 Coins)
+    </button>
+
+    <div class="result" id="result"></div>
+
+    <div class="history">
+        <h3>🏆 Spin History</h3>
+        <ul id="history"></ul>
+    </div>
+
+</div>
+
+<script>
+
+const prizes = [
+    {text:"10 Coins", value:10},
+    {text:"25 Coins", value:25},
+    {text:"50 Coins", value:50},
+    {text:"100 Coins", value:100},
+    {text:"250 Coins", value:250},
+    {text:"500 Coins", value:500},
+    {text:"LOSE", value:0},
+    {text:"JACKPOT", value:1000}
+];
+
+const colors = [
+    "#ef4444",
+    "#f97316",
+    "#facc15",
+    "#22c55e",
+    "#06b6d4",
+    "#3b82f6",
+    "#8b5cf6",
+    "#ec4899"
+];
+
+const canvas =
+    document.getElementById("wheel");
+
+const ctx =
+    canvas.getContext("2d");
+
+const result =
+    document.getElementById("result");
+
+const historyList =
+    document.getElementById("history");
+
+const coinDisplay =
+    document.getElementById("coins");
+
+let coins = 1000;
+let spinning = false;
+let currentRotation = 0;
+
+function drawWheel(){
+
+    const arc =
+        (Math.PI * 2) / prizes.length;
+
+    for(let i=0;i<prizes.length;i++){
+
+        const angle = i * arc;
+
+        ctx.beginPath();
+        ctx.moveTo(200,200);
+
+        ctx.arc(
+            200,
+            200,
+            200,
+            angle,
+            angle + arc
+        );
+
+        ctx.fillStyle = colors[i];
+        ctx.fill();
+
+        ctx.save();
+
+        ctx.translate(200,200);
+        ctx.rotate(angle + arc/2);
+
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 18px Arial";
+        ctx.textAlign = "right";
+
+        ctx.fillText(
+            prizes[i].text,
+            170,
+            10
+        );
+
+        ctx.restore();
+    }
+}
+
+drawWheel();
+
+function spinWheel(){
+
+    if(spinning) return;
+
+    if(coins < 50){
+
+        result.innerHTML =
+            "❌ Not enough coins!";
+
+        return;
+    }
+
+    coins -= 50;
+    updateCoins();
+
+    spinning = true;
+
+    const randomIndex =
+        Math.floor(
+            Math.random() *
+            prizes.length
+        );
+
+    const arc =
+        360 / prizes.length;
+
+    const stopAngle =
+        (360 * 6) +
+        (360 - (randomIndex * arc) - arc/2);
+
+    currentRotation += stopAngle;
+
+    canvas.style.transition =
+        "transform 5s cubic-bezier(.17,.67,.12,.99)";
+
+    canvas.style.transform =
+        `rotate(${currentRotation}deg)`;
+
+    setTimeout(()=>{
+
+        const prize =
+            prizes[randomIndex];
+
+        coins += prize.value;
+
+        updateCoins();
+
+        result.innerHTML =
+            `🎉 You won: ${prize.text}`;
+
+        const item =
+            document.createElement("li");
+
+        item.textContent =
+            `🎁 ${prize.text}`;
+
+        historyList.prepend(item);
+
+        spinning = false;
+
+    },5000);
+}
+
+function updateCoins(){
+
+    coinDisplay.textContent =
+        coins.toLocaleString();
+}
+
+</script>
+
+</body>
+</html>

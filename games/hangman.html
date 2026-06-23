@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hangman with Clues</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:800px;
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    text-align:center;
+}
+
+h1{
+    color:#333;
+    margin-bottom:15px;
+}
+
+.hangman{
+    font-size:100px;
+    margin-bottom:15px;
+}
+
+.clue-box{
+    background:#f4f7ff;
+    border:2px solid #dbe4ff;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:20px;
+    font-size:18px;
+    color:#333;
+}
+
+.word{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:25px 0;
+}
+
+.letter-box{
+    width:50px;
+    height:60px;
+    border-bottom:4px solid #333;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:32px;
+    font-weight:bold;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    margin-bottom:20px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.keyboard{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+.key{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#1677ff;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.key:hover{
+    transform:translateY(-2px);
+}
+
+.key:disabled{
+    background:#cfcfcf;
+    cursor:not-allowed;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    padding:12px 25px;
+    border-radius:10px;
+    cursor:pointer;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.restart{
+    background:#28a745;
+}
+
+.hint{
+    background:#ff9800;
+}
+
+.message{
+    margin-top:20px;
+    font-size:24px;
+    font-weight:bold;
+    min-height:40px;
+}
+
+@media(max-width:600px){
+
+    .keyboard{
+        grid-template-columns:repeat(5,1fr);
+    }
+
+    .letter-box{
+        width:40px;
+        height:50px;
+        font-size:24px;
+    }
+
+    .hangman{
+        font-size:70px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🎯 Hangman Game</h1>
+
+    <div class="hangman" id="hangman">😎</div>
+
+    <div class="clue-box">
+        💡 <strong>Clue:</strong>
+        <span id="clue"></span>
+    </div>
+
+    <div class="word" id="word"></div>
+
+    <div class="stats">
+        <div>❤️ Lives: <span id="lives">6</span></div>
+        <div>🏆 Score: <span id="score">0</span></div>
+    </div>
+
+    <div class="keyboard" id="keyboard"></div>
+
+    <div class="message" id="message"></div>
+
+    <div class="controls">
+        <button class="btn hint" onclick="giveHint()">💡 Hint</button>
+        <button class="btn restart" onclick="startGame()">🔄 New Game</button>
+    </div>
+
+</div>
+
+<script>
+
+const words = [
+{
+word:"JAVASCRIPT",
+clue:"Programming language used to create interactive websites."
+},
+{
+word:"COMPUTER",
+clue:"Electronic machine that processes data."
+},
+{
+word:"KEYBOARD",
+clue:"Input device used for typing."
+},
+{
+word:"MICROBIT",
+clue:"Educational microcontroller used in coding projects."
+},
+{
+word:"APPINVENTOR",
+clue:"MIT platform for creating Android apps."
+},
+{
+word:"DATABASE",
+clue:"Collection of organized information."
+},
+{
+word:"INTERNET",
+clue:"Global network connecting computers."
+},
+{
+word:"PYTHON",
+clue:"Popular programming language named after a comedy group."
+},
+{
+word:"ROBOTICS",
+clue:"Field involving the design and building of robots."
+},
+{
+word:"ALGORITHM",
+clue:"Step-by-step instructions to solve a problem."
+},
+{
+word:"WEBSITE",
+clue:"A collection of web pages."
+},
+{
+word:"NETWORK",
+clue:"Connected computers sharing resources."
+},
+{
+word:"MONITOR",
+clue:"Device that displays visual output."
+},
+{
+word:"BROWSER",
+clue:"Software used to access web pages."
+},
+{
+word:"PROGRAMMING",
+clue:"Process of writing computer instructions."
+}
+];
+
+const faces = [
+"💀",
+"😫",
+"😟",
+"🙁",
+"😐",
+"🙂",
+"😎"
+];
+
+let selectedWord = "";
+let selectedClue = "";
+let guessedLetters = [];
+let lives = 6;
+let score = 0;
+let gameOver = false;
+
+const wordContainer = document.getElementById("word");
+const clueElement = document.getElementById("clue");
+const keyboard = document.getElementById("keyboard");
+const livesElement = document.getElementById("lives");
+const scoreElement = document.getElementById("score");
+const message = document.getElementById("message");
+const hangman = document.getElementById("hangman");
+
+function startGame(){
+
+    const item =
+        words[Math.floor(Math.random()*words.length)];
+
+    selectedWord = item.word;
+    selectedClue = item.clue;
+
+    guessedLetters = [];
+    lives = 6;
+    gameOver = false;
+
+    clueElement.textContent = selectedClue;
+    livesElement.textContent = lives;
+    message.textContent = "";
+
+    createKeyboard();
+    updateWord();
+    updateFace();
+}
+
+function updateFace(){
+    hangman.textContent = faces[lives];
+}
+
+function createKeyboard(){
+
+    keyboard.innerHTML = "";
+
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
+    .forEach(letter=>{
+
+        const btn = document.createElement("button");
+
+        btn.textContent = letter;
+        btn.classList.add("key");
+
+        btn.onclick = ()=>{
+            guessLetter(letter, btn);
+        };
+
+        keyboard.appendChild(btn);
+    });
+}
+
+function guessLetter(letter, button){
+
+    if(gameOver) return;
+
+    button.disabled = true;
+
+    if(selectedWord.includes(letter)){
+
+        guessedLetters.push(letter);
+
+    }else{
+
+        lives--;
+        livesElement.textContent = lives;
+        updateFace();
+    }
+
+    updateWord();
+
+    if(lives <= 0){
+        loseGame();
+    }
+}
+
+function updateWord(){
+
+    wordContainer.innerHTML = "";
+
+    let won = true;
+
+    selectedWord.split("").forEach(letter=>{
+
+        const box = document.createElement("div");
+        box.classList.add("letter-box");
+
+        if(guessedLetters.includes(letter)){
+            box.textContent = letter;
+        }else{
+            won = false;
+        }
+
+        wordContainer.appendChild(box);
+    });
+
+    if(won){
+
+        gameOver = true;
+
+        score++;
+        scoreElement.textContent = score;
+
+        message.textContent =
+            "🎉 Congratulations! You guessed the word!";
+
+        disableKeyboard();
+    }
+}
+
+function loseGame(){
+
+    gameOver = true;
+
+    message.textContent =
+        `💀 Game Over! The word was "${selectedWord}"`;
+
+    revealWord();
+    disableKeyboard();
+}
+
+function revealWord(){
+
+    wordContainer.innerHTML = "";
+
+    selectedWord.split("").forEach(letter=>{
+
+        const box = document.createElement("div");
+        box.classList.add("letter-box");
+        box.textContent = letter;
+
+        wordContainer.appendChild(box);
+    });
+}
+
+function disableKeyboard(){
+
+    document.querySelectorAll(".key")
+    .forEach(btn=>btn.disabled = true);
+}
+
+function giveHint(){
+
+    if(gameOver || lives <= 1) return;
+
+    const hiddenLetters =
+        selectedWord.split("")
+        .filter(letter =>
+            !guessedLetters.includes(letter)
+        );
+
+    if(hiddenLetters.length){
+
+        const randomLetter =
+            hiddenLetters[
+                Math.floor(
+                    Math.random() *
+                    hiddenLetters.length
+                )
+            ];
+
+        guessedLetters.push(randomLetter);
+
+        lives--;
+        livesElement.textContent = lives;
+
+        updateFace();
+        updateWord();
+
+        if(lives <= 0){
+            loseGame();
+        }
+    }
+}
+
+document.addEventListener("keydown", e=>{
+
+    if(gameOver) return;
+
+    const key = e.key.toUpperCase();
+
+    if(!/^[A-Z]$/.test(key)) return;
+
+    document.querySelectorAll(".key")
+    .forEach(btn=>{
+
+        if(btn.textContent === key && !btn.disabled){
+            btn.click();
+        }
+    });
+});
+
+startGame();
+
+</script>
+
+</body>
+</html>

@@ -2,563 +2,296 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Rojhon Buenaventura</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rojhon's Arcade</title>
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+        body {
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+        }
 
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        header {
+            padding: 30px;
+            background: #111827;
+            border-bottom: 1px solid #1f2937;
+        }
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        header h1 {
+            font-size: 2.5rem;
+        }
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+        header p {
+            color: #94a3b8;
+            margin-top: 10px;
+        }
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+        .search-container {
+            padding: 20px 30px;
+        }
+
+        .search {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #1e293b;
+            color: white;
+            font-size: 16px;
+        }
+
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .card {
+            background: #111827;
+            border-radius: 18px;
+            overflow: hidden;
+            transition: .3s;
+            border: 1px solid #1f2937;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .4);
+        }
+
+        .banner {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .content h2 {
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            color: #94a3b8;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .play-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: #22c55e;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .play-btn:hover {
+            background: #16a34a;
+        }
+
+        .about {
+            padding: 40px 30px;
+            max-width: 1000px;
+        }
+
+        .about h2 {
+            margin-bottom: 15px;
+        }
+
+        .about p {
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+    </style>
 </head>
 
-<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
-    <!-- Spinner Start -->
-    <div id="spinner"
-        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+<body>
+
+    <header>
+        <h1>🎮 Rojhon's Arcade</h1>
+        <p>Play free HTML5 browser games including strategy, action, puzzle, arcade, and casual games developed by
+            Rojhon.</p>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="search" class="search" placeholder="Search games...">
     </div>
-    <!-- Spinner End -->
 
+    <div class="games" id="games">
 
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light fixed-top shadow py-lg-0 px-4 px-lg-5 wow fadeIn"
-        data-wow-delay="0.1s">
-        <div class="navbar-nav">
-            <a href="#home" class="navbar-brand d-block d-lg-none">
-                <h1 class="text-primary fw-bold m-0">Rojhon</h1>
-            </a>
-        </div>
-        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-between py-4 py-lg-0" id="navbarCollapse">
-            <div class="navbar-nav ms-auto py-0">
-                <a href="#about" class="nav-item nav-link">About</a>
-                <a href="#service" class="nav-item nav-link">Services</a>
-            </div>
-            <div class="navbar-nav">
-                <a href="#home" class="navbar-brand bg-secondary py-3 px-4 mx-3 d-none d-lg-block">
-                    <h1 class="text-primary fw-bold m-0">Rojhon</h1>
+        <div class="card">
+            <div class="banner">👑</div>
+            <div class="content">
+                <h2>Crown Clash</h2>
+                <p>Build your strategy, defeat opponents, and claim the throne.</p>
+                <a href="games/clash-royale-clone.html" class="play-btn">
+                    ▶ Play Now
                 </a>
             </div>
-            <div class="navbar-nav me-auto py-0">
-                <a href="#project" class="nav-item nav-link">Projects</a>
-                <a href="#contact" class="nav-item nav-link">Contact</a>
+        </div>
+
+        <div class="card">
+            <div class="banner">🎯</div>
+            <div class="content">
+                <h2>Hangman</h2>
+                <p>Guess the hidden word using clues before you run out of lives.</p>
+                <a href="games/hangman.html" class="play-btn">
+                    ▶ Play Now
+                </a>
             </div>
         </div>
-    </nav>
-    <!-- Navbar End -->
 
-
-    <!-- Header Start -->
-    <div class="container-fluid bg-light my-6 mt-0" id="home">
-        <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-6 py-6 pb-0 pt-lg-0">
-                    <h3 class="text-primary mb-3">I'm</h3>
-                    <h1 class="display-3 mb-3">Rojhon Buenaventura</h1>
-                    <h2 class="typed-text-output d-inline"></h2>
-                    <div class="typed-text d-none">Computer Engineer, Game Developer, Web Developer, Technical Writer
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <img class="img-fluid" src="img/BUENAVENTURA, ROJHON B_1234.png" alt="Rojhon">
-                </div>
+        <div class="card">
+            <div class="banner">🏴‍☠️</div>
+            <div class="content">
+                <h2>Treasure Hunt</h2>
+                <p>Open treasure chests and find valuable rewards.</p>
+                <a href="games/treasure.html" class="play-btn">
+                    ▶ Play Now
+                </a>
             </div>
         </div>
-    </div>
-    <!-- Header End -->
 
-    <!-- Expertise Start -->
-    <div class="container-xxl py-6 pb-5" id="about">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <h1 class="display-5 mb-5">About Me</h1>
-                    <p class="mb-4">I studied B.Sc. Computer Engineering from 2019–2023 at the University of Rizal
-                        System in Morong</p>
-                    <h3 class="mb-4">My Skills</h3>
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <div class="skill mb-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="font-weight-bold">Godot</h6>
-                                    <h6 class="font-weight-bold">90%</h6>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="90"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="skill mb-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="font-weight-bold">MERN Stack</h6>
-                                    <h6 class="font-weight-bold">85%</h6>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="85"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="skill mb-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="font-weight-bold">Next.js</h6>
-                                    <h6 class="font-weight-bold">75%</h6>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="75"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="skill mb-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="font-weight-bold">SQL: MySQL, MSSQL</h6>
-                                    <h6 class="font-weight-bold">90%</h6>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="90"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="skill mb-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="font-weight-bold">Version Control: Git</h6>
-                                    <h6 class="font-weight-bold">95%</h6>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="95"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="skill mb-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="font-weight-bold">Unit testing: Mocha, Jest</h6>
-                                    <h6 class="font-weight-bold">80%</h6>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" aria-valuenow="80"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="card">
+            <div class="banner">🎰</div>
+            <div class="content">
+                <h2>Slot Machine</h2>
+                <p>Spin the reels and try to hit the jackpot.</p>
+                <a href="games/slots.html" class="play-btn">
+                    ▶ Play Now
+                </a>
+            </div>
+        </div>
 
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <h3 class="mb-4">What I can do</h3>
-                    <div class="mb-3">
-                        <h5 class="mb-0">Game Development</h5>
-                    </div>
-                    <p class="mb-4">As an experienced game developer, I specialize in using the Godot Engine to create
-                        2D and 3D games and am proficient in both GDScript and C#.</p>
-                    <div class="mb-3">
-                        <h5 class="mb-0">Web Development</h5>
-                    </div>
-                    <p class="mb-4">As a full-stack web developer, I've created user-friendly web applications using
-                        different technologies and frameworks. My focus is on delivering effective, end-to-end
-                        solutions.</p>
-                    <div class="mb-3">
-                        <h5 class="mb-0">Technical Writing</h5>
-                    </div>
-                    <p class="mb-4">As a technical writer, I use my web and game development expertise to craft engaging
-                        content. My background equips me to create effective documentation and tutorials for various
-                        technical topics.</p>
-                </div>
+        <div class="card">
+            <div class="banner">🎡</div>
+            <div class="content">
+                <h2>Wheel of Fortune</h2>
+                <p>Spin the wheel and win coins and rewards.</p>
+                <a href="games/fortune.html" class="play-btn">
+                    ▶ Play Now
+                </a>
+            </div>
+        </div>
 
+        <div class="card">
+            <div class="banner">🐟</div>
+            <div class="content">
+                <h2>Fishing Frenzy</h2>
+                <p>Catch fish and earn as many coins as possible.</p>
+                <a href="games/fish.html" class="play-btn">
+                    ▶ Play Now
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="banner">🍉</div>
+            <div class="content">
+                <h2>Fruit Ninja</h2>
+                <p>Slice fruits while avoiding dangerous bombs.</p>
+                <a href="games/fruit.html" class="play-btn">
+                    ▶ Play Now
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="banner">🚀</div>
+            <div class="content">
+                <h2>Space Shooter</h2>
+                <p>Destroy enemy ships and survive as long as possible.</p>
+                <a href="games/shooter.html" class="play-btn">
+                    ▶ Play Now
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="banner">🧟</div>
+            <div class="content">
+                <h2>Zombie Survival</h2>
+                <p>Defend your base and eliminate incoming zombies.</p>
+                <a href="games/zombie.html" class="play-btn">
+                    ▶ Play Now
+                </a>
             </div>
         </div>
     </div>
-    <!-- Expertise End -->
 
+    <section class="about">
+        <h2>About Rojhon's Arcade</h2>
 
-    <!-- Service Start -->
-    <div class="container-fluid bg-light my-5 py-6" id="service">
-        <div class="container">
-            <div class="row g-5 mb-5 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="col-lg-6">
-                    <h1 class="display-5 mb-0">My Services</h1>
-                </div>
-                <div class="col-lg-6 text-lg-end" id="hire_me_btn">
-                    <a href="#contact" class="btn btn-primary py-3 px-5" href="">Hire Me</a>
-                </div>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
-                        <div class="bg-icon flex-shrink-0 mb-3">
-                            <i class="fa fa-crop-alt fa-2x text-dark"></i>
-                        </div>
-                        <div class="ms-sm-4">
-                            <h4 class="mb-3">Game Development</h4>
-                            <h6 class="mb-3">Start from <span class="text-primary">$150</span></h6>
-                            <span>I offer professional game development services using the powerful Godot Engine.
-                                Bringing your game ideas to life.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
-                        <div class="bg-icon flex-shrink-0 mb-3">
-                            <i class="fa fa-code fa-2x text-dark"></i>
-                        </div>
-                        <div class="ms-sm-4">
-                            <h4 class="mb-3">Web Development</h4>
-                            <h6 class="mb-3">Start from <span class="text-primary">$150</span></h6>
-                            <span>I provide professional web development services using a range of front-end and
-                                back-end technologies.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
+        <p>
+            Rojhon's Arcade is a collection of free browser games
+            developed using HTML, CSS, and JavaScript.
+            Enjoy strategy games, puzzle games, arcade games,
+            action games, and casual games directly from your browser
+            without downloads.
+        </p>
 
-    <!-- Projects Start -->
-    <div class="container-xxl py-6 pt-5" id="project">
-        <div class="container">
-            <div class="row g-5 mb-5 align-items-center wow fadeInUp" data-wow-delay="0.1s">
-                <div class="col-lg-6">
-                    <h1 class="display-5 mb-0">My Projects</h1>
-                </div>
-                <div class="col-lg-6 text-lg-end">
-                    <ul class="list-inline mx-n3 mb-0" id="portfolio-flters">
-                        <li class="mx-3 active" data-filter="*">All Projects</li>
-                        <li class="mx-3" data-filter=".first">Game Development</li>
-                        <li class="mx-3" data-filter=".second">Web Development</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row g-4 portfolio-container wow fadeInUp" data-wow-delay="0.1s">
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-endless.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-endless.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://github.com/Rojhon/Upwork---Endless-Running-Game" target="_blank"><i
-                                    class="bi bi-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item second">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-biology.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-biology.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://genbioscope.netlify.app/admin/login" target="_blank"><i
-                                    class="fa fa-link"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://github.com/Locality-PH/biology_frontend" target="_blank"><i
-                                    class="bi bi-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-caventure.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-caventure.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://rojhon.itch.io/caventure" target="_blank"><i class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item second">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-cpu.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1" href="img/project-cpu.png"
-                                data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://cpu-scheduler-online.netlify.app/cpu/cpu-calculator" target="_blank"><i
-                                    class="fa fa-link"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://github.com/Locality-PH/cpu_scheduler" target="_blank"><i
-                                    class="bi bi-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-zombie1.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-zombie1.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <!-- <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1" href="" target="_blank"><i
-                                    class="fa fa-link"></i></a> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-bull-running.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-bull-running.png" data-lightbox="portfolio"><i
-                                    class="fa fa-eye"></i></a>
-                            <!-- <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1" href="" target="_blank"><i
-                                    class="fa fa-link"></i></a> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-climb.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-climb.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <!-- <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1" href="" target="_blank"><i
-                                    class="fa fa-link"></i></a> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item second">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-booking.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-booking.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://github.com/user109436/URS_Booking_System" target="_blank"><i
-                                    class="bi bi-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item second">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-mitivelane-client.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-mitivelane-client.png" data-lightbox="portfolio"><i
-                                    class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://mitivelane-test.online/support/demo" target="_blank"><i
-                                    class="fa fa-link"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://github.com/Locality-PH/mitivelane-frontend-client" target="_blank"><i
-                                    class="bi bi-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item second">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-mitivelane-admin.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-mitivelane-admin.png" data-lightbox="portfolio"><i
-                                    class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://dashboard.mitivelane-test.online/auth/login" target="_blank"><i
-                                    class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-sudoku.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-sudoku.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://github.com/Rojhon/sudoku-game" target="_blank"><i
-                                    class="bi bi-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-av.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1" href="img/project-av.png"
-                                data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://github.com/Rojhon/Sorting-Algorithm-Visualizer-in-Godot"
-                                target="_blank"><i class="bi bi-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-hide.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1" href="img/project-hide.png"
-                                data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <!-- <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1" href="" target="_blank"><i
-                                    class="fa fa-link"></i></a> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-fauxead.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-fauxead.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://rojhon.itch.io/fauxead" target="_blank"><i class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-zombie.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-zombie.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <!-- <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1" href="" target="_blank"><i
-                                    class="fa fa-link"></i></a> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-letters.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-letters.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://rojhon.itch.io/letters" target="_blank"><i class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-earth.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="img/project-earth.png" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://rojhon.itch.io/protect-the-planet-earth" target="_blank"><i
-                                    class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item first">
-                    <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="img/project-cube.png" alt="">
-                        <div class="portfolio-btn">
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1" href="img/project-cube.png"
-                                data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square btn-outline-secondary border-2 mx-1"
-                                href="https://rojhon.itch.io/cube-pieces" target="_blank"><i class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Projects End -->
+        <p style="margin-top:15px;">
+            New games are added regularly as part of Rojhon's
+            independent game development projects.
+        </p>
+    </section>
 
+    <footer>
+        © 2026 My Game Hub
+    </footer>
 
-    <!-- Contact Start -->
-    <div class="container-xxl pb-5" id="contact">
-        <div class="container py-5">
-            <div class="row g-5 mb-5 wow fadeInUp justify-content-center" data-wow-delay="0.1s">
-                <div class="col-lg-6">
-                    <h1 class="display-5 mb-0">Let's Work Together</h1>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="mb-2">Where am I from?</p>
-                    <h3 class="fw-bold">Philippines</h3>
-                    <hr class="w-100">
-                    <p class="mb-2">Call me:</p>
-                    <h3 class="fw-bold">+639763443914</h3>
-                    <hr class="w-100">
-                    <p class="mb-2">Mail me:</p>
-                    <h3 class="fw-bold"><a href="mailto:rojhonbuenaventura5@gmail.com">Click me!</a></h3>
-                    <hr class="w-100">
-                    <p class="mb-2">Other:</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-primary me-2" href="https://www.fiverr.com/rojhon"
-                            target="_blank"><i class="fab fa-fonticons-fi"></i></a>
-                        <a class="btn btn-square btn-primary me-2"
-                            href="https://www.facebook.com/rojhon.buenaventura.9/" target="_blank"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-primary me-2"
-                            href="https://www.linkedin.com/in/rojhon-buenaventura-684577229/" target="_blank"><i
-                                class="fab fa-linkedin-in"></i></a>
-                        <a class="btn btn-square btn-primary me-2" href="https://github.com/Rojhon" target="_blank"><i
-                                class="bi bi-github"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Contact End -->
+    <script>
 
-    <!-- Copyright Start -->
-    <div class="container-fluid bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom text-secondary" href="https://rojhonbuenaventura.com/">Rojhon
-                        Buenaventura</a>, All Right Reserved.
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                    Designed By <a class="border-bottom text-secondary" href="https://htmlcodex.com"
-                        target="_blank">HTML Codex</a>
-                    <br>Distributed By: <a class="border-bottom" href="https://themewagon.com"
-                        target="_blank">ThemeWagon</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!-- Copyright End -->
+        const search =
+            document.getElementById("search");
 
+        search.addEventListener("keyup", () => {
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+            const value =
+                search.value.toLowerCase();
 
+            document
+                .querySelectorAll(".card")
+                .forEach(card => {
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/typed/typed.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/isotope/isotope.pkgd.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
+                    const title =
+                        card.querySelector("h2")
+                            .textContent
+                            .toLowerCase();
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+                    card.style.display =
+                        title.includes(value)
+                            ? "block"
+                            : "none";
+                });
+        });
+
+    </script>
+
 </body>
 
 </html>

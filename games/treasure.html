@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucky Treasure Hunt</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    width:100%;
+    text-align:center;
+}
+
+h1{
+    color:#facc15;
+    margin-bottom:10px;
+}
+
+.coins{
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+.message{
+    min-height:40px;
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.chest{
+    background:#7c3aed;
+    border-radius:15px;
+    height:120px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:55px;
+    cursor:pointer;
+    transition:.3s;
+    user-select:none;
+}
+
+.chest:hover{
+    transform:translateY(-5px);
+}
+
+.chest.open{
+    background:#111827;
+    cursor:not-allowed;
+}
+
+.controls{
+    margin-top:25px;
+}
+
+button{
+    padding:14px 28px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.new-game{
+    background:#22c55e;
+    color:white;
+}
+
+.stats{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+    font-size:18px;
+}
+
+@media(max-width:700px){
+    .grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .chest{
+        height:100px;
+        font-size:45px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🏴‍☠️ Lucky Treasure Hunt</h1>
+
+    <div class="coins">
+        💰 Coins: <span id="coins">1000</span>
+    </div>
+
+    <div class="message" id="message">
+        Open a treasure chest!
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="stats">
+        <div>🏆 Treasures Found: <span id="wins">0</span></div>
+        <div>💣 Bombs Found: <span id="bombs">0</span></div>
+    </div>
+
+    <div class="controls">
+        <button class="new-game" onclick="newRound()">
+            🔄 New Round
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+const rewards = [
+    {icon:"💎", value:500},
+    {icon:"💰", value:250},
+    {icon:"🪙", value:100},
+    {icon:"🎁", value:750},
+    {icon:"⭐", value:300},
+    {icon:"💣", value:-200}
+];
+
+let coins = 1000;
+let treasuresFound = 0;
+let bombsFound = 0;
+
+const grid =
+    document.getElementById("grid");
+
+const coinDisplay =
+    document.getElementById("coins");
+
+const message =
+    document.getElementById("message");
+
+const winsDisplay =
+    document.getElementById("wins");
+
+const bombsDisplay =
+    document.getElementById("bombs");
+
+function generateChestReward(){
+
+    const chance = Math.random();
+
+    if(chance < 0.15)
+        return {icon:"💣", value:-200};
+
+    if(chance < 0.25)
+        return {icon:"🎁", value:1000};
+
+    return rewards[
+        Math.floor(
+            Math.random() *
+            (rewards.length - 1)
+        )
+    ];
+}
+
+function newRound(){
+
+    grid.innerHTML = "";
+
+    message.textContent =
+        "Open a treasure chest!";
+
+    for(let i=0;i<12;i++){
+
+        const reward =
+            generateChestReward();
+
+        const chest =
+            document.createElement("div");
+
+        chest.classList.add("chest");
+
+        chest.textContent = "📦";
+
+        chest.addEventListener("click",()=>{
+
+            if(chest.classList.contains("open"))
+                return;
+
+            chest.classList.add("open");
+
+            chest.textContent =
+                reward.icon;
+
+            coins += reward.value;
+
+            if(reward.value > 0){
+
+                treasuresFound++;
+
+                message.innerHTML =
+                    `🎉 Found ${reward.icon} (+${reward.value})`;
+
+            }else{
+
+                bombsFound++;
+
+                message.innerHTML =
+                    `💣 Trap! ${reward.value}`;
+
+            }
+
+            updateStats();
+        });
+
+        grid.appendChild(chest);
+    }
+}
+
+function updateStats(){
+
+    coinDisplay.textContent =
+        coins.toLocaleString();
+
+    winsDisplay.textContent =
+        treasuresFound;
+
+    bombsDisplay.textContent =
+        bombsFound;
+}
+
+newRound();
+
+</script>
+
+</body>
+</html>

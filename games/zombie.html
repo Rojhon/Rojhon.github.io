@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zombie Survival Clicker</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#111827;
+    overflow:hidden;
+    color:white;
+}
+
+#game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    background:
+    linear-gradient(
+        to bottom,
+        #0f172a,
+        #1e293b
+    );
+}
+
+.ui{
+    position:absolute;
+    top:15px;
+    left:15px;
+    z-index:100;
+    font-size:20px;
+    line-height:1.8;
+}
+
+.upgrades{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:rgba(0,0,0,.4);
+    padding:15px;
+    border-radius:12px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#22c55e;
+    color:white;
+    font-weight:bold;
+}
+
+.zombie{
+    position:absolute;
+    font-size:70px;
+    cursor:pointer;
+    user-select:none;
+    transition:transform .1s;
+}
+
+.zombie:hover{
+    transform:scale(1.1);
+}
+
+.damage{
+    position:absolute;
+    color:#f87171;
+    font-size:24px;
+    font-weight:bold;
+    pointer-events:none;
+    animation:floatUp .8s forwards;
+}
+
+@keyframes floatUp{
+    from{
+        opacity:1;
+        transform:translateY(0);
+    }
+    to{
+        opacity:0;
+        transform:translateY(-50px);
+    }
+}
+
+.game-over{
+    position:absolute;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:rgba(0,0,0,.85);
+    z-index:999;
+}
+
+.game-over h1{
+    font-size:60px;
+}
+
+.game-over button{
+    width:auto;
+    padding:12px 25px;
+    margin-top:20px;
+}
+</style>
+</head>
+<body>
+
+<div id="game">
+
+    <div class="ui">
+        🏆 Score: <span id="score">0</span><br>
+        💰 Coins: <span id="coins">0</span><br>
+        🔫 Damage: <span id="damage">1</span><br>
+        ❤️ Base Health: <span id="health">20</span><br>
+        🌊 Wave: <span id="wave">1</span>
+    </div>
+
+    <div class="upgrades">
+        <h3>Upgrades</h3>
+
+        <button onclick="upgradeDamage()">
+            🔫 Upgrade Damage
+            (<span id="upgradeCost">20</span>)
+        </button>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <h1>🧟 Game Over</h1>
+        <h2 id="finalScore"></h2>
+
+        <button onclick="restartGame()">
+            Play Again
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+const game =
+    document.getElementById("game");
+
+let score = 0;
+let coins = 0;
+let damage = 1;
+let health = 20;
+
+let wave = 1;
+let zombieHP = 3;
+
+let upgradeCost = 20;
+let running = true;
+
+function updateUI(){
+
+    score.textContent = scoreValue = score;
+
+    document.getElementById("coins")
+    .textContent = coins;
+
+    document.getElementById("damage")
+    .textContent = damage;
+
+    document.getElementById("health")
+    .textContent = health;
+
+    document.getElementById("wave")
+    .textContent = wave;
+
+    document.getElementById("upgradeCost")
+    .textContent = upgradeCost;
+}
+
+function createZombie(){
+
+    if(!running) return;
+
+    const zombie =
+        document.createElement("div");
+
+    zombie.className = "zombie";
+    zombie.textContent = "🧟";
+
+    zombie.hp = zombieHP;
+
+    zombie.style.left =
+        Math.random() *
+        (window.innerWidth-100)
+        + "px";
+
+    zombie.style.top =
+        "-100px";
+
+    game.appendChild(zombie);
+
+    let y = -100;
+
+    const speed =
+        1 + wave * 0.4;
+
+    const move =
+        setInterval(()=>{
+
+            if(!running){
+
+                clearInterval(move);
+                return;
+            }
+
+            y += speed;
+
+            zombie.style.top =
+                y + "px";
+
+            if(y > window.innerHeight){
+
+                clearInterval(move);
+
+                zombie.remove();
+
+                health--;
+
+                updateUI();
+
+                if(health <= 0){
+                    endGame();
+                }
+            }
+
+        },16);
+
+    zombie.addEventListener("click",e=>{
+
+        zombie.hp -= damage;
+
+        showDamage(
+            e.clientX,
+            e.clientY,
+            "-" + damage
+        );
+
+        if(zombie.hp <= 0){
+
+            clearInterval(move);
+
+            zombie.remove();
+
+            score += 10;
+            coins += 5;
+
+            updateUI();
+        }
+    });
+}
+
+function showDamage(x,y,text){
+
+    const dmg =
+        document.createElement("div");
+
+    dmg.className = "damage";
+    dmg.textContent = text;
+
+    dmg.style.left = x + "px";
+    dmg.style.top = y + "px";
+
+    game.appendChild(dmg);
+
+    setTimeout(()=>{
+        dmg.remove();
+    },800);
+}
+
+function upgradeDamage(){
+
+    if(coins < upgradeCost)
+        return;
+
+    coins -= upgradeCost;
+
+    damage++;
+
+    upgradeCost =
+        Math.floor(
+            upgradeCost * 1.7
+        );
+
+    updateUI();
+}
+
+function waveSystem(){
+
+    setInterval(()=>{
+
+        if(!running) return;
+
+        wave++;
+
+        zombieHP++;
+
+        updateUI();
+
+    },20000);
+}
+
+function spawnSystem(){
+
+    setInterval(()=>{
+
+        if(!running) return;
+
+        for(
+            let i=0;
+            i<Math.min(wave,5);
+            i++
+        ){
+
+            setTimeout(
+                createZombie,
+                i*400
+            );
+        }
+
+    },2500);
+}
+
+function endGame(){
+
+    running = false;
+
+    document
+    .getElementById("gameOver")
+    .style.display = "flex";
+
+    document
+    .getElementById("finalScore")
+    .textContent =
+        "Final Score: " + score;
+}
+
+function restartGame(){
+
+    document
+    .querySelectorAll(".zombie")
+    .forEach(z=>z.remove());
+
+    score = 0;
+    coins = 0;
+    damage = 1;
+    health = 20;
+
+    wave = 1;
+    zombieHP = 3;
+
+    upgradeCost = 20;
+
+    running = true;
+
+    updateUI();
+
+    document
+    .getElementById("gameOver")
+    .style.display = "none";
+}
+
+updateUI();
+spawnSystem();
+waveSystem();
+
+</script>
+
+</body>
+</html>
