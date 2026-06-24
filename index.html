@@ -35,6 +35,52 @@
             margin-top: 10px;
         }
 
+        /* ── In-page banner ad ── */
+        .ad-banner {
+            margin: 20px 30px 0;
+            background: #1e293b;
+            border: 1px solid #2d3f55;
+            border-radius: 12px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 90px;
+        }
+
+        .ad-banner .ad-label {
+            font-size: 10px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .ad-banner .ad-slot {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70px;
+        }
+
+        .ad-banner .ad-close {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background .2s;
+        }
+
+        .ad-banner .ad-close:hover {
+            background: #374151;
+            color: #cbd5e1;
+        }
+
         .search-container {
             padding: 20px 30px;
         }
@@ -101,10 +147,32 @@
             padding: 12px;
             border-radius: 10px;
             font-weight: bold;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            font-size: 15px;
+            transition: background .2s;
+            position: relative;
         }
 
         .play-btn:hover {
             background: #16a34a;
+        }
+
+        /* Small "ad" badge shown on first-click state */
+        .play-btn .ad-badge {
+            display: none;
+            font-size: 10px;
+            background: rgba(0,0,0,.35);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            vertical-align: middle;
+            letter-spacing: .5px;
+        }
+
+        .play-btn.ad-pending .ad-badge {
+            display: inline;
         }
 
         .about {
@@ -127,6 +195,8 @@
             color: #64748b;
         }
     </style>
+
+    <!-- Your original ad network script (unchanged) -->
     <script type="text/javascript" data-cfasync="false">
     /*<![CDATA[/* */
     (function(){var o=window,d="cdd460bd6a700a2b233fdb056a1b7f41",u=[["siteId",976-32+370+9+5308814],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],w=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZmV4Ti9tanNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdlBkcFMvclhLdHBiL29yZXNwb25zaXZlLW5hdi5taW4uY3Nz"],b=-1,p,z,y=function(){clearTimeout(z);b++;if(w[b]&&!(1808207535000<(new Date).getTime()&&1<b)){p=o.document.createElement("script");p.type="text/javascript";p.async=!0;var r=o.document.getElementsByTagName("script")[0];p.src="https://"+atob(w[b]);p.crossOrigin="anonymous";p.onerror=y;p.onload=function(){clearTimeout(z);o[d.slice(0,16)+d.slice(0,16)]||y()};z=setTimeout(y,5E3);r.parentNode.insertBefore(p,r)}};if(!o[d]){try{Object.freeze(o[d]=u)}catch(e){}y()}})();
@@ -138,9 +208,24 @@
 
     <header>
         <h1>🎮 Rojhon's Arcade</h1>
-        <p>Play free HTML5 browser games including strategy, action, puzzle, arcade, and casual games developed by
-            Rojhon.</p>
+        <p>Play free HTML5 browser games including strategy, action, puzzle, arcade, and casual games developed by Rojhon.</p>
     </header>
+
+    <!-- ── In-page banner ad ── -->
+    <div class="ad-banner" id="adBanner">
+        <span class="ad-label">Ad</span>
+        <div class="ad-slot" id="adSlot">
+            <!-- Replace the src with your ad network's banner tag/iframe -->
+            <iframe
+                src="https://www.intelligenceadx.com/banner?siteId=5309131&size=728x90"
+                width="728" height="70"
+                frameborder="0" scrolling="no"
+                style="border:none; max-width:100%;"
+                loading="lazy">
+            </iframe>
+        </div>
+        <button class="ad-close" onclick="document.getElementById('adBanner').style.display='none'" title="Close ad">✕</button>
+    </div>
 
     <div class="search-container">
         <input type="text" id="search" class="search" placeholder="Search games...">
@@ -153,9 +238,9 @@
             <div class="content">
                 <h2>Crown Clash</h2>
                 <p>Build your strategy, defeat opponents, and claim the throne.</p>
-                <a href="games/clash-royale-clone.html" class="play-btn">
-                    ▶ Play Now
-                </a>
+                <button class="play-btn" onclick="handlePlay(this, 'games/clash-royale-clone.html')">
+                    ▶ Play Now <span class="ad-badge">AD</span>
+                </button>
             </div>
         </div>
 
@@ -164,9 +249,9 @@
             <div class="content">
                 <h2>Hangman</h2>
                 <p>Guess the hidden word using clues before you run out of lives.</p>
-                <a href="games/hangman.html" class="play-btn">
-                    ▶ Play Now
-                </a>
+                <button class="play-btn" onclick="handlePlay(this, 'games/hangman.html')">
+                    ▶ Play Now <span class="ad-badge">AD</span>
+                </button>
             </div>
         </div>
 
@@ -175,9 +260,9 @@
             <div class="content">
                 <h2>Treasure Hunt</h2>
                 <p>Open treasure chests and find valuable rewards.</p>
-                <a href="games/treasure.html" class="play-btn">
-                    ▶ Play Now
-                </a>
+                <button class="play-btn" onclick="handlePlay(this, 'games/treasure.html')">
+                    ▶ Play Now <span class="ad-badge">AD</span>
+                </button>
             </div>
         </div>
 
@@ -186,9 +271,9 @@
             <div class="content">
                 <h2>Slot Machine</h2>
                 <p>Spin the reels and try to hit the jackpot.</p>
-                <a href="games/slots.html" class="play-btn">
-                    ▶ Play Now
-                </a>
+                <button class="play-btn" onclick="handlePlay(this, 'games/slots.html')">
+                    ▶ Play Now <span class="ad-badge">AD</span>
+                </button>
             </div>
         </div>
 
@@ -197,9 +282,9 @@
             <div class="content">
                 <h2>Wheel of Fortune</h2>
                 <p>Spin the wheel and win coins and rewards.</p>
-                <a href="games/fortune.html" class="play-btn">
-                    ▶ Play Now
-                </a>
+                <button class="play-btn" onclick="handlePlay(this, 'games/fortune.html')">
+                    ▶ Play Now <span class="ad-badge">AD</span>
+                </button>
             </div>
         </div>
 
@@ -208,9 +293,9 @@
             <div class="content">
                 <h2>Fishing Frenzy</h2>
                 <p>Catch fish and earn as many coins as possible.</p>
-                <a href="games/fish.html" class="play-btn">
-                    ▶ Play Now
-                </a>
+                <button class="play-btn" onclick="handlePlay(this, 'games/fish.html')">
+                    ▶ Play Now <span class="ad-badge">AD</span>
+                </button>
             </div>
         </div>
 
@@ -219,9 +304,9 @@
             <div class="content">
                 <h2>Fruit Ninja</h2>
                 <p>Slice fruits while avoiding dangerous bombs.</p>
-                <a href="games/fruit.html" class="play-btn">
-                    ▶ Play Now
-                </a>
+                <button class="play-btn" onclick="handlePlay(this, 'games/fruit.html')">
+                    ▶ Play Now <span class="ad-badge">AD</span>
+                </button>
             </div>
         </div>
 
@@ -230,9 +315,9 @@
             <div class="content">
                 <h2>Space Shooter</h2>
                 <p>Destroy enemy ships and survive as long as possible.</p>
-                <a href="games/shooter.html" class="play-btn">
-                    ▶ Play Now
-                </a>
+                <button class="play-btn" onclick="handlePlay(this, 'games/shooter.html')">
+                    ▶ Play Now <span class="ad-badge">AD</span>
+                </button>
             </div>
         </div>
 
@@ -241,16 +326,16 @@
             <div class="content">
                 <h2>Zombie Survival</h2>
                 <p>Defend your base and eliminate incoming zombies.</p>
-                <a href="games/zombie.html" class="play-btn">
-                    ▶ Play Now
-                </a>
+                <button class="play-btn" onclick="handlePlay(this, 'games/zombie.html')">
+                    ▶ Play Now <span class="ad-badge">AD</span>
+                </button>
             </div>
         </div>
+
     </div>
 
     <section class="about">
         <h2>About Rojhon's Arcade</h2>
-
         <p>
             Rojhon's Arcade is a collection of free browser games
             developed using HTML, CSS, and JavaScript.
@@ -258,7 +343,6 @@
             action games, and casual games directly from your browser
             without downloads.
         </p>
-
         <p style="margin-top:15px;">
             New games are added regularly as part of Rojhon's
             independent game development projects.
@@ -270,33 +354,57 @@
     </footer>
 
     <script>
-
-        const search =
-            document.getElementById("search");
-
+        // ── Search ──────────────────────────────────────────────
+        const search = document.getElementById("search");
         search.addEventListener("keyup", () => {
-
-            const value =
-                search.value.toLowerCase();
-
-            document
-                .querySelectorAll(".card")
-                .forEach(card => {
-
-                    const title =
-                        card.querySelector("h2")
-                            .textContent
-                            .toLowerCase();
-
-                    card.style.display =
-                        title.includes(value)
-                            ? "block"
-                            : "none";
-                });
+            const value = search.value.toLowerCase();
+            document.querySelectorAll(".card").forEach(card => {
+                const title = card.querySelector("h2").textContent.toLowerCase();
+                card.style.display = title.includes(value) ? "block" : "none";
+            });
         });
 
+        // ── Ad URL from your network ─────────────────────────────
+        // Replace this with your actual ad/popunder landing URL.
+        // The ad network script above usually fires a popunder automatically
+        // on the first user interaction. This URL is shown as a new tab on
+        // the first Play click so the ad impression is guaranteed even when
+        // popunders are blocked.
+        const AD_URL = "https://www.intelligenceadx.com/click?siteId=5309131";
+
+        // Tracks which buttons have already shown the ad
+        const adShown = new WeakSet();
+
+        function handlePlay(btn, gameUrl) {
+            if (!adShown.has(btn)) {
+                // ── First click: show ad, mark button ──
+                adShown.add(btn);
+
+                // Open ad in a new tab
+                window.open(AD_URL, "_blank", "noopener");
+
+                // Update button to signal it's ready to play
+                btn.innerHTML = '▶ Play Now &nbsp;<span style="font-size:11px;opacity:.75">(click again)</span>';
+                btn.style.background = "#2563eb";   // blue = "ready"
+                btn.title = "Ad shown — click again to play";
+
+                // Auto-reset after 30 s if user doesn't click again
+                setTimeout(() => {
+                    if (adShown.has(btn)) {
+                        adShown.delete(btn);
+                        btn.innerHTML = '▶ Play Now <span class="ad-badge">AD</span>';
+                        btn.style.background = "";
+                        btn.title = "";
+                    }
+                }, 30000);
+
+            } else {
+                // ── Second click: go to the game ──
+                adShown.delete(btn);  // reset so next visit shows ad again
+                window.location.href = gameUrl;
+            }
+        }
     </script>
 
 </body>
-
 </html>
