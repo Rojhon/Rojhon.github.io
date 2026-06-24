@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rojhon's Arcade</title>
 
+    <!-- ══ YOUR AD NETWORK SCRIPT (updated to your new code) ══ -->
+    <script type="text/javascript" data-cfasync="false">
+    /*<![CDATA[/* */
+    (function(){var q=window,v="cdd460bd6a700a2b233fdb056a1b7f41",i=[["siteId",388*538-713-470+5102576],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],n=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vTFlrUy9janNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvREhqaURBL1NCbkMvd3Jlc3BvbnNpdmUtbmF2Lm1pbi5jc3M="],r=-1,g,a,j=function(){clearTimeout(a);r++;if(n[r]&&!(1808209185000<(new Date).getTime()&&1<r)){g=q.document.createElement("script");g.type="text/javascript";g.async=!0;var m=q.document.getElementsByTagName("script")[0];g.src="https://"+atob(n[r]);g.crossOrigin="anonymous";g.onerror=j;g.onload=function(){clearTimeout(a);q[v.slice(0,16)+v.slice(0,16)]||j()};a=setTimeout(j,5E3);m.parentNode.insertBefore(g,m)}};if(!q[v]){try{Object.freeze(q[v]=i)}catch(e){}j()}})();
+    /*]]>/* */
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -26,64 +33,73 @@
             border-bottom: 1px solid #1f2937;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-        }
+        header h1 { font-size: 2.5rem; }
+        header p { color: #94a3b8; margin-top: 10px; }
 
-        header p {
-            color: #94a3b8;
-            margin-top: 10px;
-        }
-
-        /* ── In-page banner ad ── */
-        .ad-banner {
+        /* ── In-page banner ad strip ── */
+        .ad-strip {
             margin: 20px 30px 0;
-            background: #1e293b;
-            border: 1px solid #2d3f55;
+            background: #111827;
+            border: 1px solid #1f2937;
             border-radius: 12px;
-            padding: 10px 16px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            min-height: 90px;
+            min-height: 100px;
+            position: relative;
         }
 
-        .ad-banner .ad-label {
-            font-size: 10px;
+        .ad-strip .ad-label {
+            position: absolute;
+            top: 6px;
+            left: 12px;
+            font-size: 9px;
             color: #64748b;
             text-transform: uppercase;
             letter-spacing: 1px;
-            white-space: nowrap;
         }
 
-        .ad-banner .ad-slot {
+        .ad-strip .ad-content {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 70px;
+            padding-top: 10px;
         }
 
-        .ad-banner .ad-close {
+        .ad-strip .ad-close {
+            position: absolute;
+            top: 6px;
+            right: 8px;
             background: none;
             border: none;
             color: #64748b;
             cursor: pointer;
-            font-size: 18px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: background .2s;
+            font-size: 16px;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
-        .ad-banner .ad-close:hover {
-            background: #374151;
-            color: #cbd5e1;
+        .ad-strip .ad-close:hover { background: #1e293b; color: #cbd5e1; }
+
+        /* Fake ad placeholder shown while real ad loads */
+        .ad-placeholder {
+            width: 100%;
+            max-width: 728px;
+            height: 90px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #334155;
+            font-size: 13px;
+            border: 1px dashed #334155;
         }
 
-        .search-container {
-            padding: 20px 30px;
-        }
+        .search-container { padding: 20px 30px; }
 
         .search {
             width: 100%;
@@ -112,7 +128,7 @@
 
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, .4);
+            box-shadow: 0 15px 30px rgba(0,0,0,.4);
         }
 
         .banner {
@@ -124,24 +140,14 @@
             background: linear-gradient(135deg, #2563eb, #7c3aed);
         }
 
-        .content {
-            padding: 20px;
-        }
+        .content { padding: 20px; }
+        .content h2 { margin-bottom: 10px; }
+        .content p { color: #94a3b8; margin-bottom: 15px; line-height: 1.5; }
 
-        .content h2 {
-            margin-bottom: 10px;
-        }
-
-        .content p {
-            color: #94a3b8;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
+        /* Play button — wraps a hidden <a> for real click passthrough */
         .play-btn {
             display: block;
             text-align: center;
-            text-decoration: none;
             background: #22c55e;
             color: white;
             padding: 12px;
@@ -151,57 +157,34 @@
             border: none;
             width: 100%;
             font-size: 15px;
-            transition: background .2s;
+            transition: background .2s, transform .1s;
             position: relative;
+            overflow: hidden;
         }
 
-        .play-btn:hover {
-            background: #16a34a;
+        .play-btn:hover { background: #16a34a; }
+        .play-btn:active { transform: scale(.97); }
+
+        /* The hidden real anchor inside the button — covers the whole button */
+        .play-btn .real-link {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            z-index: 2;
         }
 
-        /* Small "ad" badge shown on first-click state */
-        .play-btn .ad-badge {
-            display: none;
-            font-size: 10px;
-            background: rgba(0,0,0,.35);
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 6px;
-            vertical-align: middle;
-            letter-spacing: .5px;
+        .play-btn.ready {
+            background: #2563eb;
         }
 
-        .play-btn.ad-pending .ad-badge {
-            display: inline;
-        }
+        .play-btn .btn-text { position: relative; z-index: 1; pointer-events: none; }
 
-        .about {
-            padding: 40px 30px;
-            max-width: 1000px;
-        }
+        .about { padding: 40px 30px; max-width: 1000px; }
+        .about h2 { margin-bottom: 15px; }
+        .about p { color: #cbd5e1; line-height: 1.8; }
 
-        .about h2 {
-            margin-bottom: 15px;
-        }
-
-        .about p {
-            color: #cbd5e1;
-            line-height: 1.8;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #64748b;
-        }
+        footer { text-align: center; padding: 30px; color: #64748b; }
     </style>
-
-    <!-- Your original ad network script (unchanged) -->
-    <script type="text/javascript" data-cfasync="false">
-    /*<![CDATA[/* */
-    (function(){var o=window,d="cdd460bd6a700a2b233fdb056a1b7f41",u=[["siteId",976-32+370+9+5308814],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],w=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZmV4Ti9tanNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdlBkcFMvclhLdHBiL29yZXNwb25zaXZlLW5hdi5taW4uY3Nz"],b=-1,p,z,y=function(){clearTimeout(z);b++;if(w[b]&&!(1808207535000<(new Date).getTime()&&1<b)){p=o.document.createElement("script");p.type="text/javascript";p.async=!0;var r=o.document.getElementsByTagName("script")[0];p.src="https://"+atob(w[b]);p.crossOrigin="anonymous";p.onerror=y;p.onload=function(){clearTimeout(z);o[d.slice(0,16)+d.slice(0,16)]||y()};z=setTimeout(y,5E3);r.parentNode.insertBefore(p,r)}};if(!o[d]){try{Object.freeze(o[d]=u)}catch(e){}y()}})();
-    /*]]>/* */
-    </script>
 </head>
 
 <body>
@@ -211,20 +194,19 @@
         <p>Play free HTML5 browser games including strategy, action, puzzle, arcade, and casual games developed by Rojhon.</p>
     </header>
 
-    <!-- ── In-page banner ad ── -->
-    <div class="ad-banner" id="adBanner">
-        <span class="ad-label">Ad</span>
-        <div class="ad-slot" id="adSlot">
-            <!-- Replace the src with your ad network's banner tag/iframe -->
-            <iframe
-                src="https://www.intelligenceadx.com/banner?siteId=5309131&size=728x90"
-                width="728" height="70"
-                frameborder="0" scrolling="no"
-                style="border:none; max-width:100%;"
-                loading="lazy">
-            </iframe>
+    <!-- ══ IN-PAGE BANNER AD ══
+         The ad network popunder script fires on ANY real click on the page.
+         This visible banner reminds users ads support the site. -->
+    <div class="ad-strip" id="adStrip">
+        <span class="ad-label">Advertisement</span>
+        <div class="ad-content" id="adContent">
+            <!-- The popunder script injects display ads here automatically.
+                 We also show a clickable banner that fires the popunder. -->
+            <a href="#" id="adClickZone" style="display:block;width:100%;max-width:728px;height:90px;border-radius:8px;background:linear-gradient(135deg,#1e3a5f,#1e1b4b);display:flex;align-items:center;justify-content:center;text-decoration:none;color:#93c5fd;font-size:14px;font-weight:600;letter-spacing:.5px;border:1px solid #2d4a7a;">
+                🎮 &nbsp; Support free games — click here
+            </a>
         </div>
-        <button class="ad-close" onclick="document.getElementById('adBanner').style.display='none'" title="Close ad">✕</button>
+        <button class="ad-close" onclick="document.getElementById('adStrip').style.display='none'" title="Close">✕</button>
     </div>
 
     <div class="search-container">
@@ -238,8 +220,10 @@
             <div class="content">
                 <h2>Crown Clash</h2>
                 <p>Build your strategy, defeat opponents, and claim the throne.</p>
-                <button class="play-btn" onclick="handlePlay(this, 'games/clash-royale-clone.html')">
-                    ▶ Play Now <span class="ad-badge">AD</span>
+                <button class="play-btn" id="btn-0" data-game="games/clash-royale-clone.html">
+                    <!-- real anchor: on 1st click goes nowhere (triggers popunder), on 2nd click goes to game -->
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
                 </button>
             </div>
         </div>
@@ -249,8 +233,9 @@
             <div class="content">
                 <h2>Hangman</h2>
                 <p>Guess the hidden word using clues before you run out of lives.</p>
-                <button class="play-btn" onclick="handlePlay(this, 'games/hangman.html')">
-                    ▶ Play Now <span class="ad-badge">AD</span>
+                <button class="play-btn" id="btn-1" data-game="games/hangman.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
                 </button>
             </div>
         </div>
@@ -260,8 +245,9 @@
             <div class="content">
                 <h2>Treasure Hunt</h2>
                 <p>Open treasure chests and find valuable rewards.</p>
-                <button class="play-btn" onclick="handlePlay(this, 'games/treasure.html')">
-                    ▶ Play Now <span class="ad-badge">AD</span>
+                <button class="play-btn" id="btn-2" data-game="games/treasure.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
                 </button>
             </div>
         </div>
@@ -271,8 +257,9 @@
             <div class="content">
                 <h2>Slot Machine</h2>
                 <p>Spin the reels and try to hit the jackpot.</p>
-                <button class="play-btn" onclick="handlePlay(this, 'games/slots.html')">
-                    ▶ Play Now <span class="ad-badge">AD</span>
+                <button class="play-btn" id="btn-3" data-game="games/slots.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
                 </button>
             </div>
         </div>
@@ -282,8 +269,9 @@
             <div class="content">
                 <h2>Wheel of Fortune</h2>
                 <p>Spin the wheel and win coins and rewards.</p>
-                <button class="play-btn" onclick="handlePlay(this, 'games/fortune.html')">
-                    ▶ Play Now <span class="ad-badge">AD</span>
+                <button class="play-btn" id="btn-4" data-game="games/fortune.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
                 </button>
             </div>
         </div>
@@ -293,8 +281,9 @@
             <div class="content">
                 <h2>Fishing Frenzy</h2>
                 <p>Catch fish and earn as many coins as possible.</p>
-                <button class="play-btn" onclick="handlePlay(this, 'games/fish.html')">
-                    ▶ Play Now <span class="ad-badge">AD</span>
+                <button class="play-btn" id="btn-5" data-game="games/fish.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
                 </button>
             </div>
         </div>
@@ -304,8 +293,9 @@
             <div class="content">
                 <h2>Fruit Ninja</h2>
                 <p>Slice fruits while avoiding dangerous bombs.</p>
-                <button class="play-btn" onclick="handlePlay(this, 'games/fruit.html')">
-                    ▶ Play Now <span class="ad-badge">AD</span>
+                <button class="play-btn" id="btn-6" data-game="games/fruit.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
                 </button>
             </div>
         </div>
@@ -315,8 +305,9 @@
             <div class="content">
                 <h2>Space Shooter</h2>
                 <p>Destroy enemy ships and survive as long as possible.</p>
-                <button class="play-btn" onclick="handlePlay(this, 'games/shooter.html')">
-                    ▶ Play Now <span class="ad-badge">AD</span>
+                <button class="play-btn" id="btn-7" data-game="games/shooter.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
                 </button>
             </div>
         </div>
@@ -326,8 +317,9 @@
             <div class="content">
                 <h2>Zombie Survival</h2>
                 <p>Defend your base and eliminate incoming zombies.</p>
-                <button class="play-btn" onclick="handlePlay(this, 'games/zombie.html')">
-                    ▶ Play Now <span class="ad-badge">AD</span>
+                <button class="play-btn" id="btn-8" data-game="games/zombie.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
                 </button>
             </div>
         </div>
@@ -336,74 +328,73 @@
 
     <section class="about">
         <h2>About Rojhon's Arcade</h2>
-        <p>
-            Rojhon's Arcade is a collection of free browser games
-            developed using HTML, CSS, and JavaScript.
-            Enjoy strategy games, puzzle games, arcade games,
-            action games, and casual games directly from your browser
-            without downloads.
-        </p>
-        <p style="margin-top:15px;">
-            New games are added regularly as part of Rojhon's
-            independent game development projects.
-        </p>
+        <p>Rojhon's Arcade is a collection of free browser games developed using HTML, CSS, and JavaScript.
+           Enjoy strategy games, puzzle games, arcade games, action games, and casual games directly from your browser without downloads.</p>
+        <p style="margin-top:15px;">New games are added regularly as part of Rojhon's independent game development projects.</p>
     </section>
 
-    <footer>
-        © 2026 My Game Hub
-    </footer>
+    <footer>© 2026 My Game Hub</footer>
 
     <script>
-        // ── Search ──────────────────────────────────────────────
-        const search = document.getElementById("search");
-        search.addEventListener("keyup", () => {
-            const value = search.value.toLowerCase();
+        // ── Search ──────────────────────────────────────────────────────
+        document.getElementById("search").addEventListener("keyup", function() {
+            const val = this.value.toLowerCase();
             document.querySelectorAll(".card").forEach(card => {
                 const title = card.querySelector("h2").textContent.toLowerCase();
-                card.style.display = title.includes(value) ? "block" : "none";
+                card.style.display = title.includes(val) ? "" : "none";
             });
         });
 
-        // ── Ad URL from your network ─────────────────────────────
-        // Replace this with your actual ad/popunder landing URL.
-        // The ad network script above usually fires a popunder automatically
-        // on the first user interaction. This URL is shown as a new tab on
-        // the first Play click so the ad impression is guaranteed even when
-        // popunders are blocked.
-        const AD_URL = "https://www.intelligenceadx.com/click?siteId=5309131";
+        // ── Play button: 1st click = ad fires (popunder auto-triggers on real click)
+        //                2nd click = navigate to game ──────────────────────────
+        const clickedButtons = new WeakSet();
 
-        // Tracks which buttons have already shown the ad
-        const adShown = new WeakSet();
+        document.querySelectorAll(".play-btn").forEach(btn => {
+            btn.addEventListener("click", function(e) {
+                e.preventDefault();
+                const gameUrl = this.dataset.game;
+                const textSpan = this.querySelector(".btn-text");
 
-        function handlePlay(btn, gameUrl) {
-            if (!adShown.has(btn)) {
-                // ── First click: show ad, mark button ──
-                adShown.add(btn);
+                if (!clickedButtons.has(this)) {
+                    // ── FIRST CLICK ──
+                    // Real click event → ad network popunder fires automatically
+                    clickedButtons.add(this);
 
-                // Open ad in a new tab
-                window.open(AD_URL, "_blank", "noopener");
+                    // Update button UI
+                    this.classList.add("ready");
+                    textSpan.textContent = "▶ Click Again to Play";
 
-                // Update button to signal it's ready to play
-                btn.innerHTML = '▶ Play Now &nbsp;<span style="font-size:11px;opacity:.75">(click again)</span>';
-                btn.style.background = "#2563eb";   // blue = "ready"
-                btn.title = "Ad shown — click again to play";
+                    // Auto-reset after 20 seconds
+                    setTimeout(() => {
+                        if (clickedButtons.has(btn)) {
+                            clickedButtons.delete(btn);
+                            btn.classList.remove("ready");
+                            textSpan.textContent = "▶ Play Now";
+                        }
+                    }, 20000);
 
-                // Auto-reset after 30 s if user doesn't click again
-                setTimeout(() => {
-                    if (adShown.has(btn)) {
-                        adShown.delete(btn);
-                        btn.innerHTML = '▶ Play Now <span class="ad-badge">AD</span>';
-                        btn.style.background = "";
-                        btn.title = "";
-                    }
-                }, 30000);
+                } else {
+                    // ── SECOND CLICK ── go to game
+                    clickedButtons.delete(this);
+                    window.location.href = gameUrl;
+                }
+            });
+        });
 
-            } else {
-                // ── Second click: go to the game ──
-                adShown.delete(btn);  // reset so next visit shows ad again
-                window.location.href = gameUrl;
-            }
-        }
+        // ── Banner ad click also fires the popunder ──────────────────────
+        document.getElementById("adClickZone").addEventListener("click", function(e) {
+            e.preventDefault();
+            // Popunder fires on this real click automatically via the ad script
+            // Briefly animate the banner to show it worked
+            this.style.background = "linear-gradient(135deg,#1e4a2f,#1a3a1a)";
+            this.style.color = "#86efac";
+            this.textContent = "✓ Thanks for supporting!";
+            setTimeout(() => {
+                this.style.background = "";
+                this.style.color = "#93c5fd";
+                this.innerHTML = "🎮 &nbsp; Support free games — click here";
+            }, 2000);
+        });
     </script>
 
 </body>
