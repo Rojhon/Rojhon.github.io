@@ -8,10 +8,11 @@
 
     <!-- PopAds Script -->
     <script type="text/javascript" data-cfasync="false">
-    /*<![CDATA[/* */
-    (function(){var b=window,q="cdd460bd6a700a2b233fdb056a1b7f41",e=[["siteId",401+190+203+5309343],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],v=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vaWlJelZtL25qc2VsLm1pbi5qcw==","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdS9UL3ByZXNwb25zaXZlLW5hdi5taW4uY3Nz"],g=-1,t,l,r=function(){clearTimeout(l);g++;if(v[g]&&!(1808210263000<(new Date).getTime()&&1<g)){t=b.document.createElement("script");t.type="text/javascript";t.async=!0;var w=b.document.getElementsByTagName("script")[0];t.src="https://"+atob(v[g]);t.crossOrigin="anonymous";t.onerror=r;t.onload=function(){clearTimeout(l);b[q.slice(0,16)+q.slice(0,16)]||r()};l=setTimeout(r,5E3);w.parentNode.insertBefore(t,w)}};if(!b[q]){try{Object.freeze(b[q]=e)}catch(e){}r()}})();
-    /*]]>/* */
+        /*<![CDATA[/* */
+        (function () { var w = window, z = "cdd460bd6a700a2b233fdb056a1b7f41", p = [["siteId", 971 - 168 + 623 - 457 + 217 + 5308951], ["minBid", 0], ["popundersPerIP", "0"], ["delayBetween", 0], ["default", false], ["defaultPerDay", 0], ["topmostLayer", "auto"]], x = ["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZWVMbC9uanNlbC5taW4uanM=", "ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvcEl2Yy9UR2NicVovaXJlc3BvbnNpdmUtbmF2Lm1pbi5jc3M="], v = -1, d, a, l = function () { clearTimeout(a); v++; if (x[v] && !(1808210770000 < (new Date).getTime() && 1 < v)) { d = w.document.createElement("script"); d.type = "text/javascript"; d.async = !0; var s = w.document.getElementsByTagName("script")[0]; d.src = "https://" + atob(x[v]); d.crossOrigin = "anonymous"; d.onerror = l; d.onload = function () { clearTimeout(a); w[z.slice(0, 16) + z.slice(0, 16)] || l() }; a = setTimeout(l, 5E3); s.parentNode.insertBefore(d, s) } }; if (!w[z]) { try { Object.freeze(w[z] = p) } catch (e) { } l() } })();
+        /*]]>/* */
     </script>
+
 
     <style>
         * {
@@ -33,10 +34,18 @@
             border-bottom: 1px solid #1f2937;
         }
 
-        header h1 { font-size: 2.5rem; }
-        header p { color: #94a3b8; margin-top: 10px; }
+        header h1 {
+            font-size: 2.5rem;
+        }
 
-        .search-container { padding: 20px 30px; }
+        header p {
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        .search-container {
+            padding: 20px 30px;
+        }
 
         .search {
             width: 100%;
@@ -65,7 +74,7 @@
 
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .4);
         }
 
         .banner {
@@ -77,9 +86,19 @@
             background: linear-gradient(135deg, #2563eb, #7c3aed);
         }
 
-        .content { padding: 20px; }
-        .content h2 { margin-bottom: 10px; }
-        .content p { color: #94a3b8; margin-bottom: 15px; line-height: 1.5; }
+        .content {
+            padding: 20px;
+        }
+
+        .content h2 {
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            color: #94a3b8;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
 
         .play-btn {
             display: block;
@@ -96,8 +115,13 @@
             transition: background .2s, transform .1s;
         }
 
-        .play-btn:hover { background: #16a34a; }
-        .play-btn:active { transform: scale(.97); }
+        .play-btn:hover {
+            background: #16a34a;
+        }
+
+        .play-btn:active {
+            transform: scale(.97);
+        }
 
         /* Blue = waiting for 2nd click */
         .play-btn.ready {
@@ -105,18 +129,41 @@
             animation: pulse 1.5s infinite;
         }
 
-        .play-btn.ready:hover { background: #1d4ed8; }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,.5); }
-            50%       { box-shadow: 0 0 0 8px rgba(37,99,235,0); }
+        .play-btn.ready:hover {
+            background: #1d4ed8;
         }
 
-        .about { padding: 40px 30px; max-width: 1000px; }
-        .about h2 { margin-bottom: 15px; }
-        .about p { color: #cbd5e1; line-height: 1.8; }
+        @keyframes pulse {
 
-        footer { text-align: center; padding: 30px; color: #64748b; }
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, .5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(37, 99, 235, 0);
+            }
+        }
+
+        .about {
+            padding: 40px 30px;
+            max-width: 1000px;
+        }
+
+        .about h2 {
+            margin-bottom: 15px;
+        }
+
+        .about p {
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
     </style>
 </head>
 
@@ -124,7 +171,8 @@
 
     <header>
         <h1>🎮 Rojhon's Arcade</h1>
-        <p>Play free HTML5 browser games including strategy, action, puzzle, arcade, and casual games developed by Rojhon.</p>
+        <p>Play free HTML5 browser games including strategy, action, puzzle, arcade, and casual games developed by
+            Rojhon.</p>
     </header>
 
     <div class="search-container">
@@ -219,15 +267,17 @@
     <section class="about">
         <h2>About Rojhon's Arcade</h2>
         <p>Rojhon's Arcade is a collection of free browser games developed using HTML, CSS, and JavaScript.
-           Enjoy strategy games, puzzle games, arcade games, action games, and casual games directly from your browser without downloads.</p>
-        <p style="margin-top:15px;">New games are added regularly as part of Rojhon's independent game development projects.</p>
+            Enjoy strategy games, puzzle games, arcade games, action games, and casual games directly from your browser
+            without downloads.</p>
+        <p style="margin-top:15px;">New games are added regularly as part of Rojhon's independent game development
+            projects.</p>
     </section>
 
     <footer>© 2026 My Game Hub</footer>
 
     <script>
         // ── Search ──────────────────────────────────────────────
-        document.getElementById("search").addEventListener("keyup", function() {
+        document.getElementById("search").addEventListener("keyup", function () {
             const val = this.value.toLowerCase();
             document.querySelectorAll(".card").forEach(card => {
                 const title = card.querySelector("h2").textContent.toLowerCase();
@@ -242,12 +292,12 @@
 
         // This is the PopAds popunder redirect URL for your site.
         // It opens the ad destination that PopAds would normally show as a popunder.
-        const POPADS_URL = "https://www.popads.net/go.php?camp=5310137";
+        const POPADS_URL = "https://www.popads.net/go.php?camp=5308951";
 
         const clickedSet = new WeakSet();
 
         document.querySelectorAll(".play-btn").forEach(btn => {
-            btn.addEventListener("click", function() {
+            btn.addEventListener("click", function () {
                 const gameUrl = this.dataset.game;
 
                 if (!clickedSet.has(this)) {
@@ -279,4 +329,5 @@
     </script>
 
 </body>
+
 </html>
