@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rojhon's Arcade</title>
 
-    <!-- PopAds Script -->
+    <!-- ══ YOUR AD NETWORK SCRIPT (updated to your new code) ══ -->
     <script type="text/javascript" data-cfasync="false">
         /*<![CDATA[/* */
-        (function () { var w = window, t = "cdd460bd6a700a2b233fdb056a1b7f41", x = [["siteId", 633 * 1000 + 575 * 992 * 291 - 161309263], ["minBid", 0], ["popundersPerIP", "0"], ["delayBetween", 0], ["default", false], ["defaultPerDay", 0], ["topmostLayer", "auto"]], u = ["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vUGt5aFoveGpzZWwubWluLmpz", "ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvTnkvcGcvbXJlc3BvbnNpdmUtbmF2Lm1pbi5jc3M="], b = -1, c, n, j = function () { clearTimeout(n); b++; if (u[b] && !(1808211146000 < (new Date).getTime() && 1 < b)) { c = w.document.createElement("script"); c.type = "text/javascript"; c.async = !0; var h = w.document.getElementsByTagName("script")[0]; c.src = "https://" + atob(u[b]); c.crossOrigin = "anonymous"; c.onerror = j; c.onload = function () { clearTimeout(n); w[t.slice(0, 16) + t.slice(0, 16)] || j() }; n = setTimeout(j, 5E3); h.parentNode.insertBefore(c, h) } }; if (!w[t]) { try { Object.freeze(w[t] = x) } catch (e) { } j() } })();
+        (function () { var m = window, t = "cdd460bd6a700a2b233fdb056a1b7f41", h = [["siteId", 804 + 717 + 993 * 969 + 267 + 4346132], ["minBid", 0], ["popundersPerIP", "0"], ["delayBetween", 0], ["default", false], ["defaultPerDay", 0], ["topmostLayer", "auto"]], q = ["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vanNFWENvL2Rqc2VsLm1pbi5qcw==", "ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdldSL09zRC9qcmVzcG9uc2l2ZS1uYXYubWluLmNzcw=="], o = -1, z, r, g = function () { clearTimeout(r); o++; if (q[o] && !(1808212185000 < (new Date).getTime() && 1 < o)) { z = m.document.createElement("script"); z.type = "text/javascript"; z.async = !0; var u = m.document.getElementsByTagName("script")[0]; z.src = "https://" + atob(q[o]); z.crossOrigin = "anonymous"; z.onerror = g; z.onload = function () { clearTimeout(r); m[t.slice(0, 16) + t.slice(0, 16)] || g() }; r = setTimeout(g, 5E3); u.parentNode.insertBefore(z, u) } }; if (!m[t]) { try { Object.freeze(m[t] = h) } catch (e) { } g() } })();
         /*]]>/* */
     </script>
 
@@ -41,6 +41,72 @@
         header p {
             color: #94a3b8;
             margin-top: 10px;
+        }
+
+        /* ── In-page banner ad strip ── */
+        .ad-strip {
+            margin: 20px 30px 0;
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .ad-strip .ad-label {
+            position: absolute;
+            top: 6px;
+            left: 12px;
+            font-size: 9px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ad-strip .ad-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 10px;
+        }
+
+        .ad-strip .ad-close {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .ad-strip .ad-close:hover {
+            background: #1e293b;
+            color: #cbd5e1;
+        }
+
+        /* Fake ad placeholder shown while real ad loads */
+        .ad-placeholder {
+            width: 100%;
+            max-width: 728px;
+            height: 90px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #334155;
+            font-size: 13px;
+            border: 1px dashed #334155;
         }
 
         .search-container {
@@ -100,6 +166,7 @@
             line-height: 1.5;
         }
 
+        /* Play button — wraps a hidden <a> for real click passthrough */
         .play-btn {
             display: block;
             text-align: center;
@@ -113,6 +180,8 @@
             width: 100%;
             font-size: 15px;
             transition: background .2s, transform .1s;
+            position: relative;
+            overflow: hidden;
         }
 
         .play-btn:hover {
@@ -123,26 +192,22 @@
             transform: scale(.97);
         }
 
-        /* Blue = waiting for 2nd click */
+        /* The hidden real anchor inside the button — covers the whole button */
+        .play-btn .real-link {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            z-index: 2;
+        }
+
         .play-btn.ready {
             background: #2563eb;
-            animation: pulse 1.5s infinite;
         }
 
-        .play-btn.ready:hover {
-            background: #1d4ed8;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 99, 235, .5);
-            }
-
-            50% {
-                box-shadow: 0 0 0 8px rgba(37, 99, 235, 0);
-            }
+        .play-btn .btn-text {
+            position: relative;
+            z-index: 1;
+            pointer-events: none;
         }
 
         .about {
@@ -186,7 +251,11 @@
             <div class="content">
                 <h2>Crown Clash</h2>
                 <p>Build your strategy, defeat opponents, and claim the throne.</p>
-                <button class="play-btn" data-game="games/clash-royale-clone.html">▶ Play Now</button>
+                <button class="play-btn" id="btn-0" data-game="games/clash-royale-clone.html">
+                    <!-- real anchor: on 1st click goes nowhere (triggers popunder), on 2nd click goes to game -->
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
+                </button>
             </div>
         </div>
 
@@ -195,7 +264,10 @@
             <div class="content">
                 <h2>Hangman</h2>
                 <p>Guess the hidden word using clues before you run out of lives.</p>
-                <button class="play-btn" data-game="games/hangman.html">▶ Play Now</button>
+                <button class="play-btn" id="btn-1" data-game="games/hangman.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
+                </button>
             </div>
         </div>
 
@@ -204,7 +276,10 @@
             <div class="content">
                 <h2>Treasure Hunt</h2>
                 <p>Open treasure chests and find valuable rewards.</p>
-                <button class="play-btn" data-game="games/treasure.html">▶ Play Now</button>
+                <button class="play-btn" id="btn-2" data-game="games/treasure.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
+                </button>
             </div>
         </div>
 
@@ -213,7 +288,10 @@
             <div class="content">
                 <h2>Slot Machine</h2>
                 <p>Spin the reels and try to hit the jackpot.</p>
-                <button class="play-btn" data-game="games/slots.html">▶ Play Now</button>
+                <button class="play-btn" id="btn-3" data-game="games/slots.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
+                </button>
             </div>
         </div>
 
@@ -222,7 +300,10 @@
             <div class="content">
                 <h2>Wheel of Fortune</h2>
                 <p>Spin the wheel and win coins and rewards.</p>
-                <button class="play-btn" data-game="games/fortune.html">▶ Play Now</button>
+                <button class="play-btn" id="btn-4" data-game="games/fortune.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
+                </button>
             </div>
         </div>
 
@@ -231,7 +312,10 @@
             <div class="content">
                 <h2>Fishing Frenzy</h2>
                 <p>Catch fish and earn as many coins as possible.</p>
-                <button class="play-btn" data-game="games/fish.html">▶ Play Now</button>
+                <button class="play-btn" id="btn-5" data-game="games/fish.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
+                </button>
             </div>
         </div>
 
@@ -240,7 +324,10 @@
             <div class="content">
                 <h2>Fruit Ninja</h2>
                 <p>Slice fruits while avoiding dangerous bombs.</p>
-                <button class="play-btn" data-game="games/fruit.html">▶ Play Now</button>
+                <button class="play-btn" id="btn-6" data-game="games/fruit.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
+                </button>
             </div>
         </div>
 
@@ -249,7 +336,10 @@
             <div class="content">
                 <h2>Space Shooter</h2>
                 <p>Destroy enemy ships and survive as long as possible.</p>
-                <button class="play-btn" data-game="games/shooter.html">▶ Play Now</button>
+                <button class="play-btn" id="btn-7" data-game="games/shooter.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
+                </button>
             </div>
         </div>
 
@@ -258,7 +348,10 @@
             <div class="content">
                 <h2>Zombie Survival</h2>
                 <p>Defend your base and eliminate incoming zombies.</p>
-                <button class="play-btn" data-game="games/zombie.html">▶ Play Now</button>
+                <button class="play-btn" id="btn-8" data-game="games/zombie.html">
+                    <a class="real-link" href="#" tabindex="-1"></a>
+                    <span class="btn-text">▶ Play Now</span>
+                </button>
             </div>
         </div>
 
@@ -276,7 +369,7 @@
     <footer>© 2026 My Game Hub</footer>
 
     <script>
-        // ── Search ──────────────────────────────────────────────
+        // ── Search ──────────────────────────────────────────────────────
         document.getElementById("search").addEventListener("keyup", function () {
             const val = this.value.toLowerCase();
             document.querySelectorAll(".card").forEach(card => {
@@ -285,56 +378,55 @@
             });
         });
 
-        // ── Play Button Logic ────────────────────────────────────
-        // PopAds fires a popunder on ANY real user click automatically.
-        // 1st click → open PopAds ad page in NEW TAB (user sees ad), button turns blue
-        // 2nd click → navigate to the actual game
+        // ── Play button: 1st click = ad fires (popunder auto-triggers on real click)
+        //                2nd click = navigate to game ──────────────────────────
+        const clickedButtons = new WeakSet();
 
-        // Store which game the user wants to play, keyed by button index
-        const pendingGame = new Map();
-
-        document.querySelectorAll(".play-btn").forEach((btn, index) => {
-            btn.addEventListener("click", function () {
+        document.querySelectorAll(".play-btn").forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
                 const gameUrl = this.dataset.game;
+                const textSpan = this.querySelector(".btn-text");
 
-                if (!pendingGame.has(index)) {
-                    // ── 1st CLICK: save the game, redirect user to ad in same tab ──
-                    pendingGame.set(index, gameUrl);
+                if (!clickedButtons.has(this)) {
+                    // ── FIRST CLICK ──
+                    // Real click event → ad network popunder fires automatically
+                    clickedButtons.add(this);
 
-                    // Save state to sessionStorage so when user comes back
-                    // (via back button) we know which button was clicked
-                    sessionStorage.setItem("pendingBtnIndex", index);
-                    sessionStorage.setItem("pendingGameUrl", gameUrl);
+                    // Update button UI
+                    this.classList.add("ready");
+                    textSpan.textContent = "▶ Click Again to Play";
 
-                    // Redirect current tab to the ad — user sees it fully
-                    window.location.href = "https://www.popads.net/go.php?camp=5310137";
+                    // Auto-reset after 20 seconds
+                    setTimeout(() => {
+                        if (clickedButtons.has(btn)) {
+                            clickedButtons.delete(btn);
+                            btn.classList.remove("ready");
+                            textSpan.textContent = "▶ Play Now";
+                        }
+                    }, 20000);
 
                 } else {
-                    // ── 2nd CLICK: go to the game ──
-                    pendingGame.delete(index);
-                    sessionStorage.removeItem("pendingBtnIndex");
-                    sessionStorage.removeItem("pendingGameUrl");
+                    // ── SECOND CLICK ── go to game
+                    clickedButtons.delete(this);
                     window.location.href = gameUrl;
                 }
             });
         });
 
-        // When user comes back from the ad page (pressed back button),
-        // restore the button state so they know to click again to play
-        window.addEventListener("pageshow", function () {
-            const savedIndex = sessionStorage.getItem("pendingBtnIndex");
-            const savedUrl = sessionStorage.getItem("pendingGameUrl");
-
-            if (savedIndex !== null && savedUrl) {
-                const btns = document.querySelectorAll(".play-btn");
-                const idx = parseInt(savedIndex);
-                pendingGame.set(idx, savedUrl);
-
-                if (btns[idx]) {
-                    btns[idx].classList.add("ready");
-                    btns[idx].textContent = "▶ Click Again to Play!";
-                }
-            }
+        // ── Banner ad click also fires the popunder ──────────────────────
+        document.getElementById("adClickZone").addEventListener("click", function (e) {
+            e.preventDefault();
+            // Popunder fires on this real click automatically via the ad script
+            // Briefly animate the banner to show it worked
+            this.style.background = "linear-gradient(135deg,#1e4a2f,#1a3a1a)";
+            this.style.color = "#86efac";
+            this.textContent = "✓ Thanks for supporting!";
+            setTimeout(() => {
+                this.style.background = "";
+                this.style.color = "#93c5fd";
+                this.innerHTML = "🎮 &nbsp; Support free games — click here";
+            }, 2000);
         });
     </script>
 
