@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Crown Clash</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Exo+2:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" data-cfasync="false" src="../scripts/ad-network.js"></script>
+</head>
+
+<body>
+
+  <!-- ══ MENU ══ -->
+  <div id="menu" class="screen active">
+    <div class="stars" id="stars-bg"></div>
+    <div class="menu-logo">Crown Clash</div>
+    <div class="menu-tagline">Deploy ✦ Destroy ✦ Dominate</div>
+    <button class="menu-btn" onclick="startGame()">⚔️ Battle!</button>
+    <div class="menu-info">
+      <div class="info-card">
+        <div class="label">Troops</div>
+        <div class="value">4</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Spells</div>
+        <div class="value">3</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Time</div>
+        <div class="value">3:00</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GAME ══ -->
+  <div id="game" class="screen">
+    <div id="arena-wrap">
+      <div id="arena">
+        <div class="arena-half-top"></div>
+        <div class="arena-half-bot"></div>
+        <div class="lane-path left"></div>
+        <div class="lane-path right"></div>
+        <div class="lane-path center"></div>
+        <div class="arena-river"></div>
+        <div class="river-bridge"></div>
+
+        <div id="hud-top">
+          <div class="crown-row" id="player-crowns"></div>
+          <div id="timer">3:00</div>
+          <div class="crown-row" id="enemy-crowns"></div>
+        </div>
+
+        <div id="elixir-bar-wrap">
+          <div class="elixir-label">
+            <span class="elixir-text">Elixir</span>
+            <span class="elixir-count" id="elixir-num">5</span>
+          </div>
+          <div id="elixir-bar">
+            <div id="elixir-fill" style="width:50%"></div>
+          </div>
+        </div>
+
+        <!-- Fixed 4 troop cards -->
+        <div id="card-hand"></div>
+
+        <!-- Spell panel corner -->
+        <div id="spell-panel">
+          <div class="spell-label">Spells</div>
+        </div>
+
+        <div id="placement-overlay"></div>
+        <div class="placement-hint" id="placement-hint">Tap your half to place!</div>
+      </div>
+    </div>
+
+    <div id="side-panel">
+      <div class="panel-title">Battle Status</div>
+      <div class="stat-row"><span class="stat-label">Crowns</span><span class="stat-val gold" id="sp-crowns">0 –
+          0</span></div>
+      <div class="stat-row"><span class="stat-label">Units Out</span><span class="stat-val blue" id="sp-units">0 /
+          0</span></div>
+      <div class="stat-row"><span class="stat-label">Elixir Spent</span><span class="stat-val gold"
+          id="sp-elixir">0</span></div>
+      <div class="panel-title" style="margin-top:4px">Towers</div>
+      <div class="tower-status" id="tower-status-wrap"></div>
+      <div class="panel-title" style="margin-top:4px">Battle Log</div>
+      <div id="battle-log"></div>
+    </div>
+  </div>
+
+  <!-- ══ GAME OVER ══ -->
+  <div id="gameover" class="screen">
+    <div class="go-title" id="go-title">Victory!</div>
+    <div class="go-subtitle" id="go-sub">The enemy has been crushed</div>
+    <div class="go-stats">
+      <div class="go-stat">
+        <div class="s-label">Crowns Won</div>
+        <div class="s-val" id="go-crowns">3</div>
+      </div>
+      <div class="go-stat">
+        <div class="s-label">Elixir Used</div>
+        <div class="s-val" id="go-elixir">0</div>
+      </div>
+      <div class="go-stat">
+        <div class="s-label">Units Deployed</div>
+        <div class="s-val" id="go-units">0</div>
+      </div>
+    </div>
+    <div class="go-btns">
+      <button class="go-btn" onclick="startGame()">⚔️ Play Again</button>
+      <button class="go-btn secondary" onclick="showMenu()">🏠 Menu</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+
+</html>
