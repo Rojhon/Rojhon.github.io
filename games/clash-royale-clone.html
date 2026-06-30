@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Crown Clash</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Exo+2:wght@400;600;700;800&display=swap"
@@ -24,24 +25,32 @@
       --text-dim: #8892a4;
       --grass-top: #1a3a2a;
       --grass-bot: #1a3a1a;
+      --arena-w: 320px;
+      --arena-h: 560px;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
+    html,
     body {
       font-family: 'Exo 2', sans-serif;
       background: var(--bg-dark);
       color: var(--text);
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      overscroll-behavior: none;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     /* ── SCREENS ── */
@@ -65,6 +74,7 @@
     #menu {
       background: radial-gradient(ellipse at 50% 0%, #1a2a4a 0%, #0a0d14 70%);
       overflow: hidden;
+      padding: 16px;
     }
 
     #menu::before {
@@ -104,7 +114,7 @@
 
     .menu-logo {
       font-family: 'Cinzel Decorative', cursive;
-      font-size: clamp(28px, 5vw, 52px);
+      font-size: clamp(28px, 9vw, 52px);
       font-weight: 900;
       background: linear-gradient(135deg, #f5c518 0%, #ffea80 40%, #c9a012 70%, #f5c518 100%);
       -webkit-background-clip: text;
@@ -122,6 +132,7 @@
       letter-spacing: 4px;
       text-transform: uppercase;
       margin-bottom: 48px;
+      text-align: center;
     }
 
     .menu-btn {
@@ -139,6 +150,7 @@
       box-shadow: 0 4px 20px rgba(245, 197, 24, .4), 0 0 0 3px rgba(245, 197, 24, .15);
       transition: all .2s;
       margin-bottom: 16px;
+      touch-action: manipulation;
     }
 
     .menu-btn:hover {
@@ -164,7 +176,7 @@
       border-radius: 12px;
       padding: 16px 24px;
       text-align: center;
-      min-width: 120px;
+      min-width: 100px;
     }
 
     .info-card .label {
@@ -184,14 +196,16 @@
     /* GAME OVER */
     #gameover {
       background: radial-gradient(ellipse at 50% 50%, #1a1a2a 0%, #0a0d14 100%);
+      padding: 16px;
     }
 
     .go-title {
       font-family: 'Cinzel Decorative', cursive;
-      font-size: clamp(32px, 6vw, 64px);
+      font-size: clamp(32px, 9vw, 64px);
       font-weight: 900;
       margin-bottom: 12px;
       letter-spacing: 3px;
+      text-align: center;
     }
 
     .go-title.win {
@@ -206,16 +220,17 @@
 
     .go-subtitle {
       color: var(--text-dim);
-      font-size: 16px;
-      margin-bottom: 40px;
+      font-size: 14px;
+      margin-bottom: 32px;
       letter-spacing: 3px;
       text-transform: uppercase;
+      text-align: center;
     }
 
     .go-stats {
       display: flex;
-      gap: 24px;
-      margin-bottom: 40px;
+      gap: 16px;
+      margin-bottom: 32px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -224,7 +239,7 @@
       background: rgba(255, 255, 255, .04);
       border: 1px solid rgba(255, 255, 255, .08);
       border-radius: 12px;
-      padding: 20px 28px;
+      padding: 16px 22px;
       text-align: center;
     }
 
@@ -236,7 +251,7 @@
     }
 
     .go-stat .s-val {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 800;
       color: var(--gold);
       margin-top: 6px;
@@ -263,6 +278,7 @@
       cursor: pointer;
       box-shadow: 0 4px 20px rgba(245, 197, 24, .4);
       transition: all .2s;
+      touch-action: manipulation;
     }
 
     .go-btn.secondary {
@@ -293,17 +309,21 @@
       justify-content: center;
       overflow: hidden;
       background: var(--bg-dark);
+      min-width: 0;
+      min-height: 0;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
 
     #arena {
       position: relative;
-      width: 320px;
-      height: 560px;
+      width: var(--arena-w);
+      height: var(--arena-h);
       background: var(--grass-bot);
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 0 40px rgba(0, 0, 0, .8), 0 0 0 2px rgba(255, 255, 255, .05);
       flex-shrink: 0;
+      touch-action: none;
     }
 
     /* Arena layers */
@@ -791,6 +811,7 @@
       transition: all .15s;
       position: relative;
       flex-shrink: 0;
+      touch-action: manipulation;
     }
 
     .card:hover:not(.disabled) {
@@ -873,6 +894,7 @@
       cursor: pointer;
       transition: all .15s;
       position: relative;
+      touch-action: manipulation;
     }
 
     .spell-btn:hover:not(.disabled) {
@@ -936,6 +958,7 @@
       z-index: 40;
       cursor: crosshair;
       display: none;
+      touch-action: none;
     }
 
     #placement-overlay.active {
@@ -1117,21 +1140,53 @@
       color: #cc88ff;
     }
 
-    @media(max-width:600px) {
+    /* ── Responsive breakpoints ── */
+    @media(max-width:760px) {
       #side-panel {
-        width: 150px
+        width: 140px;
+        padding: 10px 8px;
       }
     }
 
-    @media(max-width:480px) {
+    @media(max-width:600px) {
       #side-panel {
-        display: none
+        display: none;
       }
 
-      #arena {
-        width: 100vw;
-        height: 100vh;
-        border-radius: 0
+      #arena-wrap {
+        width: 100%;
+      }
+    }
+
+    /* Below this width the arena itself scales down to fit the viewport
+       while keeping its 320:560 aspect ratio (handled by JS via --arena-w/--arena-h) */
+    @media(max-width:480px), (max-height:620px) {
+      #card-hand {
+        height: 60px;
+        gap: 6px;
+      }
+
+      .card {
+        width: 48px;
+        height: 52px;
+      }
+
+      .card .card-emoji {
+        font-size: 19px;
+      }
+
+      #spell-panel {
+        width: 56px;
+        bottom: 64px;
+      }
+
+      .spell-btn {
+        width: 44px;
+        height: 46px;
+      }
+
+      #elixir-bar-wrap {
+        bottom: 64px;
       }
     }
   </style>
@@ -1244,19 +1299,40 @@
 
   <script>
     // ═══════════════════════════════════════════════════
-    //  CROWN CLASH  v2  –  Fixed cards + Spell panel
+    //  CROWN CLASH  v3  –  Fixed cards + Spell panel + Mobile support
     // ═══════════════════════════════════════════════════
 
-    // Stars
-    (function () {
+    const ARENA_BASE_W = 320, ARENA_BASE_H = 560;
+
+    // ── Background stars ──────────────────────────────
+    (function initStars() {
       const bg = document.getElementById('stars-bg');
+      const frag = document.createDocumentFragment();
       for (let i = 0; i < 80; i++) {
-        const s = document.createElement('div'); s.className = 'star';
-        const z = Math.random() * 2.5 + .5;
-        s.style.cssText = `width:${z}px;height:${z}px;top:${Math.random() * 100}%;left:${Math.random() * 100}%;--dur:${2 + Math.random() * 4}s;--delay:${Math.random() * 4}s`;
-        bg.appendChild(s);
+        const s = document.createElement('div');
+        s.className = 'star';
+        const size = Math.random() * 2.5 + 0.5;
+        s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random() * 100}%;left:${Math.random() * 100}%;--dur:${2 + Math.random() * 4}s;--delay:${Math.random() * 4}s`;
+        frag.appendChild(s);
       }
+      bg.appendChild(frag);
     })();
+
+    // ── Responsive arena scaling ──────────────────────
+    // Keeps the 320x560 aspect ratio but shrinks to fit the available
+    // space on small phones / short viewports / landscape orientation.
+    function fitArenaToViewport() {
+      const wrap = document.getElementById('arena-wrap');
+      if (!wrap) return;
+      const availW = wrap.clientWidth - 8;
+      const availH = wrap.clientHeight - 8;
+      const scale = Math.min(1, availW / ARENA_BASE_W, availH / ARENA_BASE_H);
+      const root = document.documentElement.style;
+      root.setProperty('--arena-w', Math.floor(ARENA_BASE_W * scale) + 'px');
+      root.setProperty('--arena-h', Math.floor(ARENA_BASE_H * scale) + 'px');
+    }
+    window.addEventListener('resize', fitArenaToViewport);
+    window.addEventListener('orientationchange', () => setTimeout(fitArenaToViewport, 150));
 
     // ── Card definitions (4 fixed troops) ─────────────
     const TROOP_CARDS = [
@@ -1282,6 +1358,16 @@
       { id: 'barbarian', name: 'Barbarian', emoji: '🪓', cost: 5, hp: 250, dmg: 90, spd: 1.1, range: 28, atkSpd: 900, type: 'melee', count: 2 },
     ];
 
+    // ── Tower layout ───────────────────────────────────
+    const TOWER_CFGS = [
+      { id: 'e-left', team: 'red', x: 75, y: 80, isKing: false, maxHp: 800 },
+      { id: 'e-king', team: 'red', x: 160, y: 48, isKing: true, maxHp: 1400 },
+      { id: 'e-right', team: 'red', x: 245, y: 80, isKing: false, maxHp: 800 },
+      { id: 'p-left', team: 'blue', x: 75, y: 480, isKing: false, maxHp: 800 },
+      { id: 'p-king', team: 'blue', x: 160, y: 512, isKing: true, maxHp: 1400 },
+      { id: 'p-right', team: 'blue', x: 245, y: 480, isKing: false, maxHp: 800 },
+    ];
+
     // ── Globals ────────────────────────────────────────
     let G = {};
     const arena = document.getElementById('arena');
@@ -1293,50 +1379,65 @@
     const cardHand = document.getElementById('card-hand');
     const spellPanel = document.getElementById('spell-panel');
     const battleLog = document.getElementById('battle-log');
-    const ARENA_W = 320, ARENA_H = 560;
 
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
-    function showMenu() { stopGame(); showScreen('menu'); }
 
-    // ── Tower layout ───────────────────────────────────
-    const TOWER_CFGS = [
-      { id: 'e-left', team: 'red', x: 75, y: 80, isKing: false, maxHp: 800 },
-      { id: 'e-king', team: 'red', x: 160, y: 48, isKing: true, maxHp: 1400 },
-      { id: 'e-right', team: 'red', x: 245, y: 80, isKing: false, maxHp: 800 },
-      { id: 'p-left', team: 'blue', x: 75, y: 480, isKing: false, maxHp: 800 },
-      { id: 'p-king', team: 'blue', x: 160, y: 512, isKing: true, maxHp: 1400 },
-      { id: 'p-right', team: 'blue', x: 245, y: 480, isKing: false, maxHp: 800 },
-    ];
+    function showMenu() {
+      stopGame();
+      showScreen('menu');
+    }
 
     function buildTowers() {
-      const t = {};
-      TOWER_CFGS.forEach(c => { t[c.id] = { ...c, hp: c.maxHp, destroyed: false, lastShot: 0, shotCooldown: 1800, dmg: c.isKing ? 90 : 65, range: c.isKing ? 105 : 88 }; });
-      return t;
+      const towers = {};
+      TOWER_CFGS.forEach(cfg => {
+        towers[cfg.id] = {
+          ...cfg,
+          hp: cfg.maxHp,
+          destroyed: false,
+          lastShot: 0,
+          shotCooldown: 1800,
+          dmg: cfg.isKing ? 90 : 65,
+          range: cfg.isKing ? 105 : 88,
+        };
+      });
+      return towers;
     }
 
     // ── Start / Stop ───────────────────────────────────
     function startGame() {
       stopGame();
       G = {
-        running: true, time: 180,
-        elixir: 5, elixirMax: 10, elixirRate: 1 / 2.8,
-        selectedCard: null, selectedSpell: null, selectedSlot: null, isSpellMode: false,
-        units: [], projectiles: [],
+        running: true,
+        time: 180,
+        elixir: 5,
+        elixirMax: 10,
+        elixirRate: 1 / 2.8,
+        selectedCard: null,
+        selectedSpell: null,
+        selectedSlot: null,
+        isSpellMode: false,
+        units: [],
+        projectiles: [],
         nextId: 1,
-        playerCrowns: 0, enemyCrowns: 0,
-        elixirSpent: 0, unitsDeployed: 0,
+        playerCrowns: 0,
+        enemyCrowns: 0,
+        elixirSpent: 0,
+        unitsDeployed: 0,
         // AI — noticeably weaker & slower
-        aiElixir: 3, aiElixirRate: 1 / 4.5,
-        aiTimer: 5 + Math.random() * 4,  // wait before first move
-        aiMaxUnits: 4,                  // cap AI units on field
-        lastTime: null, raf: null,
+        aiElixir: 3,
+        aiElixirRate: 1 / 4.5,
+        aiTimer: 5 + Math.random() * 4, // wait before first move
+        aiMaxUnits: 4, // cap AI units on field
+        lastTime: null,
+        raf: null,
         towers: buildTowers(),
         spellCooldowns: { fireball: 0, lightning: 0, freeze: 0 },
       };
       showScreen('game');
+      fitArenaToViewport();
       clearArena();
       buildTowerEls();
       buildCardHandUI();
@@ -1350,26 +1451,34 @@
     }
 
     function stopGame() {
-      if (G.raf) { cancelAnimationFrame(G.raf); G.raf = null; }
+      if (G.raf) {
+        cancelAnimationFrame(G.raf);
+        G.raf = null;
+      }
       if (G) G.running = false;
     }
 
     function clearArena() {
-      arena.querySelectorAll('.tower,.unit,.projectile,.dmg-num,.spawn-flash,.explosion,.freeze-ring,.lightning-strike').forEach(e => e.remove());
+      arena.querySelectorAll('.tower,.unit,.projectile,.dmg-num,.spawn-flash,.explosion,.freeze-ring,.lightning-strike')
+        .forEach(el => el.remove());
     }
 
     // ── Tower elements ─────────────────────────────────
     function buildTowerEls() {
       Object.values(G.towers).forEach(t => {
         const el = document.createElement('div');
-        el.className = `tower ${t.team}`; el.id = `tower-${t.id}`;
-        el.style.left = (t.x - 22) + 'px'; el.style.top = (t.y - 22) + 'px';
+        el.className = `tower ${t.team}`;
+        el.id = `tower-${t.id}`;
+        el.style.left = (t.x - 22) + 'px';
+        el.style.top = (t.y - 22) + 'px';
         el.innerHTML = `${t.isKing ? '👑' : (t.team === 'blue' ? '🏰' : '🏯')}<div class="tower-hp-bar"><div class="tower-hp-fill" id="thp-${t.id}" style="width:100%"></div></div>`;
         arena.appendChild(el);
       });
     }
+
     function updateTowerEl(t) {
-      const el = document.getElementById(`tower-${t.id}`); if (!el) return;
+      const el = document.getElementById(`tower-${t.id}`);
+      if (!el) return;
       const fill = document.getElementById(`thp-${t.id}`);
       if (fill) fill.style.width = Math.max(0, t.hp / t.maxHp * 100) + '%';
       if (t.destroyed) el.classList.add('destroyed');
@@ -1380,9 +1489,10 @@
       cardHand.innerHTML = '';
       TROOP_CARDS.forEach((card, i) => {
         const el = document.createElement('div');
-        el.className = 'card'; el.id = `card-slot-${i}`;
+        el.className = 'card';
+        el.id = `card-slot-${i}`;
         el.innerHTML = `<span class="card-cost">${card.cost}</span><span class="card-emoji">${card.emoji}</span><span class="card-name">${card.name}</span>`;
-        el.addEventListener('click', () => selectTroopCard(i));
+        el.addEventListener('pointerup', (e) => { e.preventDefault(); selectTroopCard(i); });
         cardHand.appendChild(el);
       });
     }
@@ -1390,10 +1500,11 @@
     function selectTroopCard(i) {
       const card = TROOP_CARDS[i];
       if (G.elixir < card.cost) { shake(); return; }
-      // Toggle off
       if (G.selectedSlot === i && !G.isSpellMode) { deselectAll(); return; }
       deselectAll();
-      G.selectedSlot = i; G.selectedCard = card; G.isSpellMode = false;
+      G.selectedSlot = i;
+      G.selectedCard = card;
+      G.isSpellMode = false;
       document.getElementById(`card-slot-${i}`).className = 'card selected';
       placementOverlay.classList.add('active');
       placementHint.textContent = 'Tap your half to place!';
@@ -1403,34 +1514,36 @@
 
     function updateCardStates() {
       TROOP_CARDS.forEach((card, i) => {
-        const el = document.getElementById(`card-slot-${i}`); if (!el) return;
-        const sel = G.selectedSlot === i && !G.isSpellMode;
-        const dis = G.elixir < card.cost;
-        el.className = `card${sel ? ' selected' : ''}${dis ? ' disabled' : ''}`;
+        const el = document.getElementById(`card-slot-${i}`);
+        if (!el) return;
+        const selected = G.selectedSlot === i && !G.isSpellMode;
+        const disabled = G.elixir < card.cost;
+        el.className = `card${selected ? ' selected' : ''}${disabled ? ' disabled' : ''}`;
       });
       SPELL_DEFS.forEach(sp => {
-        const el = document.getElementById(`spell-btn-${sp.id}`); if (!el) return;
-        const sel = G.isSpellMode && G.selectedSpell?.id === sp.id;
-        const dis = G.elixir < sp.cost || Date.now() < G.spellCooldowns[sp.id];
-        el.className = `spell-btn${sel ? ' selected' : ''}${dis ? ' disabled' : ''}`;
-        const ov = document.getElementById(`scd-${sp.id}`);
-        if (ov) {
-          const rem = Math.ceil((G.spellCooldowns[sp.id] - Date.now()) / 1000);
-          ov.style.display = rem > 0 ? 'flex' : 'none';
-          if (rem > 0) ov.textContent = rem + 's';
+        const el = document.getElementById(`spell-btn-${sp.id}`);
+        if (!el) return;
+        const selected = G.isSpellMode && G.selectedSpell?.id === sp.id;
+        const disabled = G.elixir < sp.cost || Date.now() < G.spellCooldowns[sp.id];
+        el.className = `spell-btn${selected ? ' selected' : ''}${disabled ? ' disabled' : ''}`;
+        const overlay = document.getElementById(`scd-${sp.id}`);
+        if (overlay) {
+          const remaining = Math.ceil((G.spellCooldowns[sp.id] - Date.now()) / 1000);
+          overlay.style.display = remaining > 0 ? 'flex' : 'none';
+          if (remaining > 0) overlay.textContent = remaining + 's';
         }
       });
     }
 
     // ── Spell panel ─────────────────────────────────────
     function buildSpellPanelUI() {
-      // Remove old spell btns
-      spellPanel.querySelectorAll('.spell-btn').forEach(e => e.remove());
+      spellPanel.querySelectorAll('.spell-btn').forEach(el => el.remove());
       SPELL_DEFS.forEach(sp => {
         const btn = document.createElement('div');
-        btn.className = 'spell-btn'; btn.id = `spell-btn-${sp.id}`;
+        btn.className = 'spell-btn';
+        btn.id = `spell-btn-${sp.id}`;
         btn.innerHTML = `<span class="s-cost">${sp.cost}</span><span class="s-emoji">${sp.emoji}</span><span class="s-name">${sp.name}</span><div class="spell-cooldown-overlay" id="scd-${sp.id}" style="display:none"></div>`;
-        btn.addEventListener('click', () => selectSpell(sp.id));
+        btn.addEventListener('pointerup', (e) => { e.preventDefault(); selectSpell(sp.id); });
         spellPanel.appendChild(btn);
       });
     }
@@ -1440,53 +1553,80 @@
       if (!sp) return;
       if (G.elixir < sp.cost) { shake(); return; }
       if (Date.now() < G.spellCooldowns[id]) { shake(); return; }
-      // Toggle
       if (G.isSpellMode && G.selectedSpell?.id === id) { deselectAll(); return; }
       deselectAll();
-      G.selectedSpell = sp; G.isSpellMode = true;
+      G.selectedSpell = sp;
+      G.isSpellMode = true;
       document.getElementById(`spell-btn-${id}`).className = 'spell-btn selected';
       placementOverlay.classList.add('active');
       placementHint.textContent = 'Tap anywhere to cast!';
       placementHint.classList.add('show');
-      // Purple cursor
-      const cur = document.createElement('div'); cur.className = 'placement-cursor spell'; placementOverlay.appendChild(cur);
+      const cursor = document.createElement('div');
+      cursor.className = 'placement-cursor spell';
+      placementOverlay.appendChild(cursor);
       updateCardStates();
     }
 
     function deselectAll() {
-      G.selectedSlot = null; G.selectedCard = null; G.selectedSpell = null; G.isSpellMode = false;
+      G.selectedSlot = null;
+      G.selectedCard = null;
+      G.selectedSpell = null;
+      G.isSpellMode = false;
       placementOverlay.classList.remove('active');
       placementHint.classList.remove('show');
-      const cur = placementOverlay.querySelector('.placement-cursor'); if (cur) cur.remove();
+      const cursor = placementOverlay.querySelector('.placement-cursor');
+      if (cursor) cursor.remove();
       updateCardStates();
     }
 
-    // ── Placement overlay events ───────────────────────
-    placementOverlay.addEventListener('click', function (e) {
+    // ── Placement overlay events (mouse + touch via Pointer Events) ──
+    placementOverlay.addEventListener('pointerdown', function (e) {
       const rect = arena.getBoundingClientRect();
-      const x = e.clientX - rect.left, y = e.clientY - rect.top;
+      const scaleX = ARENA_BASE_W / rect.width;
+      const scaleY = ARENA_BASE_H / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+
       if (G.isSpellMode && G.selectedSpell) {
         castSpell(G.selectedSpell, x, y, 'blue');
-        G.elixir -= G.selectedSpell.cost; G.elixirSpent += G.selectedSpell.cost;
-        G.spellCooldowns[G.selectedSpell.id] = Date.now() + 3000; // 3s cooldown
-        deselectAll(); updateElixir(); updateCardStates();
+        G.elixir -= G.selectedSpell.cost;
+        G.elixirSpent += G.selectedSpell.cost;
+        G.spellCooldowns[G.selectedSpell.id] = Date.now() + 3000;
+        deselectAll();
+        updateElixir();
+        updateCardStates();
       } else if (G.selectedCard) {
-        if (y < ARENA_H * 0.53) { addLog('Place in your half!', 'bad'); shake(); return; }
-        G.elixir -= G.selectedCard.cost; G.elixirSpent += G.selectedCard.cost;
-        spawnUnit(G.selectedCard, x, y, 'blue'); G.unitsDeployed++;
-        deselectAll(); updateElixir(); updateCardStates(); updateSidePanel();
+        if (y < ARENA_BASE_H * 0.53) { addLog('Place in your half!', 'bad'); shake(); return; }
+        G.elixir -= G.selectedCard.cost;
+        G.elixirSpent += G.selectedCard.cost;
+        spawnUnit(G.selectedCard, x, y, 'blue');
+        G.unitsDeployed++;
+        deselectAll();
+        updateElixir();
+        updateCardStates();
+        updateSidePanel();
       }
     });
 
-    placementOverlay.addEventListener('mousemove', function (e) {
+    placementOverlay.addEventListener('pointermove', function (e) {
       const rect = arena.getBoundingClientRect();
-      const x = e.clientX - rect.left, y = e.clientY - rect.top;
-      let cur = placementOverlay.querySelector('.placement-cursor');
-      if (!cur) { cur = document.createElement('div'); cur.className = `placement-cursor${G.isSpellMode ? ' spell' : ''}`; placementOverlay.appendChild(cur); }
-      cur.style.left = x + 'px'; cur.style.top = y + 'px';
+      const scaleX = ARENA_BASE_W / rect.width;
+      const scaleY = ARENA_BASE_H / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+      let cursor = placementOverlay.querySelector('.placement-cursor');
+      if (!cursor) {
+        cursor = document.createElement('div');
+        cursor.className = `placement-cursor${G.isSpellMode ? ' spell' : ''}`;
+        placementOverlay.appendChild(cursor);
+      }
+      cursor.style.left = (x / scaleX) + 'px';
+      cursor.style.top = (y / scaleY) + 'px';
     });
-    placementOverlay.addEventListener('mouseleave', function () {
-      const cur = placementOverlay.querySelector('.placement-cursor'); if (cur) cur.remove();
+
+    placementOverlay.addEventListener('pointerleave', function () {
+      const cursor = placementOverlay.querySelector('.placement-cursor');
+      if (cursor) cursor.remove();
     });
 
     function shake() {
@@ -1499,30 +1639,46 @@
     function spawnUnit(card, x, y, team) {
       const count = card.count || 1;
       for (let c = 0; c < count; c++) {
-        const ox = (c - (count - 1) / 2) * 18;
+        const offsetX = (c - (count - 1) / 2) * 18;
         const uid = G.nextId++;
         const unit = {
-          id: uid, cardId: card.id, emoji: card.emoji, team,
-          x: Math.max(14, Math.min(ARENA_W - 14, x + ox)),
-          y: Math.max(50, Math.min(ARENA_H - 80, y)),
-          hp: card.hp, maxHp: card.hp,
-          dmg: card.dmg, spd: card.spd * 25, range: card.range,
-          atkSpd: card.atkSpd, type: card.type,
-          target: card.target || 'any', aoe: card.aoe || 0,
-          lastAtk: 0, state: 'march',
-          frozen: false, frozenUntil: 0,
+          id: uid,
+          cardId: card.id,
+          emoji: card.emoji,
+          team,
+          x: Math.max(14, Math.min(ARENA_BASE_W - 14, x + offsetX)),
+          y: Math.max(50, Math.min(ARENA_BASE_H - 80, y)),
+          hp: card.hp,
+          maxHp: card.hp,
+          dmg: card.dmg,
+          spd: card.spd * 25,
+          range: card.range,
+          atkSpd: card.atkSpd,
+          type: card.type,
+          target: card.target || 'any',
+          aoe: card.aoe || 0,
+          lastAtk: 0,
+          state: 'march',
+          frozen: false,
+          frozenUntil: 0,
           el: null,
         };
         const el = document.createElement('div');
-        el.className = `unit ${team}`; el.id = `unit-${uid}`;
+        el.className = `unit ${team}`;
+        el.id = `unit-${uid}`;
         el.innerHTML = `${card.emoji}<div class="unit-hp-bar"><div class="unit-hp-fill" id="uhp-${uid}" style="width:100%"></div></div>`;
-        el.style.left = (unit.x - 14) + 'px'; el.style.top = (unit.y - 14) + 'px';
-        arena.appendChild(el); unit.el = el;
+        el.style.left = (unit.x - 14) + 'px';
+        el.style.top = (unit.y - 14) + 'px';
+        arena.appendChild(el);
+        unit.el = el;
         G.units.push(unit);
+
         const flash = document.createElement('div');
         flash.className = `spawn-flash ${team}`;
-        flash.style.left = (unit.x - 20) + 'px'; flash.style.top = (unit.y - 20) + 'px';
-        arena.appendChild(flash); setTimeout(() => flash.remove(), 500);
+        flash.style.left = (unit.x - 20) + 'px';
+        flash.style.top = (unit.y - 20) + 'px';
+        arena.appendChild(flash);
+        setTimeout(() => flash.remove(), 500);
       }
       addLog(`${team === 'blue' ? '🔵' : '🔴'} ${card.name} deployed!`, team === 'blue' ? 'good' : 'bad');
     }
@@ -1536,22 +1692,20 @@
         G.units.forEach(u => {
           if (u.team === team) return;
           const d = dist2d(u.x, u.y, x, y);
-          if (d < sp.aoe) dealDamage(u, sp.dmg * (1 - d / sp.aoe * .5));
+          if (d < sp.aoe) dealDamage(u, sp.dmg * (1 - d / sp.aoe * 0.5));
         });
         Object.values(G.towers).forEach(t => {
           if (t.team === team || t.destroyed) return;
-          if (dist2d(t.x, t.y, x, y) < sp.aoe) damageTower(t, sp.dmg * .55);
+          if (dist2d(t.x, t.y, x, y) < sp.aoe) damageTower(t, sp.dmg * 0.55);
         });
-        addLog(`🔥 Fireball cast!`, 'spell');
+        addLog('🔥 Fireball cast!', 'spell');
       }
 
       if (sp.id === 'lightning') {
-        // Hits closest enemy unit or tower, then chains
-        let targets = [];
-        // Collect enemy units
-        G.units.filter(u => u.team === enemyTeam).forEach(u => targets.push({ x: u.x, y: u.y, unit: u }));
-        // Sort by nearest to click
-        targets.sort((a, b) => dist2d(a.x, a.y, x, y) - dist2d(b.x, b.y, x, y));
+        const targets = G.units
+          .filter(u => u.team === enemyTeam)
+          .map(u => ({ x: u.x, y: u.y, unit: u }))
+          .sort((a, b) => dist2d(a.x, a.y, x, y) - dist2d(b.x, b.y, x, y));
         const hit = targets.slice(0, sp.chainCount);
         hit.forEach((h, i) => {
           const dmg = i === 0 ? sp.dmg : sp.dmg * sp.chainDmg;
@@ -1560,12 +1714,16 @@
             dealDamage(h.unit, dmg);
           }, i * 120);
         });
-        // Also zap a tower if fewer than chainCount units
         if (hit.length < sp.chainCount) {
           const t = getNearestEnemyTower(team);
-          if (t) { setTimeout(() => { showLightningStrike(x, y, t.x, t.y); damageTower(t, sp.dmg * .4); }, hit.length * 120); }
+          if (t) {
+            setTimeout(() => {
+              showLightningStrike(x, y, t.x, t.y);
+              damageTower(t, sp.dmg * 0.4);
+            }, hit.length * 120);
+          }
         }
-        addLog(`⚡ Lightning strikes!`, 'spell');
+        addLog('⚡ Lightning strikes!', 'spell');
       }
 
       if (sp.id === 'freeze') {
@@ -1574,47 +1732,66 @@
         G.units.forEach(u => {
           if (u.team === team) return;
           if (dist2d(u.x, u.y, x, y) < sp.aoe) {
-            u.frozen = true; u.frozenUntil = now + sp.freezeDur;
+            u.frozen = true;
+            u.frozenUntil = now + sp.freezeDur;
             if (u.el) u.el.classList.add('frozen');
           }
         });
-        addLog(`❄️ Freeze!`, 'spell');
+        addLog('❄️ Freeze!', 'spell');
       }
     }
 
     function spawnExplosion(x, y, aoe, color) {
-      const el = document.createElement('div'); el.className = 'explosion';
-      el.style.left = (x - aoe / 2) + 'px'; el.style.top = (y - aoe / 2) + 'px';
-      el.style.width = aoe + 'px'; el.style.height = aoe + 'px';
-      el.style.background = color; arena.appendChild(el);
+      const el = document.createElement('div');
+      el.className = 'explosion';
+      el.style.left = (x - aoe / 2) + 'px';
+      el.style.top = (y - aoe / 2) + 'px';
+      el.style.width = aoe + 'px';
+      el.style.height = aoe + 'px';
+      el.style.background = color;
+      arena.appendChild(el);
       setTimeout(() => el.remove(), 600);
     }
 
     function spawnFreezeRing(x, y, aoe) {
-      const el = document.createElement('div'); el.className = 'freeze-ring';
-      el.style.left = (x - aoe / 2) + 'px'; el.style.top = (y - aoe / 2) + 'px';
-      el.style.width = aoe + 'px'; el.style.height = aoe + 'px';
-      arena.appendChild(el); setTimeout(() => el.remove(), 700);
+      const el = document.createElement('div');
+      el.className = 'freeze-ring';
+      el.style.left = (x - aoe / 2) + 'px';
+      el.style.top = (y - aoe / 2) + 'px';
+      el.style.width = aoe + 'px';
+      el.style.height = aoe + 'px';
+      arena.appendChild(el);
+      setTimeout(() => el.remove(), 700);
     }
 
     function showLightningStrike(x1, y1, x2, y2) {
       const dx = x2 - x1, dy = y2 - y1;
       const len = Math.sqrt(dx * dx + dy * dy);
       const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-      const el = document.createElement('div'); el.className = 'lightning-strike';
-      el.style.left = x1 + 'px'; el.style.top = y1 + 'px';
-      el.style.height = len + 'px'; el.style.transformOrigin = 'top center';
+      const el = document.createElement('div');
+      el.className = 'lightning-strike';
+      el.style.left = x1 + 'px';
+      el.style.top = y1 + 'px';
+      el.style.height = len + 'px';
+      el.style.transformOrigin = 'top center';
       el.style.transform = `rotate(${angle + 90}deg)`;
-      arena.appendChild(el); setTimeout(() => el.remove(), 350);
+      arena.appendChild(el);
+      setTimeout(() => el.remove(), 350);
     }
 
     function getNearestEnemyTower(myTeam) {
       const order = myTeam === 'blue' ? ['e-left', 'e-right', 'e-king'] : ['p-left', 'p-right', 'p-king'];
-      for (const id of order) { const t = G.towers[id]; if (t && !t.destroyed) return t; }
+      for (const id of order) {
+        const t = G.towers[id];
+        if (t && !t.destroyed) return t;
+      }
       return null;
     }
 
-    function dist2d(ax, ay, bx, by) { const dx = ax - bx, dy = ay - by; return Math.sqrt(dx * dx + dy * dy); }
+    function dist2d(ax, ay, bx, by) {
+      const dx = ax - bx, dy = ay - by;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
 
     // ── Game loop ──────────────────────────────────────
     function gameLoop(ts) {
@@ -1625,8 +1802,8 @@
       G.time -= dt;
       if (G.time <= 0) { G.time = 0; endGame(null); return; }
 
-      const m = Math.floor(G.time / 60), s = Math.floor(G.time % 60);
-      timerEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+      const minutes = Math.floor(G.time / 60), seconds = Math.floor(G.time % 60);
+      timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
       timerEl.classList.toggle('urgent', G.time <= 30);
 
       G.elixir = Math.min(G.elixirMax, G.elixir + G.elixirRate * dt);
@@ -1655,33 +1832,34 @@
     function updateUnits(ts, dt) {
       const now = Date.now();
       const toRemove = [];
+
       G.units.forEach(unit => {
         if (unit.hp <= 0) { toRemove.push(unit); return; }
-        // Unfreeze
+
         if (unit.frozen && now >= unit.frozenUntil) {
           unit.frozen = false;
           if (unit.el) unit.el.classList.remove('frozen');
         }
-        if (unit.frozen) return; // frozen units don't move or attack
+        if (unit.frozen) return;
 
-        const tgt = findTarget(unit);
-        if (tgt) {
-          const dx = tgt.x - unit.x, dy = tgt.y - unit.y;
-          const d = dist2d(unit.x, unit.y, tgt.x, tgt.y);
+        const target = findTarget(unit);
+        if (target) {
+          const dx = target.x - unit.x, dy = target.y - unit.y;
+          const d = dist2d(unit.x, unit.y, target.x, target.y);
           if (d <= unit.range) {
             unit.state = 'attack';
             if (ts - unit.lastAtk >= unit.atkSpd) {
               unit.lastAtk = ts;
-              if (tgt.maxHp !== undefined && tgt.isKing !== undefined) {
-                damageTower(tgt, unit.dmg);
-                shootProjectile(unit, tgt);
+              if (target.maxHp !== undefined && target.isKing !== undefined) {
+                damageTower(target, unit.dmg);
+                shootProjectile(unit, target);
               } else {
-                dealDamage(tgt, unit.dmg);
-                if (unit.type === 'ranged' || unit.type === 'splash') shootProjectile(unit, tgt);
+                dealDamage(target, unit.dmg);
+                if (unit.type === 'ranged' || unit.type === 'splash') shootProjectile(unit, target);
                 if (unit.type === 'splash') {
                   G.units.forEach(u => {
-                    if (u.team === unit.team || u.id === tgt.id) return;
-                    if (dist2d(u.x, u.y, tgt.x, tgt.y) < (unit.aoe || 44)) dealDamage(u, unit.dmg * .6);
+                    if (u.team === unit.team || u.id === target.id) return;
+                    if (dist2d(u.x, u.y, target.x, target.y) < (unit.aoe || 44)) dealDamage(u, unit.dmg * 0.6);
                   });
                 }
               }
@@ -1689,17 +1867,18 @@
           } else {
             unit.state = 'march';
             const spd = unit.spd * dt;
-            unit.x += dx / d * spd; unit.y += dy / d * spd;
+            unit.x += dx / d * spd;
+            unit.y += dy / d * spd;
           }
         } else {
           unit.state = 'march';
-          const ty = unit.team === 'blue' ? 55 : ARENA_H - 55;
-          const dy2 = ty - unit.y;
-          if (Math.abs(dy2) > 5) unit.y += Math.sign(dy2) * unit.spd * dt;
+          const targetY = unit.team === 'blue' ? 55 : ARENA_BASE_H - 55;
+          const dy = targetY - unit.y;
+          if (Math.abs(dy) > 5) unit.y += Math.sign(dy) * unit.spd * dt;
         }
 
-        unit.x = Math.max(14, Math.min(ARENA_W - 14, unit.x));
-        unit.y = Math.max(50, Math.min(ARENA_H - 80, unit.y));
+        unit.x = Math.max(14, Math.min(ARENA_BASE_W - 14, unit.x));
+        unit.y = Math.max(50, Math.min(ARENA_BASE_H - 80, unit.y));
 
         if (unit.el) {
           unit.el.style.left = (unit.x - 14) + 'px';
@@ -1708,23 +1887,25 @@
           if (fill) fill.style.width = Math.max(0, unit.hp / unit.maxHp * 100) + '%';
         }
       });
+
       toRemove.forEach(u => removeUnit(u));
     }
 
     function findTarget(unit) {
-      const et = unit.team === 'blue' ? 'red' : 'blue';
+      const enemyTeam = unit.team === 'blue' ? 'red' : 'blue';
       if (unit.target !== 'tower') {
-        let best = null, bd = Infinity;
+        let best = null, bestDist = Infinity;
         G.units.forEach(u => {
-          if (u.team !== et || u.hp <= 0) return;
+          if (u.team !== enemyTeam || u.hp <= 0) return;
           const d = dist2d(u.x, u.y, unit.x, unit.y);
-          if (d < bd) { bd = d; best = u; }
+          if (d < bestDist) { bestDist = d; best = u; }
         });
-        if (best && bd < 130) return best;
+        if (best && bestDist < 130) return best;
       }
       const order = unit.team === 'blue' ? ['e-left', 'e-right', 'e-king'] : ['p-left', 'p-right', 'p-king'];
       for (const id of order) {
-        const t = G.towers[id]; if (!t || t.destroyed) continue;
+        const t = G.towers[id];
+        if (!t || t.destroyed) continue;
         if (t.isKing) {
           const sidesDead = order.filter(i => !G.towers[i]?.isKing).every(i => G.towers[i]?.destroyed);
           if (!sidesDead) continue;
@@ -1736,30 +1917,36 @@
 
     function dealDamage(unit, dmg) {
       if (!unit || unit.hp <= 0) return;
-      unit.hp -= dmg; showDmgNum(unit.x, unit.y, Math.round(dmg), unit.team);
+      unit.hp -= dmg;
+      showDmgNum(unit.x, unit.y, Math.round(dmg), unit.team);
       if (unit.hp <= 0) unit.hp = 0;
     }
 
     function removeUnit(unit) {
-      const i = G.units.indexOf(unit); if (i >= 0) G.units.splice(i, 1);
+      const i = G.units.indexOf(unit);
+      if (i >= 0) G.units.splice(i, 1);
       if (unit.el) unit.el.remove();
     }
 
     function damageTower(tower, dmg) {
       if (!tower || tower.destroyed) return;
-      tower.hp -= dmg; showDmgNum(tower.x, tower.y, Math.round(dmg), tower.team);
+      tower.hp -= dmg;
+      showDmgNum(tower.x, tower.y, Math.round(dmg), tower.team);
       updateTowerEl(tower);
       if (tower.hp <= 0) { tower.hp = 0; destroyTower(tower); }
     }
 
     function destroyTower(tower) {
-      tower.destroyed = true; updateTowerEl(tower);
+      tower.destroyed = true;
+      updateTowerEl(tower);
       addLog(tower.team === 'red' ? '👑 Crown!' : '💀 Tower lost!', tower.team === 'red' ? 'gold' : 'bad');
       if (tower.team === 'red') {
-        G.playerCrowns++; updateCrowns();
+        G.playerCrowns++;
+        updateCrowns();
         if (G.playerCrowns >= 3) { endGame('blue'); return; }
       } else {
-        G.enemyCrowns++; updateCrowns();
+        G.enemyCrowns++;
+        updateCrowns();
         if (G.enemyCrowns >= 3) { endGame('red'); return; }
       }
     }
@@ -1769,75 +1956,103 @@
       Object.values(G.towers).forEach(tower => {
         if (tower.destroyed) return;
         if (ts - tower.lastShot < tower.shotCooldown) return;
-        const et = tower.team === 'blue' ? 'red' : 'blue';
-        let tgt = null, bd = tower.range;
+        const enemyTeam = tower.team === 'blue' ? 'red' : 'blue';
+        let target = null, bestDist = tower.range;
         G.units.forEach(u => {
-          if (u.team !== et) return;
+          if (u.team !== enemyTeam) return;
           const d = dist2d(u.x, u.y, tower.x, tower.y);
-          if (d < bd) { bd = d; tgt = u; }
+          if (d < bestDist) { bestDist = d; target = u; }
         });
-        if (tgt) { tower.lastShot = ts; dealDamage(tgt, tower.dmg); shootProjectile({ x: tower.x, y: tower.y, type: 'ranged' }, tgt); }
+        if (target) {
+          tower.lastShot = ts;
+          dealDamage(target, tower.dmg);
+          shootProjectile({ x: tower.x, y: tower.y, type: 'ranged' }, target);
+        }
       });
     }
 
     // ── Projectiles ────────────────────────────────────
     function shootProjectile(from, to) {
       const proj = {
-        id: G.nextId++, x: from.x, y: from.y, tx: to.x, ty: to.y, spd: 280,
-        type: from.type === 'ranged' ? 'arrow' : from.type === 'splash' ? 'fireball' : 'arrow', done: false
+        id: G.nextId++,
+        x: from.x,
+        y: from.y,
+        tx: to.x,
+        ty: to.y,
+        spd: 280,
+        type: from.type === 'ranged' ? 'arrow' : from.type === 'splash' ? 'fireball' : 'arrow',
+        done: false,
       };
-      const el = document.createElement('div'); el.className = `projectile ${proj.type}`;
-      el.style.left = proj.x + 'px'; el.style.top = proj.y + 'px';
-      arena.appendChild(el); proj.el = el; G.projectiles.push(proj);
+      const el = document.createElement('div');
+      el.className = `projectile ${proj.type}`;
+      el.style.left = proj.x + 'px';
+      el.style.top = proj.y + 'px';
+      arena.appendChild(el);
+      proj.el = el;
+      G.projectiles.push(proj);
     }
 
     function updateProjectiles(dt) {
-      const tr = [];
+      const toRemove = [];
       G.projectiles.forEach(p => {
         const dx = p.tx - p.x, dy = p.ty - p.y, d = dist2d(p.x, p.y, p.tx, p.ty);
-        if (d < 5) { tr.push(p); return; }
+        if (d < 5) { toRemove.push(p); return; }
         const spd = p.spd * dt;
-        p.x += dx / d * Math.min(spd, d); p.y += dy / d * Math.min(spd, d);
+        p.x += dx / d * Math.min(spd, d);
+        p.y += dy / d * Math.min(spd, d);
         if (p.el) { p.el.style.left = p.x + 'px'; p.el.style.top = p.y + 'px'; }
       });
-      tr.forEach(p => { if (p.el) p.el.remove(); G.projectiles.splice(G.projectiles.indexOf(p), 1); });
+      toRemove.forEach(p => {
+        if (p.el) p.el.remove();
+        G.projectiles.splice(G.projectiles.indexOf(p), 1);
+      });
     }
 
     // ── Damage floaters ────────────────────────────────
     function showDmgNum(x, y, dmg, team) {
-      const el = document.createElement('div'); el.className = 'dmg-num';
+      const el = document.createElement('div');
+      el.className = 'dmg-num';
       el.textContent = dmg;
       el.style.left = (x - 10 + Math.random() * 10 - 5) + 'px';
       el.style.top = (y - 10) + 'px';
       el.style.color = team === 'blue' ? '#ff6655' : '#6ab8ff';
-      arena.appendChild(el); setTimeout(() => el.remove(), 900);
+      arena.appendChild(el);
+      setTimeout(() => el.remove(), 900);
     }
 
     // ── Crowns ─────────────────────────────────────────
     function updateCrowns() {
-      ['player-crowns', 'enemy-crowns'].forEach((id, ti) => {
-        const row = document.getElementById(id); row.innerHTML = '';
-        const count = ti === 0 ? G.playerCrowns : G.enemyCrowns;
+      ['player-crowns', 'enemy-crowns'].forEach((id, teamIdx) => {
+        const row = document.getElementById(id);
+        row.innerHTML = '';
+        const count = teamIdx === 0 ? G.playerCrowns : G.enemyCrowns;
         for (let i = 0; i < 3; i++) {
-          const s = document.createElement('span');
-          s.className = `crown-icon${i < count ? ' earned' : ''}`;
-          s.textContent = '👑'; row.appendChild(s);
+          const span = document.createElement('span');
+          span.className = `crown-icon${i < count ? ' earned' : ''}`;
+          span.textContent = '👑';
+          row.appendChild(span);
         }
       });
     }
 
     // ── Side panel ─────────────────────────────────────
     function buildTowerStatusPanel() {
-      const wrap = document.getElementById('tower-status-wrap'); wrap.innerHTML = '';
+      const wrap = document.getElementById('tower-status-wrap');
+      wrap.innerHTML = '';
       const order = ['p-king', 'p-left', 'p-right', 'e-king', 'e-left', 'e-right'];
-      const labels = { 'p-king': '👑 King', 'p-left': '🏰 Left', 'p-right': '🏰 Right', 'e-king': '👑 E.King', 'e-left': '🏯 E.Left', 'e-right': '🏯 E.Right' };
+      const labels = {
+        'p-king': '👑 King', 'p-left': '🏰 Left', 'p-right': '🏰 Right',
+        'e-king': '👑 E.King', 'e-left': '🏯 E.Left', 'e-right': '🏯 E.Right',
+      };
       order.forEach(id => {
         const t = G.towers[id];
-        const row = document.createElement('div'); row.className = 'ts-row';
+        const row = document.createElement('div');
+        row.className = 'ts-row';
         row.innerHTML = `<span style="font-size:11px;color:var(--text-dim);min-width:60px">${labels[id]}</span><div class="ts-bar-wrap"><div class="ts-bar ${t.team}" id="spthp-${id}" style="width:100%"></div></div><span class="ts-label" id="sptxt-${id}">${t.hp}</span>`;
         wrap.appendChild(row);
       });
     }
+
     function updateTowerStatusPanel() {
       ['p-king', 'p-left', 'p-right', 'e-king', 'e-left', 'e-right'].forEach(id => {
         const t = G.towers[id];
@@ -1847,47 +2062,53 @@
         if (txt) txt.textContent = t.destroyed ? '💀' : Math.max(0, Math.round(t.hp));
       });
     }
+
     function updateSidePanel() {
-      const sc = document.getElementById('sp-crowns'); if (sc) sc.textContent = `${G.playerCrowns} – ${G.enemyCrowns}`;
-      const su = document.getElementById('sp-units');
-      if (su) { const p = G.units.filter(u => u.team === 'blue').length, a = G.units.filter(u => u.team === 'red').length; su.textContent = `${p} / ${a}`; }
-      const se = document.getElementById('sp-elixir'); if (se) se.textContent = G.elixirSpent;
+      const crownsEl = document.getElementById('sp-crowns');
+      if (crownsEl) crownsEl.textContent = `${G.playerCrowns} – ${G.enemyCrowns}`;
+      const unitsEl = document.getElementById('sp-units');
+      if (unitsEl) {
+        const playerUnits = G.units.filter(u => u.team === 'blue').length;
+        const enemyUnits = G.units.filter(u => u.team === 'red').length;
+        unitsEl.textContent = `${playerUnits} / ${enemyUnits}`;
+      }
+      const elixirEl = document.getElementById('sp-elixir');
+      if (elixirEl) elixirEl.textContent = G.elixirSpent;
     }
 
     // ── Battle log ─────────────────────────────────────
     function addLog(msg, cls = '') {
-      const el = document.createElement('div'); el.className = `log-entry ${cls}`;
-      el.textContent = msg; battleLog.prepend(el);
+      const el = document.createElement('div');
+      el.className = `log-entry ${cls}`;
+      el.textContent = msg;
+      battleLog.prepend(el);
       while (battleLog.children.length > 20) battleLog.lastChild.remove();
     }
 
     // ── AI (nerfed) ────────────────────────────────────
     function aiTick() {
       const aliveAI = G.units.filter(u => u.team === 'red').length;
-      // Cap AI units on field — prevents swarm overwhelming
       if (aliveAI >= G.aiMaxUnits) { G.aiTimer = 2 + Math.random() * 2; return; }
 
-      // Only deploy if has enough elixir for chosen card
       const affordable = AI_CARDS.filter(c => G.aiElixir >= c.cost);
       if (!affordable.length) { G.aiTimer = 1.5 + Math.random() * 2.5; return; }
 
       // Weighted random: prefer cheaper cards (less aggression)
-      // Sort by cost ascending, pick from first half more often
       const sorted = [...affordable].sort((a, b) => a.cost - b.cost);
-      const idx = Math.random() < 0.65 ? Math.floor(Math.random() * Math.ceil(sorted.length / 2)) : Math.floor(Math.random() * sorted.length);
+      const idx = Math.random() < 0.65
+        ? Math.floor(Math.random() * Math.ceil(sorted.length / 2))
+        : Math.floor(Math.random() * sorted.length);
       const card = sorted[idx];
 
       G.aiElixir -= card.cost;
 
-      // Lane choice: slightly biased toward lanes where player has fewer units
       const laneXs = [70, 160, 250];
       const laneX = laneXs[Math.floor(Math.random() * laneXs.length)];
       const y = 75 + Math.random() * 175;
       spawnUnit(card, laneX + (Math.random() * 24 - 12), y, 'red');
 
-      // AI base delay: 5–9s (much slower than before)
+      // AI base delay: 5–9s, slightly faster in the last 30s
       G.aiTimer = 5 + Math.random() * 4;
-      // Slight speed-up in last 30s (still slower than original)
       if (G.time < 30) G.aiTimer *= 0.65;
     }
 
@@ -1899,30 +2120,21 @@
         else if (G.enemyCrowns > G.playerCrowns) winner = 'red';
         else winner = 'draw';
       }
-      let title, sub;
-      if (winner === 'blue') { title = '🏆 Victory!'; sub = 'The enemy has been crushed'; }
-      else if (winner === 'red') { title = '💀 Defeat!'; sub = 'Your kingdom fell'; }
-      else { title = '🤝 Draw!'; sub = 'An equal battle ends'; }
-      const gt = document.getElementById('go-title');
-      gt.textContent = title; gt.className = `go-title ${winner === 'blue' ? 'win' : 'lose'}`;
-      document.getElementById('go-sub').textContent = sub;
+
+      let title, subtitle;
+      if (winner === 'blue') { title = '🏆 Victory!'; subtitle = 'The enemy has been crushed'; }
+      else if (winner === 'red') { title = '💀 Defeat!'; subtitle = 'Your kingdom fell'; }
+      else { title = '🤝 Draw!'; subtitle = 'An equal battle ends'; }
+
+      const titleEl = document.getElementById('go-title');
+      titleEl.textContent = title;
+      titleEl.className = `go-title ${winner === 'blue' ? 'win' : 'lose'}`;
+      document.getElementById('go-sub').textContent = subtitle;
       document.getElementById('go-crowns').textContent = `${G.playerCrowns} – ${G.enemyCrowns}`;
       document.getElementById('go-elixir').textContent = G.elixirSpent;
       document.getElementById('go-units').textContent = G.unitsDeployed;
       setTimeout(() => showScreen('gameover'), 800);
     }
-  </script>
-  <script>
-    // Fire popunder on first user click (game interaction)
-    (function () {
-      var fired = false;
-      document.addEventListener('click', function handler() {
-        if (!fired) {
-          fired = true;
-          document.removeEventListener('click', handler);
-        }
-      });
-    })();
   </script>
 </body>
 
