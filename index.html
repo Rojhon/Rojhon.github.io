@@ -37,72 +37,6 @@
             margin-top: 10px;
         }
 
-        /* ── In-page banner ad strip ── */
-        .ad-strip {
-            margin: 20px 30px 0;
-            background: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            min-height: 100px;
-            position: relative;
-        }
-
-        .ad-strip .ad-label {
-            position: absolute;
-            top: 6px;
-            left: 12px;
-            font-size: 9px;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .ad-strip .ad-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top: 10px;
-        }
-
-        .ad-strip .ad-close {
-            position: absolute;
-            top: 6px;
-            right: 8px;
-            background: none;
-            border: none;
-            color: #64748b;
-            cursor: pointer;
-            font-size: 16px;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .ad-strip .ad-close:hover {
-            background: #1e293b;
-            color: #cbd5e1;
-        }
-
-        /* Fake ad placeholder shown while real ad loads */
-        .ad-placeholder {
-            width: 100%;
-            max-width: 728px;
-            height: 90px;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #334155;
-            font-size: 13px;
-            border: 1px dashed #334155;
-        }
-
         .search-container {
             padding: 20px 30px;
         }
@@ -137,6 +71,36 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, .4);
         }
 
+        /* ── Coming soon card state ── */
+        .card.coming-soon {
+            opacity: .75;
+        }
+
+        .card.coming-soon:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .card.coming-soon .banner {
+            background: linear-gradient(135deg, #334155, #1e293b);
+            filter: grayscale(.4);
+        }
+
+        .soon-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(15, 23, 42, .85);
+            color: #fbbf24;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: .5px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid #fbbf24;
+            text-transform: uppercase;
+        }
+
         .banner {
             height: 160px;
             display: flex;
@@ -144,6 +108,7 @@
             justify-content: center;
             font-size: 70px;
             background: linear-gradient(135deg, #2563eb, #7c3aed);
+            position: relative;
         }
 
         .content {
@@ -194,14 +159,23 @@
             z-index: 2;
         }
 
-        .play-btn.ready {
-            background: #2563eb;
-        }
-
         .play-btn .btn-text {
             position: relative;
             z-index: 1;
             pointer-events: none;
+        }
+
+        /* ── Disabled button (game not released yet) ── */
+        .play-btn.disabled {
+            background: #1e293b;
+            color: #64748b;
+            cursor: not-allowed;
+            border: 1px solid #334155;
+            pointer-events: none;
+        }
+
+        .play-btn.disabled:hover {
+            background: #1e293b;
         }
 
         .about {
@@ -337,6 +311,7 @@
             </div>
         </div>
 
+        <!-- Released -->
         <div class="card">
             <div class="banner">🧟</div>
             <div class="content">
@@ -345,6 +320,21 @@
                 <button class="play-btn" id="btn-8" data-game="games/zombie.html">
                     <a class="real-link" href="#" tabindex="-1"></a>
                     <span class="btn-text">▶ Play Now</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Example of an unreleased game using the disabled button design -->
+        <div class="card coming-soon">
+            <div class="banner">
+                🐹
+                <span class="soon-tag">Coming Soon</span>
+            </div>
+            <div class="content">
+                <h2>Whack-a-Mole</h2>
+                <p>Whack as many moles as you can before time runs out.</p>
+                <button class="play-btn disabled" id="btn-9" disabled>
+                    <span class="btn-text">🔒 Coming Soon</span>
                 </button>
             </div>
         </div>
@@ -376,29 +366,18 @@
         //                2nd click = navigate to game ──────────────────────────
         const clickedButtons = new WeakSet();
 
-        document.querySelectorAll(".play-btn").forEach(btn => {
+        document.querySelectorAll(".play-btn:not(.disabled)").forEach(btn => {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
                 const gameUrl = this.dataset.game;
-                const textSpan = this.querySelector(".btn-text");
 
                 if (!clickedButtons.has(this)) {
                     // ── FIRST CLICK ──
                     // Real click event → ad network popunder fires automatically
                     clickedButtons.add(this);
 
-                    // Update button UI
-                    this.classList.add("ready");
-                    textSpan.textContent = "▶ Click Again to Play";
-
                     // Auto-reset after 20 seconds
-                    setTimeout(() => {
-                        if (clickedButtons.has(btn)) {
-                            clickedButtons.delete(btn);
-                            btn.classList.remove("ready");
-                            textSpan.textContent = "▶ Play Now";
-                        }
-                    }, 20000);
+                    setTimeout(() => clickedButtons.delete(this), 20000);
 
                 } else {
                     // ── SECOND CLICK ── go to game
@@ -406,21 +385,6 @@
                     window.location.href = gameUrl;
                 }
             });
-        });
-
-        // ── Banner ad click also fires the popunder ──────────────────────
-        document.getElementById("adClickZone").addEventListener("click", function (e) {
-            e.preventDefault();
-            // Popunder fires on this real click automatically via the ad script
-            // Briefly animate the banner to show it worked
-            this.style.background = "linear-gradient(135deg,#1e4a2f,#1a3a1a)";
-            this.style.color = "#86efac";
-            this.textContent = "✓ Thanks for supporting!";
-            setTimeout(() => {
-                this.style.background = "";
-                this.style.color = "#93c5fd";
-                this.innerHTML = "🎮 &nbsp; Support free games — click here";
-            }, 2000);
         });
     </script>
 
