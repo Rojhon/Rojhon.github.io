@@ -187,7 +187,7 @@
 
         <div class="controls">
             <button class="btn hint" onclick="giveHint()">💡 Hint</button>
-            <button class="btn restart" onclick="startGame()">🔄 New Game</button>
+            <button class="btn restart" id="newGameBtn" onclick="handleNewGameClick()">🔄 New Game</button>
         </div>
 
     </div>
@@ -281,6 +281,31 @@
         const scoreElement = document.getElementById("score");
         const message = document.getElementById("message");
         const hangman = document.getElementById("hangman");
+        const newGameBtn = document.getElementById("newGameBtn");
+
+        // ---- Smartlink ad mechanic for New Game button ----
+        const SMARTLINK_URL = "https://www.effectivecpmnetwork.com/zxkq3vh8v5?key=b696ec5fd6d8106e8a3ac214bbabe577";
+        const PENDING_KEY = "hangman_pending_newgame";
+
+        function handleNewGameClick() {
+
+            // If we're already in the "returning from ad" state, just start the game.
+            if (sessionStorage.getItem(PENDING_KEY) === "1") {
+                sessionStorage.removeItem(PENDING_KEY);
+                newGameBtn.textContent = "🔄 New Game";
+                startGame();
+                return;
+            }
+
+            // First click: mark pending, redirect to smartlink, game starts on return.
+            sessionStorage.setItem(PENDING_KEY, "1");
+            window.location.href = SMARTLINK_URL;
+        }
+
+        // On load, if returning via back button from the ad, restore button state.
+        if (sessionStorage.getItem(PENDING_KEY) === "1") {
+            newGameBtn.textContent = "▶️ Click Again to Play!";
+        }
 
         function startGame() {
 
@@ -471,18 +496,6 @@
 
     </script>
 
-    <script>
-        // Fire popunder on first user click (game interaction)
-        (function () {
-            var fired = false;
-            document.addEventListener('click', function handler() {
-                if (!fired) {
-                    fired = true;
-                    document.removeEventListener('click', handler);
-                }
-            });
-        })();
-    </script>
 </body>
 
 </html>
