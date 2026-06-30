@@ -1,257 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Whack-a-Mole</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack-a-Mole</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#4facfe,#00f2fe);
-}
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
 
-.container{
-    width:90%;
-    max-width:700px;
-    background:white;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-    text-align:center;
-}
+        .container {
+            width: 90%;
+            max-width: 700px;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+            text-align: center;
+        }
 
-h1{
-    margin-bottom:20px;
-}
+        h1 {
+            margin-bottom: 20px;
+        }
 
-.stats{
-    display:flex;
-    justify-content:space-around;
-    margin-bottom:20px;
-    font-size:1.2rem;
-    font-weight:bold;
-}
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
 
-button{
-    border:none;
-    background:#1677ff;
-    color:white;
-    padding:12px 25px;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:1rem;
-    margin-bottom:20px;
-    transition:.3s;
-}
+        button {
+            border: none;
+            background: #1677ff;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: .3s;
+        }
 
-button:hover{
-    background:#0056d6;
-}
+        button:hover {
+            background: #0056d6;
+        }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
 
-.hole{
-    position:relative;
-    width:100%;
-    aspect-ratio:1;
-    background:#654321;
-    border-radius:50%;
-    overflow:hidden;
-    cursor:pointer;
-}
+        .hole {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            background: #654321;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+        }
 
-.mole{
-    position:absolute;
-    width:70%;
-    height:70%;
-    background:#8b5e3c;
-    border-radius:50%;
-    left:15%;
-    bottom:-100%;
-    transition:.25s;
-}
+        .mole {
+            position: absolute;
+            width: 70%;
+            height: 70%;
+            background: #8b5e3c;
+            border-radius: 50%;
+            left: 15%;
+            bottom: -100%;
+            transition: .25s;
+        }
 
-.mole::before{
-    content:"";
-    position:absolute;
-    width:15px;
-    height:15px;
-    background:black;
-    border-radius:50%;
-    top:25%;
-    left:25%;
-    box-shadow:35px 0 black;
-}
+        .mole::before {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: black;
+            border-radius: 50%;
+            top: 25%;
+            left: 25%;
+            box-shadow: 35px 0 black;
+        }
 
-.mole::after{
-    content:"";
-    position:absolute;
-    width:30px;
-    height:12px;
-    border-bottom:3px solid black;
-    left:50%;
-    transform:translateX(-50%);
-    top:55%;
-}
+        .mole::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 12px;
+            border-bottom: 3px solid black;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 55%;
+        }
 
-.hole.active .mole{
-    bottom:15%;
-}
+        .hole.active .mole {
+            bottom: 15%;
+        }
 
-.game-over{
-    margin-top:15px;
-    font-size:1.3rem;
-    font-weight:bold;
-    color:#e63946;
-}
+        .game-over {
+            margin-top: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e63946;
+        }
 
-@media(max-width:600px){
-    .stats{
-        flex-direction:column;
-        gap:10px;
-    }
-}
-</style>
-    <script type="text/javascript" data-cfasync="false">
-    /*<![CDATA[/* */
-    (function(){var o=window,d="cdd460bd6a700a2b233fdb056a1b7f41",u=[["siteId",976-32+370+9+5308814],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],w=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZmV4Ti9tanNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdlBkcFMvclhLdHBiL29yZXNwb25zaXZlLW5hdi5taW4uY3Nz"],b=-1,p,z,y=function(){clearTimeout(z);b++;if(w[b]&&!(1808207535000<(new Date).getTime()&&1<b)){p=o.document.createElement("script");p.type="text/javascript";p.async=!0;var r=o.document.getElementsByTagName("script")[0];p.src="https://"+atob(w[b]);p.crossOrigin="anonymous";p.onerror=y;p.onload=function(){clearTimeout(z);o[d.slice(0,16)+d.slice(0,16)]||y()};z=setTimeout(y,5E3);r.parentNode.insertBefore(p,r)}};if(!o[d]){try{Object.freeze(o[d]=u)}catch(e){}y()}})();
-    /*]]>/* */
-    </script>
+        @media(max-width:600px) {
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+    <script type="text/javascript" data-cfasync="false" src="../scripts/ad-network.js"></script>
 </head>
+
 <body>
 
-<div class="container">
-    <h1>🐹 Whack-a-Mole</h1>
+    <div class="container">
+        <h1>🐹 Whack-a-Mole</h1>
 
-    <div class="stats">
-        <div>Score: <span id="score">0</span></div>
-        <div>Time: <span id="time">30</span>s</div>
+        <div class="stats">
+            <div>Score: <span id="score">0</span></div>
+            <div>Time: <span id="time">30</span>s</div>
+        </div>
+
+        <button id="startBtn">Start Game</button>
+
+        <div class="grid" id="grid"></div>
+
+        <div class="game-over" id="message"></div>
     </div>
 
-    <button id="startBtn">Start Game</button>
+    <script>
+        const grid = document.getElementById("grid");
+        const scoreEl = document.getElementById("score");
+        const timeEl = document.getElementById("time");
+        const message = document.getElementById("message");
+        const startBtn = document.getElementById("startBtn");
 
-    <div class="grid" id="grid"></div>
+        let score = 0;
+        let timeLeft = 30;
+        let currentHole = null;
+        let gameRunning = false;
+        let moleInterval;
+        let timerInterval;
 
-    <div class="game-over" id="message"></div>
-</div>
+        for (let i = 0; i < 9; i++) {
+            const hole = document.createElement("div");
+            hole.classList.add("hole");
 
-<script>
-const grid = document.getElementById("grid");
-const scoreEl = document.getElementById("score");
-const timeEl = document.getElementById("time");
-const message = document.getElementById("message");
-const startBtn = document.getElementById("startBtn");
+            const mole = document.createElement("div");
+            mole.classList.add("mole");
 
-let score = 0;
-let timeLeft = 30;
-let currentHole = null;
-let gameRunning = false;
-let moleInterval;
-let timerInterval;
+            hole.appendChild(mole);
 
-for(let i=0;i<9;i++){
-    const hole = document.createElement("div");
-    hole.classList.add("hole");
+            hole.addEventListener("click", () => {
+                if (gameRunning && hole === currentHole) {
+                    score++;
+                    scoreEl.textContent = score;
+                    hole.classList.remove("active");
+                    currentHole = null;
+                }
+            });
 
-    const mole = document.createElement("div");
-    mole.classList.add("mole");
+            grid.appendChild(hole);
+        }
 
-    hole.appendChild(mole);
+        const holes = document.querySelectorAll(".hole");
 
-    hole.addEventListener("click",()=>{
-        if(gameRunning && hole === currentHole){
-            score++;
+        function randomHole() {
+            holes.forEach(h => h.classList.remove("active"));
+
+            const random = Math.floor(Math.random() * holes.length);
+            currentHole = holes[random];
+
+            currentHole.classList.add("active");
+
+            setTimeout(() => {
+                currentHole?.classList.remove("active");
+            }, 700);
+        }
+
+        function startGame() {
+
+            clearInterval(moleInterval);
+            clearInterval(timerInterval);
+
+            score = 0;
+            timeLeft = 30;
+
             scoreEl.textContent = score;
-            hole.classList.remove("active");
-            currentHole = null;
+            timeEl.textContent = timeLeft;
+
+            message.textContent = "";
+            gameRunning = true;
+
+            moleInterval = setInterval(randomHole, 800);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timeEl.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
         }
-    });
 
-    grid.appendChild(hole);
-}
+        function endGame() {
+            gameRunning = false;
 
-const holes = document.querySelectorAll(".hole");
+            clearInterval(moleInterval);
+            clearInterval(timerInterval);
 
-function randomHole(){
-    holes.forEach(h=>h.classList.remove("active"));
+            holes.forEach(h => h.classList.remove("active"));
 
-    const random = Math.floor(Math.random()*holes.length);
-    currentHole = holes[random];
-
-    currentHole.classList.add("active");
-
-    setTimeout(()=>{
-        currentHole?.classList.remove("active");
-    },700);
-}
-
-function startGame(){
-
-    clearInterval(moleInterval);
-    clearInterval(timerInterval);
-
-    score = 0;
-    timeLeft = 30;
-
-    scoreEl.textContent = score;
-    timeEl.textContent = timeLeft;
-
-    message.textContent = "";
-    gameRunning = true;
-
-    moleInterval = setInterval(randomHole,800);
-
-    timerInterval = setInterval(()=>{
-        timeLeft--;
-        timeEl.textContent = timeLeft;
-
-        if(timeLeft <= 0){
-            endGame();
+            message.textContent =
+                `🎉 Game Over! Final Score: ${score}`;
         }
-    },1000);
-}
 
-function endGame(){
-    gameRunning = false;
-
-    clearInterval(moleInterval);
-    clearInterval(timerInterval);
-
-    holes.forEach(h=>h.classList.remove("active"));
-
-    message.textContent =
-        `🎉 Game Over! Final Score: ${score}`;
-}
-
-startBtn.addEventListener("click",startGame);
-</script>
+        startBtn.addEventListener("click", startGame);
+    </script>
 
     <script>
-    // Fire popunder on first user click (game interaction)
-    (function(){
-        var fired = false;
-        document.addEventListener('click', function handler(){
-            if(!fired){
-                fired = true;
-                document.removeEventListener('click', handler);
-            }
-        });
-    })();
+        // Fire popunder on first user click (game interaction)
+        (function () {
+            var fired = false;
+            document.addEventListener('click', function handler() {
+                if (!fired) {
+                    fired = true;
+                    document.removeEventListener('click', handler);
+                }
+            });
+        })();
     </script>
 </body>
+
 </html>

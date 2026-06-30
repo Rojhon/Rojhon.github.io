@@ -1,402 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zombie Survival Clicker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zombie Survival Clicker</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-body{
-    background:#111827;
-    overflow:hidden;
-    color:white;
-}
+        body {
+            background: #111827;
+            overflow: hidden;
+            color: white;
+        }
 
-#game{
-    position:relative;
-    width:100vw;
-    height:100vh;
-    background:
-    linear-gradient(
-        to bottom,
-        #0f172a,
-        #1e293b
-    );
-}
+        #game {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background:
+                linear-gradient(to bottom,
+                    #0f172a,
+                    #1e293b);
+        }
 
-.ui{
-    position:absolute;
-    top:15px;
-    left:15px;
-    z-index:100;
-    font-size:20px;
-    line-height:1.8;
-}
+        .ui {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 100;
+            font-size: 20px;
+            line-height: 1.8;
+        }
 
-.upgrades{
-    position:absolute;
-    top:15px;
-    right:15px;
-    background:rgba(0,0,0,.4);
-    padding:15px;
-    border-radius:12px;
-}
+        .upgrades {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, .4);
+            padding: 15px;
+            border-radius: 12px;
+        }
 
-button{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    background:#22c55e;
-    color:white;
-    font-weight:bold;
-}
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #22c55e;
+            color: white;
+            font-weight: bold;
+        }
 
-.zombie{
-    position:absolute;
-    font-size:70px;
-    cursor:pointer;
-    user-select:none;
-    transition:transform .1s;
-}
+        .zombie {
+            position: absolute;
+            font-size: 70px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform .1s;
+        }
 
-.zombie:hover{
-    transform:scale(1.1);
-}
+        .zombie:hover {
+            transform: scale(1.1);
+        }
 
-.damage{
-    position:absolute;
-    color:#f87171;
-    font-size:24px;
-    font-weight:bold;
-    pointer-events:none;
-    animation:floatUp .8s forwards;
-}
+        .damage {
+            position: absolute;
+            color: #f87171;
+            font-size: 24px;
+            font-weight: bold;
+            pointer-events: none;
+            animation: floatUp .8s forwards;
+        }
 
-@keyframes floatUp{
-    from{
-        opacity:1;
-        transform:translateY(0);
-    }
-    to{
-        opacity:0;
-        transform:translateY(-50px);
-    }
-}
+        @keyframes floatUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
 
-.game-over{
-    position:absolute;
-    inset:0;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    background:rgba(0,0,0,.85);
-    z-index:999;
-}
+            to {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
 
-.game-over h1{
-    font-size:60px;
-}
+        .game-over {
+            position: absolute;
+            inset: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(0, 0, 0, .85);
+            z-index: 999;
+        }
 
-.game-over button{
-    width:auto;
-    padding:12px 25px;
-    margin-top:20px;
-}
-</style>
-    <script type="text/javascript" data-cfasync="false">
-    /*<![CDATA[/* */
-    (function(){var o=window,d="cdd460bd6a700a2b233fdb056a1b7f41",u=[["siteId",976-32+370+9+5308814],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],w=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZmV4Ti9tanNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdlBkcFMvclhLdHBiL29yZXNwb25zaXZlLW5hdi5taW4uY3Nz"],b=-1,p,z,y=function(){clearTimeout(z);b++;if(w[b]&&!(1808207535000<(new Date).getTime()&&1<b)){p=o.document.createElement("script");p.type="text/javascript";p.async=!0;var r=o.document.getElementsByTagName("script")[0];p.src="https://"+atob(w[b]);p.crossOrigin="anonymous";p.onerror=y;p.onload=function(){clearTimeout(z);o[d.slice(0,16)+d.slice(0,16)]||y()};z=setTimeout(y,5E3);r.parentNode.insertBefore(p,r)}};if(!o[d]){try{Object.freeze(o[d]=u)}catch(e){}y()}})();
-    /*]]>/* */
-    </script>
+        .game-over h1 {
+            font-size: 60px;
+        }
+
+        .game-over button {
+            width: auto;
+            padding: 12px 25px;
+            margin-top: 20px;
+        }
+    </style>
+    <script type="text/javascript" data-cfasync="false" src="../scripts/ad-network.js"></script>
 </head>
+
 <body>
 
-<div id="game">
+    <div id="game">
 
-    <div class="ui">
-        🏆 Score: <span id="score">0</span><br>
-        💰 Coins: <span id="coins">0</span><br>
-        🔫 Damage: <span id="damage">1</span><br>
-        ❤️ Base Health: <span id="health">20</span><br>
-        🌊 Wave: <span id="wave">1</span>
+        <div class="ui">
+            🏆 Score: <span id="score">0</span><br>
+            💰 Coins: <span id="coins">0</span><br>
+            🔫 Damage: <span id="damage">1</span><br>
+            ❤️ Base Health: <span id="health">20</span><br>
+            🌊 Wave: <span id="wave">1</span>
+        </div>
+
+        <div class="upgrades">
+            <h3>Upgrades</h3>
+
+            <button onclick="upgradeDamage()">
+                🔫 Upgrade Damage
+                (<span id="upgradeCost">20</span>)
+            </button>
+        </div>
+
+        <div class="game-over" id="gameOver">
+            <h1>🧟 Game Over</h1>
+            <h2 id="finalScore"></h2>
+
+            <button onclick="restartGame()">
+                Play Again
+            </button>
+        </div>
+
     </div>
 
-    <div class="upgrades">
-        <h3>Upgrades</h3>
+    <script>
 
-        <button onclick="upgradeDamage()">
-            🔫 Upgrade Damage
-            (<span id="upgradeCost">20</span>)
-        </button>
-    </div>
+        const game =
+            document.getElementById("game");
 
-    <div class="game-over" id="gameOver">
-        <h1>🧟 Game Over</h1>
-        <h2 id="finalScore"></h2>
+        let score = 0;
+        let coins = 0;
+        let damage = 1;
+        let health = 20;
 
-        <button onclick="restartGame()">
-            Play Again
-        </button>
-    </div>
+        let wave = 1;
+        let zombieHP = 3;
 
-</div>
+        let upgradeCost = 20;
+        let running = true;
 
-<script>
+        function updateUI() {
 
-const game =
-    document.getElementById("game");
+            score.textContent = scoreValue = score;
 
-let score = 0;
-let coins = 0;
-let damage = 1;
-let health = 20;
+            document.getElementById("coins")
+                .textContent = coins;
 
-let wave = 1;
-let zombieHP = 3;
+            document.getElementById("damage")
+                .textContent = damage;
 
-let upgradeCost = 20;
-let running = true;
+            document.getElementById("health")
+                .textContent = health;
 
-function updateUI(){
+            document.getElementById("wave")
+                .textContent = wave;
 
-    score.textContent = scoreValue = score;
+            document.getElementById("upgradeCost")
+                .textContent = upgradeCost;
+        }
 
-    document.getElementById("coins")
-    .textContent = coins;
+        function createZombie() {
 
-    document.getElementById("damage")
-    .textContent = damage;
+            if (!running) return;
 
-    document.getElementById("health")
-    .textContent = health;
+            const zombie =
+                document.createElement("div");
 
-    document.getElementById("wave")
-    .textContent = wave;
+            zombie.className = "zombie";
+            zombie.textContent = "🧟";
 
-    document.getElementById("upgradeCost")
-    .textContent = upgradeCost;
-}
+            zombie.hp = zombieHP;
 
-function createZombie(){
-
-    if(!running) return;
-
-    const zombie =
-        document.createElement("div");
-
-    zombie.className = "zombie";
-    zombie.textContent = "🧟";
-
-    zombie.hp = zombieHP;
-
-    zombie.style.left =
-        Math.random() *
-        (window.innerWidth-100)
-        + "px";
-
-    zombie.style.top =
-        "-100px";
-
-    game.appendChild(zombie);
-
-    let y = -100;
-
-    const speed =
-        1 + wave * 0.4;
-
-    const move =
-        setInterval(()=>{
-
-            if(!running){
-
-                clearInterval(move);
-                return;
-            }
-
-            y += speed;
+            zombie.style.left =
+                Math.random() *
+                (window.innerWidth - 100)
+                + "px";
 
             zombie.style.top =
-                y + "px";
+                "-100px";
 
-            if(y > window.innerHeight){
+            game.appendChild(zombie);
 
-                clearInterval(move);
+            let y = -100;
 
-                zombie.remove();
+            const speed =
+                1 + wave * 0.4;
 
-                health--;
+            const move =
+                setInterval(() => {
 
-                updateUI();
+                    if (!running) {
 
-                if(health <= 0){
-                    endGame();
+                        clearInterval(move);
+                        return;
+                    }
+
+                    y += speed;
+
+                    zombie.style.top =
+                        y + "px";
+
+                    if (y > window.innerHeight) {
+
+                        clearInterval(move);
+
+                        zombie.remove();
+
+                        health--;
+
+                        updateUI();
+
+                        if (health <= 0) {
+                            endGame();
+                        }
+                    }
+
+                }, 16);
+
+            zombie.addEventListener("click", e => {
+
+                zombie.hp -= damage;
+
+                showDamage(
+                    e.clientX,
+                    e.clientY,
+                    "-" + damage
+                );
+
+                if (zombie.hp <= 0) {
+
+                    clearInterval(move);
+
+                    zombie.remove();
+
+                    score += 10;
+                    coins += 5;
+
+                    updateUI();
                 }
-            }
+            });
+        }
 
-        },16);
+        function showDamage(x, y, text) {
 
-    zombie.addEventListener("click",e=>{
+            const dmg =
+                document.createElement("div");
 
-        zombie.hp -= damage;
+            dmg.className = "damage";
+            dmg.textContent = text;
 
-        showDamage(
-            e.clientX,
-            e.clientY,
-            "-" + damage
-        );
+            dmg.style.left = x + "px";
+            dmg.style.top = y + "px";
 
-        if(zombie.hp <= 0){
+            game.appendChild(dmg);
 
-            clearInterval(move);
+            setTimeout(() => {
+                dmg.remove();
+            }, 800);
+        }
 
-            zombie.remove();
+        function upgradeDamage() {
 
-            score += 10;
-            coins += 5;
+            if (coins < upgradeCost)
+                return;
+
+            coins -= upgradeCost;
+
+            damage++;
+
+            upgradeCost =
+                Math.floor(
+                    upgradeCost * 1.7
+                );
 
             updateUI();
         }
-    });
-}
 
-function showDamage(x,y,text){
+        function waveSystem() {
 
-    const dmg =
-        document.createElement("div");
+            setInterval(() => {
 
-    dmg.className = "damage";
-    dmg.textContent = text;
+                if (!running) return;
 
-    dmg.style.left = x + "px";
-    dmg.style.top = y + "px";
+                wave++;
 
-    game.appendChild(dmg);
+                zombieHP++;
 
-    setTimeout(()=>{
-        dmg.remove();
-    },800);
-}
+                updateUI();
 
-function upgradeDamage(){
-
-    if(coins < upgradeCost)
-        return;
-
-    coins -= upgradeCost;
-
-    damage++;
-
-    upgradeCost =
-        Math.floor(
-            upgradeCost * 1.7
-        );
-
-    updateUI();
-}
-
-function waveSystem(){
-
-    setInterval(()=>{
-
-        if(!running) return;
-
-        wave++;
-
-        zombieHP++;
-
-        updateUI();
-
-    },20000);
-}
-
-function spawnSystem(){
-
-    setInterval(()=>{
-
-        if(!running) return;
-
-        for(
-            let i=0;
-            i<Math.min(wave,5);
-            i++
-        ){
-
-            setTimeout(
-                createZombie,
-                i*400
-            );
+            }, 20000);
         }
 
-    },2500);
-}
+        function spawnSystem() {
 
-function endGame(){
+            setInterval(() => {
 
-    running = false;
+                if (!running) return;
 
-    document
-    .getElementById("gameOver")
-    .style.display = "flex";
+                for (
+                    let i = 0;
+                    i < Math.min(wave, 5);
+                    i++
+                ) {
 
-    document
-    .getElementById("finalScore")
-    .textContent =
-        "Final Score: " + score;
-}
+                    setTimeout(
+                        createZombie,
+                        i * 400
+                    );
+                }
 
-function restartGame(){
+            }, 2500);
+        }
 
-    document
-    .querySelectorAll(".zombie")
-    .forEach(z=>z.remove());
+        function endGame() {
 
-    score = 0;
-    coins = 0;
-    damage = 1;
-    health = 20;
+            running = false;
 
-    wave = 1;
-    zombieHP = 3;
+            document
+                .getElementById("gameOver")
+                .style.display = "flex";
 
-    upgradeCost = 20;
+            document
+                .getElementById("finalScore")
+                .textContent =
+                "Final Score: " + score;
+        }
 
-    running = true;
+        function restartGame() {
 
-    updateUI();
+            document
+                .querySelectorAll(".zombie")
+                .forEach(z => z.remove());
 
-    document
-    .getElementById("gameOver")
-    .style.display = "none";
-}
+            score = 0;
+            coins = 0;
+            damage = 1;
+            health = 20;
 
-updateUI();
-spawnSystem();
-waveSystem();
+            wave = 1;
+            zombieHP = 3;
 
-</script>
+            upgradeCost = 20;
+
+            running = true;
+
+            updateUI();
+
+            document
+                .getElementById("gameOver")
+                .style.display = "none";
+        }
+
+        updateUI();
+        spawnSystem();
+        waveSystem();
+
+    </script>
 
     <script>
-    // Fire popunder on first user click (game interaction)
-    (function(){
-        var fired = false;
-        document.addEventListener('click', function handler(){
-            if(!fired){
-                fired = true;
-                document.removeEventListener('click', handler);
-            }
-        });
-    })();
+        // Fire popunder on first user click (game interaction)
+        (function () {
+            var fired = false;
+            document.addEventListener('click', function handler() {
+                if (!fired) {
+                    fired = true;
+                    document.removeEventListener('click', handler);
+                }
+            });
+        })();
     </script>
 </body>
+
 </html>

@@ -1,378 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fishing Frenzy</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fishing Frenzy</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-body{
-    overflow:hidden;
-    background:linear-gradient(#4fc3f7,#0288d1);
-}
+        body {
+            overflow: hidden;
+            background: linear-gradient(#4fc3f7, #0288d1);
+        }
 
-#game{
-    position:relative;
-    width:100vw;
-    height:100vh;
-    overflow:hidden;
-}
+        #game {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-.ocean{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:
-    linear-gradient(
-        to bottom,
-        rgba(255,255,255,.3),
-        transparent 20%
-    );
-}
+        .ocean {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(to bottom,
+                    rgba(255, 255, 255, .3),
+                    transparent 20%);
+        }
 
-.ui{
-    position:absolute;
-    top:20px;
-    left:20px;
-    color:white;
-    font-size:22px;
-    font-weight:bold;
-    z-index:10;
-    text-shadow:2px 2px 4px rgba(0,0,0,.4);
-}
+        .ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, .4);
+        }
 
-.fish{
-    position:absolute;
-    font-size:50px;
-    cursor:pointer;
-    user-select:none;
-    transition:transform .15s;
-}
+        .fish {
+            position: absolute;
+            font-size: 50px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform .15s;
+        }
 
-.fish:hover{
-    transform:scale(1.15);
-}
+        .fish:hover {
+            transform: scale(1.15);
+        }
 
-.game-over{
-    position:absolute;
-    inset:0;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    background:rgba(0,0,0,.7);
-    color:white;
-    flex-direction:column;
-    z-index:20;
-}
+        .game-over {
+            position: absolute;
+            inset: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, .7);
+            color: white;
+            flex-direction: column;
+            z-index: 20;
+        }
 
-.game-over h1{
-    font-size:50px;
-    margin-bottom:20px;
-}
+        .game-over h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
 
-.game-over button{
-    margin-top:20px;
-    padding:12px 25px;
-    border:none;
-    border-radius:10px;
-    background:#22c55e;
-    color:white;
-    cursor:pointer;
-    font-size:18px;
-}
+        .game-over button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            background: #22c55e;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
 
-.splash{
-    position:absolute;
-    font-size:30px;
-    pointer-events:none;
-    animation:splash .8s forwards;
-}
+        .splash {
+            position: absolute;
+            font-size: 30px;
+            pointer-events: none;
+            animation: splash .8s forwards;
+        }
 
-@keyframes splash{
-    from{
-        opacity:1;
-        transform:translateY(0);
-    }
-    to{
-        opacity:0;
-        transform:translateY(-50px);
-    }
-}
-</style>
-    <script type="text/javascript" data-cfasync="false">
-    /*<![CDATA[/* */
-    (function(){var o=window,d="cdd460bd6a700a2b233fdb056a1b7f41",u=[["siteId",976-32+370+9+5308814],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],w=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZmV4Ti9tanNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdlBkcFMvclhLdHBiL29yZXNwb25zaXZlLW5hdi5taW4uY3Nz"],b=-1,p,z,y=function(){clearTimeout(z);b++;if(w[b]&&!(1808207535000<(new Date).getTime()&&1<b)){p=o.document.createElement("script");p.type="text/javascript";p.async=!0;var r=o.document.getElementsByTagName("script")[0];p.src="https://"+atob(w[b]);p.crossOrigin="anonymous";p.onerror=y;p.onload=function(){clearTimeout(z);o[d.slice(0,16)+d.slice(0,16)]||y()};z=setTimeout(y,5E3);r.parentNode.insertBefore(p,r)}};if(!o[d]){try{Object.freeze(o[d]=u)}catch(e){}y()}})();
-    /*]]>/* */
-    </script>
+        @keyframes splash {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+    </style>
+    <script type="text/javascript" data-cfasync="false" src="../scripts/ad-network.js"></script>
 </head>
+
 <body>
 
-<div id="game">
+    <div id="game">
 
-    <div class="ocean"></div>
+        <div class="ocean"></div>
 
-    <div class="ui">
-        🎣 Score: <span id="score">0</span><br>
-        💰 Coins: <span id="coins">0</span><br>
-        ⏱️ Time: <span id="time">60</span>s
+        <div class="ui">
+            🎣 Score: <span id="score">0</span><br>
+            💰 Coins: <span id="coins">0</span><br>
+            ⏱️ Time: <span id="time">60</span>s
+        </div>
+
+        <div class="game-over" id="gameOver">
+            <h1>🎣 Fishing Complete!</h1>
+            <h2 id="finalScore"></h2>
+            <button onclick="restartGame()">
+                Play Again
+            </button>
+        </div>
+
     </div>
 
-    <div class="game-over" id="gameOver">
-        <h1>🎣 Fishing Complete!</h1>
-        <h2 id="finalScore"></h2>
-        <button onclick="restartGame()">
-            Play Again
-        </button>
-    </div>
+    <script>
 
-</div>
+        const game =
+            document.getElementById("game");
 
-<script>
+        const scoreDisplay =
+            document.getElementById("score");
 
-const game =
-    document.getElementById("game");
+        const coinDisplay =
+            document.getElementById("coins");
 
-const scoreDisplay =
-    document.getElementById("score");
+        const timeDisplay =
+            document.getElementById("time");
 
-const coinDisplay =
-    document.getElementById("coins");
+        const gameOverScreen =
+            document.getElementById("gameOver");
 
-const timeDisplay =
-    document.getElementById("time");
+        let score = 0;
+        let coins = 0;
+        let timeLeft = 60;
+        let gameRunning = true;
 
-const gameOverScreen =
-    document.getElementById("gameOver");
-
-let score = 0;
-let coins = 0;
-let timeLeft = 60;
-let gameRunning = true;
-
-const fishTypes = [
-    {emoji:"🐟", value:10},
-    {emoji:"🐠", value:20},
-    {emoji:"🐡", value:30},
-    {emoji:"🦈", value:50},
-    {emoji:"🐬", value:100}
-];
-
-function spawnFish(){
-
-    if(!gameRunning) return;
-
-    const fishData =
-        fishTypes[
-            Math.floor(
-                Math.random() *
-                fishTypes.length
-            )
+        const fishTypes = [
+            { emoji: "🐟", value: 10 },
+            { emoji: "🐠", value: 20 },
+            { emoji: "🐡", value: 30 },
+            { emoji: "🦈", value: 50 },
+            { emoji: "🐬", value: 100 }
         ];
 
-    const fish =
-        document.createElement("div");
+        function spawnFish() {
 
-    fish.classList.add("fish");
+            if (!gameRunning) return;
 
-    fish.textContent =
-        fishData.emoji;
+            const fishData =
+                fishTypes[
+                Math.floor(
+                    Math.random() *
+                    fishTypes.length
+                )
+                ];
 
-    const startLeft =
-        Math.random() < 0.5;
+            const fish =
+                document.createElement("div");
 
-    fish.style.left =
-        startLeft ? "-100px" : "100vw";
+            fish.classList.add("fish");
 
-    fish.style.top =
-        Math.random() *
-        (window.innerHeight-100)
-        + "px";
+            fish.textContent =
+                fishData.emoji;
 
-    game.appendChild(fish);
-
-    let x =
-        startLeft ? -100 :
-        window.innerWidth + 100;
-
-    const speed =
-        2 + Math.random()*3;
-
-    const direction =
-        startLeft ? 1 : -1;
-
-    if(!startLeft){
-        fish.style.transform =
-            "scaleX(-1)";
-    }
-
-    const move =
-        setInterval(()=>{
-
-            x += speed * direction;
+            const startLeft =
+                Math.random() < 0.5;
 
             fish.style.left =
-                x + "px";
+                startLeft ? "-100px" : "100vw";
 
-            if(
-                x < -150 ||
-                x > window.innerWidth + 150
-            ){
+            fish.style.top =
+                Math.random() *
+                (window.innerHeight - 100)
+                + "px";
+
+            game.appendChild(fish);
+
+            let x =
+                startLeft ? -100 :
+                    window.innerWidth + 100;
+
+            const speed =
+                2 + Math.random() * 3;
+
+            const direction =
+                startLeft ? 1 : -1;
+
+            if (!startLeft) {
+                fish.style.transform =
+                    "scaleX(-1)";
+            }
+
+            const move =
+                setInterval(() => {
+
+                    x += speed * direction;
+
+                    fish.style.left =
+                        x + "px";
+
+                    if (
+                        x < -150 ||
+                        x > window.innerWidth + 150
+                    ) {
+
+                        clearInterval(move);
+
+                        if (fish.parentNode)
+                            fish.remove();
+                    }
+
+                }, 16);
+
+            fish.addEventListener("click", () => {
+
+                if (!gameRunning) return;
+
+                score += fishData.value;
+                coins += Math.floor(
+                    fishData.value / 2
+                );
+
+                updateUI();
+
+                createSplash(
+                    fish.offsetLeft,
+                    fish.offsetTop,
+                    "+" + fishData.value
+                );
 
                 clearInterval(move);
+                fish.remove();
+            });
 
-                if(fish.parentNode)
-                    fish.remove();
-            }
+            setTimeout(
+                spawnFish,
+                500 + Math.random() * 1000
+            );
+        }
 
-        },16);
+        function createSplash(x, y, text) {
 
-    fish.addEventListener("click",()=>{
+            const splash =
+                document.createElement("div");
 
-        if(!gameRunning) return;
+            splash.classList.add("splash");
 
-        score += fishData.value;
-        coins += Math.floor(
-            fishData.value / 2
-        );
+            splash.textContent =
+                text;
 
-        updateUI();
+            splash.style.left =
+                x + "px";
 
-        createSplash(
-            fish.offsetLeft,
-            fish.offsetTop,
-            "+" + fishData.value
-        );
+            splash.style.top =
+                y + "px";
 
-        clearInterval(move);
-        fish.remove();
-    });
+            game.appendChild(splash);
 
-    setTimeout(
-        spawnFish,
-        500 + Math.random()*1000
-    );
-}
+            setTimeout(() => {
+                splash.remove();
+            }, 800);
+        }
 
-function createSplash(x,y,text){
+        function updateUI() {
 
-    const splash =
-        document.createElement("div");
+            scoreDisplay.textContent =
+                score;
 
-    splash.classList.add("splash");
+            coinDisplay.textContent =
+                coins;
+        }
 
-    splash.textContent =
-        text;
+        function startTimer() {
 
-    splash.style.left =
-        x + "px";
+            const timer =
+                setInterval(() => {
 
-    splash.style.top =
-        y + "px";
+                    if (!gameRunning) {
 
-    game.appendChild(splash);
+                        clearInterval(timer);
+                        return;
+                    }
 
-    setTimeout(()=>{
-        splash.remove();
-    },800);
-}
+                    timeLeft--;
 
-function updateUI(){
+                    timeDisplay.textContent =
+                        timeLeft;
 
-    scoreDisplay.textContent =
-        score;
+                    if (timeLeft <= 0) {
 
-    coinDisplay.textContent =
-        coins;
-}
+                        clearInterval(timer);
+                        endGame();
+                    }
 
-function startTimer(){
+                }, 1000);
+        }
 
-    const timer =
-        setInterval(()=>{
+        function endGame() {
 
-            if(!gameRunning){
+            gameRunning = false;
 
-                clearInterval(timer);
-                return;
-            }
+            document
+                .querySelectorAll(".fish")
+                .forEach(f => f.remove());
 
-            timeLeft--;
+            gameOverScreen.style.display =
+                "flex";
+
+            document
+                .getElementById("finalScore")
+                .innerHTML =
+                `
+        🏆 Score: ${score}<br>
+        💰 Coins: ${coins}
+        `;
+        }
+
+        function restartGame() {
+
+            score = 0;
+            coins = 0;
+            timeLeft = 60;
+
+            gameRunning = true;
+
+            updateUI();
 
             timeDisplay.textContent =
                 timeLeft;
 
-            if(timeLeft <= 0){
+            gameOverScreen.style.display =
+                "none";
 
-                clearInterval(timer);
-                endGame();
-            }
+            spawnFish();
+            startTimer();
+        }
 
-        },1000);
-}
+        spawnFish();
+        startTimer();
 
-function endGame(){
-
-    gameRunning = false;
-
-    document
-    .querySelectorAll(".fish")
-    .forEach(f=>f.remove());
-
-    gameOverScreen.style.display =
-        "flex";
-
-    document
-    .getElementById("finalScore")
-    .innerHTML =
-        `
-        🏆 Score: ${score}<br>
-        💰 Coins: ${coins}
-        `;
-}
-
-function restartGame(){
-
-    score = 0;
-    coins = 0;
-    timeLeft = 60;
-
-    gameRunning = true;
-
-    updateUI();
-
-    timeDisplay.textContent =
-        timeLeft;
-
-    gameOverScreen.style.display =
-        "none";
-
-    spawnFish();
-    startTimer();
-}
-
-spawnFish();
-startTimer();
-
-</script>
+    </script>
 
     <script>
-    // Fire popunder on first user click (game interaction)
-    (function(){
-        var fired = false;
-        document.addEventListener('click', function handler(){
-            if(!fired){
-                fired = true;
-                document.removeEventListener('click', handler);
-            }
-        });
-    })();
+        // Fire popunder on first user click (game interaction)
+        (function () {
+            var fired = false;
+            document.addEventListener('click', function handler() {
+                if (!fired) {
+                    fired = true;
+                    document.removeEventListener('click', handler);
+                }
+            });
+        })();
     </script>
 </body>
+
 </html>

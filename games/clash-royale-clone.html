@@ -1,1070 +1,1929 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crown Clash</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Exo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --gold:#f5c518; --gold-dark:#c9a012;
-    --blue:#1a6bdc; --blue-light:#3d9bff;
-    --red:#dc2a1a;  --red-light:#ff5544;
-    --purple-light:#cc88ff;
-    --bg-dark:#0a0d14; --bg-mid:#111827; --card-bg:#1c2535;
-    --text:#e8eaf6; --text-dim:#8892a4;
-    --grass-top:#1a3a2a; --grass-bot:#1a3a1a;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family:'Exo 2',sans-serif;
-    background:var(--bg-dark); color:var(--text);
-    width:100vw; height:100vh; overflow:hidden;
-    display:flex; align-items:center; justify-content:center;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crown Clash</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Exo+2:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --gold: #f5c518;
+      --gold-dark: #c9a012;
+      --blue: #1a6bdc;
+      --blue-light: #3d9bff;
+      --red: #dc2a1a;
+      --red-light: #ff5544;
+      --purple-light: #cc88ff;
+      --bg-dark: #0a0d14;
+      --bg-mid: #111827;
+      --card-bg: #1c2535;
+      --text: #e8eaf6;
+      --text-dim: #8892a4;
+      --grass-top: #1a3a2a;
+      --grass-bot: #1a3a1a;
+    }
 
-  /* ── SCREENS ── */
-  .screen { display:none; width:100%; height:100%; position:absolute; top:0; left:0; }
-  .screen.active { display:flex; align-items:center; justify-content:center; flex-direction:column; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  /* MENU */
-  #menu { background:radial-gradient(ellipse at 50% 0%,#1a2a4a 0%,#0a0d14 70%); overflow:hidden; }
-  #menu::before {
-    content:''; position:absolute; inset:0; pointer-events:none;
-    background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
-  .stars { position:absolute; inset:0; pointer-events:none; }
-  .star {
-    position:absolute; border-radius:50%; background:white;
-    animation:twinkle var(--dur,3s) ease-in-out infinite var(--delay,0s);
-  }
-  @keyframes twinkle { 0%,100%{opacity:.1;transform:scale(1)} 50%{opacity:.8;transform:scale(1.3)} }
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .menu-logo {
-    font-family:'Cinzel Decorative',cursive; font-size:clamp(28px,5vw,52px); font-weight:900;
-    background:linear-gradient(135deg,#f5c518 0%,#ffea80 40%,#c9a012 70%,#f5c518 100%);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    filter:drop-shadow(0 0 20px rgba(245,197,24,.5));
-    margin-bottom:8px; letter-spacing:2px; text-align:center;
-  }
-  .menu-tagline { color:var(--text-dim); font-size:14px; letter-spacing:4px; text-transform:uppercase; margin-bottom:48px; }
-  .menu-btn {
-    background:linear-gradient(135deg,#f5c518,#c9a012); color:#1a1200; border:none;
-    padding:16px 56px; font-family:'Exo 2',sans-serif; font-size:18px; font-weight:800;
-    letter-spacing:2px; text-transform:uppercase; border-radius:50px; cursor:pointer;
-    box-shadow:0 4px 20px rgba(245,197,24,.4),0 0 0 3px rgba(245,197,24,.15);
-    transition:all .2s; margin-bottom:16px;
-  }
-  .menu-btn:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(245,197,24,.6),0 0 0 4px rgba(245,197,24,.25); }
-  .menu-btn:active { transform:translateY(1px); }
-  .menu-info { display:flex; gap:32px; margin-top:40px; flex-wrap:wrap; justify-content:center; }
-  .info-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:16px 24px; text-align:center; min-width:120px; }
-  .info-card .label { font-size:11px; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; }
-  .info-card .value { font-size:22px; font-weight:800; color:var(--gold); margin-top:4px; }
+    /* ── SCREENS ── */
+    .screen {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
 
-  /* GAME OVER */
-  #gameover { background:radial-gradient(ellipse at 50% 50%,#1a1a2a 0%,#0a0d14 100%); }
-  .go-title { font-family:'Cinzel Decorative',cursive; font-size:clamp(32px,6vw,64px); font-weight:900; margin-bottom:12px; letter-spacing:3px; }
-  .go-title.win  { color:#f5c518; filter:drop-shadow(0 0 20px rgba(245,197,24,.7)); }
-  .go-title.lose { color:var(--red); filter:drop-shadow(0 0 20px rgba(220,42,26,.7)); }
-  .go-subtitle { color:var(--text-dim); font-size:16px; margin-bottom:40px; letter-spacing:3px; text-transform:uppercase; }
-  .go-stats { display:flex; gap:24px; margin-bottom:40px; flex-wrap:wrap; justify-content:center; }
-  .go-stat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:20px 28px; text-align:center; }
-  .go-stat .s-label { font-size:11px; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; }
-  .go-stat .s-val   { font-size:28px; font-weight:800; color:var(--gold); margin-top:6px; }
-  .go-btns { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
-  .go-btn {
-    background:linear-gradient(135deg,#f5c518,#c9a012); color:#1a1200; border:none;
-    padding:14px 40px; font-family:'Exo 2',sans-serif; font-size:16px; font-weight:800;
-    letter-spacing:2px; text-transform:uppercase; border-radius:50px; cursor:pointer;
-    box-shadow:0 4px 20px rgba(245,197,24,.4); transition:all .2s;
-  }
-  .go-btn.secondary { background:rgba(255,255,255,.08); color:var(--text); box-shadow:none; border:1px solid rgba(255,255,255,.15); }
-  .go-btn:hover { transform:translateY(-2px); filter:brightness(1.1); }
+    .screen.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
 
-  /* GAME SCREEN */
-  #game { flex-direction:row; align-items:stretch; padding:0; gap:0; }
+    /* MENU */
+    #menu {
+      background: radial-gradient(ellipse at 50% 0%, #1a2a4a 0%, #0a0d14 70%);
+      overflow: hidden;
+    }
 
-  #arena-wrap {
-    position:relative; flex:1;
-    display:flex; align-items:center; justify-content:center;
-    overflow:hidden; background:var(--bg-dark);
-  }
-  #arena {
-    position:relative; width:320px; height:560px;
-    background:var(--grass-bot); border-radius:8px; overflow:hidden;
-    box-shadow:0 0 40px rgba(0,0,0,.8),0 0 0 2px rgba(255,255,255,.05);
-    flex-shrink:0;
-  }
+    #menu::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
 
-  /* Arena layers */
-  .arena-half-top { position:absolute; top:0; left:0; right:0; height:50%; background:var(--grass-top); }
-  .arena-half-bot { position:absolute; bottom:0; left:0; right:0; height:50%; background:var(--grass-bot); }
-  .arena-river {
-    position:absolute; top:50%; left:0; right:0; height:40px; transform:translateY(-50%);
-    background:linear-gradient(180deg,#1a5a8c 0%,#0d3a6a 100%);
-    border-top:2px solid #2a7acc; border-bottom:2px solid #2a7acc; z-index:1;
-  }
-  .arena-river::after {
-    content:''; position:absolute; inset:0;
-    background:repeating-linear-gradient(90deg,transparent,transparent 20px,rgba(255,255,255,.03) 20px,rgba(255,255,255,.03) 21px);
-  }
-  .river-bridge {
-    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-    width:60px; height:48px; background:#5a4a2a; border:2px solid #7a6a3a; border-radius:4px; z-index:2;
-  }
-  .lane-path { position:absolute; top:0; bottom:0; background:rgba(90,70,40,.4); z-index:0; }
-  .lane-path.left  { left:18%;  width:22px; }
-  .lane-path.right { right:18%; width:22px; }
-  .lane-path.center{ left:50%;  width:22px; transform:translateX(-50%); }
+    .stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
 
-  /* Towers */
-  .tower {
-    position:absolute; width:44px; height:44px; border-radius:6px; border:2px solid;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    font-size:20px; z-index:10; transition:opacity .3s;
-  }
-  .tower.blue { background:rgba(26,107,220,.7); border-color:#3d9bff; box-shadow:0 0 10px rgba(26,107,220,.4); }
-  .tower.red  { background:rgba(220,42,26,.7);  border-color:#ff5544; box-shadow:0 0 10px rgba(220,42,26,.4); }
-  .tower.destroyed { opacity:.3; filter:grayscale(1); }
-  .tower-hp-bar { position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); width:44px; height:5px; background:rgba(0,0,0,.5); border-radius:3px; overflow:hidden; }
-  .tower-hp-fill { height:100%; border-radius:3px; transition:width .3s; }
-  .tower.blue .tower-hp-fill { background:var(--blue-light); }
-  .tower.red  .tower-hp-fill { background:var(--red-light); }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+    }
 
-  /* Units */
-  .unit {
-    position:absolute; width:28px; height:28px; border-radius:50%; border:2px solid;
-    display:flex; align-items:center; justify-content:center; font-size:14px; z-index:15; pointer-events:none;
-  }
-  .unit.blue { background:rgba(26,107,220,.85); border-color:#6ab8ff; }
-  .unit.red  { background:rgba(220,42,26,.85);  border-color:#ff8877; }
-  .unit.frozen { filter:brightness(.7) saturate(.3); }
-  .unit-hp-bar { position:absolute; bottom:-7px; left:50%; transform:translateX(-50%); width:28px; height:3px; background:rgba(0,0,0,.5); border-radius:2px; overflow:hidden; }
-  .unit-hp-fill { height:100%; border-radius:2px; }
-  .unit.blue .unit-hp-fill { background:var(--blue-light); }
-  .unit.red  .unit-hp-fill { background:#ff6655; }
+    @keyframes twinkle {
 
-  /* Projectiles */
-  .projectile { position:absolute; border-radius:50%; z-index:20; pointer-events:none; }
-  .projectile.arrow    { width:8px;  height:8px;  background:var(--gold); box-shadow:0 0 4px var(--gold); }
-  .projectile.fireball { width:12px; height:12px; background:#ff6600; box-shadow:0 0 8px #ff4400; }
-  .projectile.lightning{ width:6px;  height:6px;  background:#ffff44; box-shadow:0 0 8px #ffee00; }
-  .projectile.ice      { width:10px; height:10px; background:#aaddff; box-shadow:0 0 6px #88ccff; }
+      0%,
+      100% {
+        opacity: .1;
+        transform: scale(1)
+      }
 
-  /* Damage numbers */
-  .dmg-num {
-    position:absolute; font-size:11px; font-weight:800; pointer-events:none; z-index:30;
-    animation:floatUp .8s ease-out forwards; text-shadow:0 1px 3px rgba(0,0,0,.8);
-  }
-  @keyframes floatUp { 0%{opacity:1;transform:translateY(0) scale(1)} 100%{opacity:0;transform:translateY(-30px) scale(.7)} }
+      50% {
+        opacity: .8;
+        transform: scale(1.3)
+      }
+    }
 
-  /* Spawn flash */
-  .spawn-flash {
-    position:absolute; width:40px; height:40px; border-radius:50%; border:2px solid;
-    animation:spawnRing .4s ease-out forwards; pointer-events:none; z-index:25;
-  }
-  @keyframes spawnRing { 0%{opacity:1;transform:scale(.5)} 100%{opacity:0;transform:scale(2)} }
-  .spawn-flash.blue { border-color:#6ab8ff; }
-  .spawn-flash.red  { border-color:#ff8877; }
+    .menu-logo {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      background: linear-gradient(135deg, #f5c518 0%, #ffea80 40%, #c9a012 70%, #f5c518 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(245, 197, 24, .5));
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+      text-align: center;
+    }
 
-  /* Explosions / spell FX */
-  .explosion { position:absolute; border-radius:50%; pointer-events:none; z-index:25; animation:explode .5s ease-out forwards; }
-  @keyframes explode { 0%{opacity:1;transform:scale(.2)} 60%{opacity:.8} 100%{opacity:0;transform:scale(3)} }
-  .freeze-ring { position:absolute; border-radius:50%; pointer-events:none; z-index:25; border:3px solid #aaddff; animation:freezeRing .6s ease-out forwards; }
-  @keyframes freezeRing { 0%{opacity:1;transform:scale(.2)} 100%{opacity:0;transform:scale(3)} }
-  .lightning-strike {
-    position:absolute; width:4px; pointer-events:none; z-index:25;
-    background:linear-gradient(180deg,#ffff44,#ffffff,#88aaff);
-    box-shadow:0 0 10px #ffff00,0 0 20px #ffff00;
-    animation:lStrike .3s ease-out forwards;
-    border-radius:2px;
-  }
-  @keyframes lStrike { 0%{opacity:1;transform:scaleY(1)} 100%{opacity:0;transform:scaleY(1.1)} }
+    .menu-tagline {
+      color: var(--text-dim);
+      font-size: 14px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
 
-  /* HUD */
-  #hud-top {
-    position:absolute; top:0; left:0; right:0; height:44px;
-    background:rgba(10,13,20,.85); backdrop-filter:blur(8px);
-    display:flex; align-items:center; justify-content:space-between;
-    padding:0 12px; z-index:50; border-bottom:1px solid rgba(255,255,255,.06);
-  }
-  #timer { font-family:'Cinzel Decorative',cursive; font-size:18px; color:var(--gold); font-weight:700; min-width:60px; text-align:center; }
-  #timer.urgent { color:var(--red-light); animation:pulse .5s ease-in-out infinite alternate; }
-  @keyframes pulse { from{opacity:1} to{opacity:.5} }
-  .crown-row { display:flex; gap:8px; align-items:center; }
-  .crown-icon { font-size:16px; opacity:.3; transition:opacity .3s,filter .3s; }
-  .crown-icon.earned { opacity:1; filter:drop-shadow(0 0 5px gold); }
+    .menu-btn {
+      background: linear-gradient(135deg, #f5c518, #c9a012);
+      color: #1a1200;
+      border: none;
+      padding: 16px 56px;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(245, 197, 24, .4), 0 0 0 3px rgba(245, 197, 24, .15);
+      transition: all .2s;
+      margin-bottom: 16px;
+    }
 
-  /* Elixir */
-  #elixir-bar-wrap { position:absolute; bottom:72px; left:0; right:0; padding:0 12px; z-index:50; }
-  .elixir-label { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
-  .elixir-text  { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#cc88ff; }
-  .elixir-count { font-size:20px; font-weight:800; color:#cc88ff; }
-  #elixir-bar   { height:10px; background:rgba(0,0,0,.4); border-radius:5px; overflow:hidden; border:1px solid rgba(138,43,226,.3); }
-  #elixir-fill  { height:100%; background:linear-gradient(90deg,#9933dd,#cc66ff); border-radius:5px; transition:width .2s; box-shadow:0 0 8px rgba(200,100,255,.5); }
+    .menu-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(245, 197, 24, .6), 0 0 0 4px rgba(245, 197, 24, .25);
+    }
 
-  /* Card hand — fixed 4 troop cards */
-  #card-hand {
-    position:absolute; bottom:0; left:0; right:0; height:68px;
-    background:rgba(10,13,20,.92); backdrop-filter:blur(8px);
-    border-top:1px solid rgba(255,255,255,.08);
-    display:flex; align-items:center; justify-content:center;
-    gap:8px; padding:0 12px; z-index:50;
-  }
-  .card {
-    width:54px; height:58px; border-radius:8px; border:2px solid rgba(255,255,255,.15);
-    background:var(--card-bg); display:flex; flex-direction:column; align-items:center;
-    justify-content:center; cursor:pointer; transition:all .15s; position:relative; flex-shrink:0;
-  }
-  .card:hover:not(.disabled) { transform:translateY(-4px); border-color:var(--gold); box-shadow:0 4px 16px rgba(245,197,24,.25); }
-  .card.selected { border-color:var(--gold); box-shadow:0 0 0 2px var(--gold),0 0 20px rgba(245,197,24,.5); transform:translateY(-6px); }
-  .card.disabled { opacity:.4; cursor:not-allowed; filter:grayscale(.5); }
-  .card .card-emoji { font-size:22px; line-height:1; }
-  .card .card-name  { font-size:8px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.5px; margin-top:2px; }
-  .card .card-cost  { position:absolute; top:2px; left:4px; font-size:10px; font-weight:800; color:#cc88ff; }
+    .menu-btn:active {
+      transform: translateY(1px);
+    }
 
-  /* Spell panel — bottom-right corner of arena */
-  #spell-panel {
-    position:absolute; bottom:72px; right:0; width:64px;
-    background:rgba(10,13,20,.88); backdrop-filter:blur(6px);
-    border-top-left-radius:10px; border-left:1px solid rgba(255,255,255,.08);
-    border-top:1px solid rgba(255,255,255,.08);
-    padding:6px 4px 8px; z-index:52;
-    display:flex; flex-direction:column; align-items:center; gap:6px;
-  }
-  .spell-label { font-size:8px; letter-spacing:1px; text-transform:uppercase; color:var(--text-dim); margin-bottom:2px; }
-  .spell-btn {
-    width:50px; height:52px; border-radius:8px; border:2px solid rgba(255,255,255,.15);
-    background:var(--card-bg); display:flex; flex-direction:column; align-items:center;
-    justify-content:center; cursor:pointer; transition:all .15s; position:relative;
-  }
-  .spell-btn:hover:not(.disabled) { transform:translateY(-2px); border-color:var(--gold); box-shadow:0 4px 16px rgba(245,197,24,.25); }
-  .spell-btn.selected { border-color:#cc88ff; box-shadow:0 0 0 2px #cc88ff,0 0 16px rgba(200,100,255,.5); transform:translateY(-4px); }
-  .spell-btn.disabled { opacity:.4; cursor:not-allowed; filter:grayscale(.5); }
-  .spell-btn .s-emoji { font-size:20px; line-height:1; }
-  .spell-btn .s-name  { font-size:7px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.5px; margin-top:2px; }
-  .spell-btn .s-cost  { position:absolute; top:2px; left:4px; font-size:10px; font-weight:800; color:#cc88ff; }
-  .spell-cooldown-overlay {
-    position:absolute; inset:0; background:rgba(0,0,0,.65); border-radius:6px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:12px; font-weight:800; color:#cc88ff; pointer-events:none;
-  }
+    .menu-info {
+      display: flex;
+      gap: 32px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-  /* Placement overlay */
-  #placement-overlay { position:absolute; inset:0; z-index:40; cursor:crosshair; display:none; }
-  #placement-overlay.active { display:block; }
-  .placement-hint {
-    position:absolute; bottom:76px; left:50%; transform:translateX(-50%);
-    background:rgba(245,197,24,.92); color:#1a1200;
-    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
-    padding:6px 16px; border-radius:20px; pointer-events:none; z-index:55; display:none; white-space:nowrap;
-  }
-  .placement-hint.show { display:block; }
-  .placement-cursor {
-    position:absolute; width:36px; height:36px; border:2px dashed var(--gold); border-radius:50%;
-    transform:translate(-50%,-50%); pointer-events:none; animation:rotateCursor 2s linear infinite;
-  }
-  @keyframes rotateCursor { to{ transform:translate(-50%,-50%) rotate(360deg); } }
-  .placement-cursor.spell { border-color:#cc88ff; }
+    .info-card {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 12px;
+      padding: 16px 24px;
+      text-align: center;
+      min-width: 120px;
+    }
 
-  /* Side panel */
-  #side-panel {
-    width:220px; background:var(--bg-mid); border-left:1px solid rgba(255,255,255,.06);
-    display:flex; flex-direction:column; padding:16px 12px; gap:12px; overflow-y:auto; flex-shrink:0;
-  }
-  .panel-title { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text-dim); text-align:center; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,.06); }
-  .stat-row { display:flex; justify-content:space-between; align-items:center; padding:4px 0; font-size:13px; }
-  .stat-label { color:var(--text-dim); }
-  .stat-val       { font-weight:700; color:var(--text); }
-  .stat-val.blue  { color:var(--blue-light); }
-  .stat-val.red   { color:var(--red-light); }
-  .stat-val.gold  { color:var(--gold); }
-  .tower-status { display:flex; flex-direction:column; gap:8px; }
-  .ts-row { display:flex; align-items:center; gap:8px; font-size:12px; }
-  .ts-bar-wrap { flex:1; height:8px; background:rgba(0,0,0,.4); border-radius:4px; overflow:hidden; }
-  .ts-bar { height:100%; border-radius:4px; transition:width .3s; }
-  .ts-bar.blue { background:linear-gradient(90deg,var(--blue),var(--blue-light)); }
-  .ts-bar.red  { background:linear-gradient(90deg,var(--red),var(--red-light)); }
-  .ts-label { font-size:10px; color:var(--text-dim); min-width:30px; text-align:right; }
-  #battle-log { flex:1; overflow-y:auto; font-size:11px; color:var(--text-dim); line-height:1.8; }
-  #battle-log::-webkit-scrollbar { width:3px; }
-  #battle-log::-webkit-scrollbar-thumb { background:rgba(255,255,255,.1); border-radius:2px; }
-  .log-entry { padding:1px 0; }
-  .log-entry.good { color:#6ab8ff; }
-  .log-entry.bad  { color:#ff8877; }
-  .log-entry.gold { color:var(--gold); }
-  .log-entry.spell{ color:#cc88ff; }
+    .info-card .label {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
 
-  @media(max-width:600px){ #side-panel{width:150px} }
-  @media(max-width:480px){ #side-panel{display:none} #arena{width:100vw;height:100vh;border-radius:0} }
-</style>
-    <script type="text/javascript" data-cfasync="false">
-    /*<![CDATA[/* */
-    (function(){var o=window,d="cdd460bd6a700a2b233fdb056a1b7f41",u=[["siteId",976-32+370+9+5308814],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],w=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZmV4Ti9tanNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdlBkcFMvclhLdHBiL29yZXNwb25zaXZlLW5hdi5taW4uY3Nz"],b=-1,p,z,y=function(){clearTimeout(z);b++;if(w[b]&&!(1808207535000<(new Date).getTime()&&1<b)){p=o.document.createElement("script");p.type="text/javascript";p.async=!0;var r=o.document.getElementsByTagName("script")[0];p.src="https://"+atob(w[b]);p.crossOrigin="anonymous";p.onerror=y;p.onload=function(){clearTimeout(z);o[d.slice(0,16)+d.slice(0,16)]||y()};z=setTimeout(y,5E3);r.parentNode.insertBefore(p,r)}};if(!o[d]){try{Object.freeze(o[d]=u)}catch(e){}y()}})();
-    /*]]>/* */
-    </script>
+    .info-card .value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-top: 4px;
+    }
+
+    /* GAME OVER */
+    #gameover {
+      background: radial-gradient(ellipse at 50% 50%, #1a1a2a 0%, #0a0d14 100%);
+    }
+
+    .go-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(32px, 6vw, 64px);
+      font-weight: 900;
+      margin-bottom: 12px;
+      letter-spacing: 3px;
+    }
+
+    .go-title.win {
+      color: #f5c518;
+      filter: drop-shadow(0 0 20px rgba(245, 197, 24, .7));
+    }
+
+    .go-title.lose {
+      color: var(--red);
+      filter: drop-shadow(0 0 20px rgba(220, 42, 26, .7));
+    }
+
+    .go-subtitle {
+      color: var(--text-dim);
+      font-size: 16px;
+      margin-bottom: 40px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .go-stats {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .go-stat {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 12px;
+      padding: 20px 28px;
+      text-align: center;
+    }
+
+    .go-stat .s-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .go-stat .s-val {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-top: 6px;
+    }
+
+    .go-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .go-btn {
+      background: linear-gradient(135deg, #f5c518, #c9a012);
+      color: #1a1200;
+      border: none;
+      padding: 14px 40px;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(245, 197, 24, .4);
+      transition: all .2s;
+    }
+
+    .go-btn.secondary {
+      background: rgba(255, 255, 255, .08);
+      color: var(--text);
+      box-shadow: none;
+      border: 1px solid rgba(255, 255, 255, .15);
+    }
+
+    .go-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+
+    /* GAME SCREEN */
+    #game {
+      flex-direction: row;
+      align-items: stretch;
+      padding: 0;
+      gap: 0;
+    }
+
+    #arena-wrap {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--bg-dark);
+    }
+
+    #arena {
+      position: relative;
+      width: 320px;
+      height: 560px;
+      background: var(--grass-bot);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(0, 0, 0, .8), 0 0 0 2px rgba(255, 255, 255, .05);
+      flex-shrink: 0;
+    }
+
+    /* Arena layers */
+    .arena-half-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: var(--grass-top);
+    }
+
+    .arena-half-bot {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: var(--grass-bot);
+    }
+
+    .arena-river {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 40px;
+      transform: translateY(-50%);
+      background: linear-gradient(180deg, #1a5a8c 0%, #0d3a6a 100%);
+      border-top: 2px solid #2a7acc;
+      border-bottom: 2px solid #2a7acc;
+      z-index: 1;
+    }
+
+    .arena-river::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255, 255, 255, .03) 20px, rgba(255, 255, 255, .03) 21px);
+    }
+
+    .river-bridge {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 48px;
+      background: #5a4a2a;
+      border: 2px solid #7a6a3a;
+      border-radius: 4px;
+      z-index: 2;
+    }
+
+    .lane-path {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: rgba(90, 70, 40, .4);
+      z-index: 0;
+    }
+
+    .lane-path.left {
+      left: 18%;
+      width: 22px;
+    }
+
+    .lane-path.right {
+      right: 18%;
+      width: 22px;
+    }
+
+    .lane-path.center {
+      left: 50%;
+      width: 22px;
+      transform: translateX(-50%);
+    }
+
+    /* Towers */
+    .tower {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      border: 2px solid;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      z-index: 10;
+      transition: opacity .3s;
+    }
+
+    .tower.blue {
+      background: rgba(26, 107, 220, .7);
+      border-color: #3d9bff;
+      box-shadow: 0 0 10px rgba(26, 107, 220, .4);
+    }
+
+    .tower.red {
+      background: rgba(220, 42, 26, .7);
+      border-color: #ff5544;
+      box-shadow: 0 0 10px rgba(220, 42, 26, .4);
+    }
+
+    .tower.destroyed {
+      opacity: .3;
+      filter: grayscale(1);
+    }
+
+    .tower-hp-bar {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 5px;
+      background: rgba(0, 0, 0, .5);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .tower-hp-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .3s;
+    }
+
+    .tower.blue .tower-hp-fill {
+      background: var(--blue-light);
+    }
+
+    .tower.red .tower-hp-fill {
+      background: var(--red-light);
+    }
+
+    /* Units */
+    .unit {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .unit.blue {
+      background: rgba(26, 107, 220, .85);
+      border-color: #6ab8ff;
+    }
+
+    .unit.red {
+      background: rgba(220, 42, 26, .85);
+      border-color: #ff8877;
+    }
+
+    .unit.frozen {
+      filter: brightness(.7) saturate(.3);
+    }
+
+    .unit-hp-bar {
+      position: absolute;
+      bottom: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 3px;
+      background: rgba(0, 0, 0, .5);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .unit-hp-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    .unit.blue .unit-hp-fill {
+      background: var(--blue-light);
+    }
+
+    .unit.red .unit-hp-fill {
+      background: #ff6655;
+    }
+
+    /* Projectiles */
+    .projectile {
+      position: absolute;
+      border-radius: 50%;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .projectile.arrow {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      box-shadow: 0 0 4px var(--gold);
+    }
+
+    .projectile.fireball {
+      width: 12px;
+      height: 12px;
+      background: #ff6600;
+      box-shadow: 0 0 8px #ff4400;
+    }
+
+    .projectile.lightning {
+      width: 6px;
+      height: 6px;
+      background: #ffff44;
+      box-shadow: 0 0 8px #ffee00;
+    }
+
+    .projectile.ice {
+      width: 10px;
+      height: 10px;
+      background: #aaddff;
+      box-shadow: 0 0 6px #88ccff;
+    }
+
+    /* Damage numbers */
+    .dmg-num {
+      position: absolute;
+      font-size: 11px;
+      font-weight: 800;
+      pointer-events: none;
+      z-index: 30;
+      animation: floatUp .8s ease-out forwards;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .8);
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-30px) scale(.7)
+      }
+    }
+
+    /* Spawn flash */
+    .spawn-flash {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid;
+      animation: spawnRing .4s ease-out forwards;
+      pointer-events: none;
+      z-index: 25;
+    }
+
+    @keyframes spawnRing {
+      0% {
+        opacity: 1;
+        transform: scale(.5)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(2)
+      }
+    }
+
+    .spawn-flash.blue {
+      border-color: #6ab8ff;
+    }
+
+    .spawn-flash.red {
+      border-color: #ff8877;
+    }
+
+    /* Explosions / spell FX */
+    .explosion {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 25;
+      animation: explode .5s ease-out forwards;
+    }
+
+    @keyframes explode {
+      0% {
+        opacity: 1;
+        transform: scale(.2)
+      }
+
+      60% {
+        opacity: .8
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(3)
+      }
+    }
+
+    .freeze-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 25;
+      border: 3px solid #aaddff;
+      animation: freezeRing .6s ease-out forwards;
+    }
+
+    @keyframes freezeRing {
+      0% {
+        opacity: 1;
+        transform: scale(.2)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(3)
+      }
+    }
+
+    .lightning-strike {
+      position: absolute;
+      width: 4px;
+      pointer-events: none;
+      z-index: 25;
+      background: linear-gradient(180deg, #ffff44, #ffffff, #88aaff);
+      box-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00;
+      animation: lStrike .3s ease-out forwards;
+      border-radius: 2px;
+    }
+
+    @keyframes lStrike {
+      0% {
+        opacity: 1;
+        transform: scaleY(1)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scaleY(1.1)
+      }
+    }
+
+    /* HUD */
+    #hud-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: rgba(10, 13, 20, .85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    #timer {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 18px;
+      color: var(--gold);
+      font-weight: 700;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    #timer.urgent {
+      color: var(--red-light);
+      animation: pulse .5s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        opacity: 1
+      }
+
+      to {
+        opacity: .5
+      }
+    }
+
+    .crown-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .crown-icon {
+      font-size: 16px;
+      opacity: .3;
+      transition: opacity .3s, filter .3s;
+    }
+
+    .crown-icon.earned {
+      opacity: 1;
+      filter: drop-shadow(0 0 5px gold);
+    }
+
+    /* Elixir */
+    #elixir-bar-wrap {
+      position: absolute;
+      bottom: 72px;
+      left: 0;
+      right: 0;
+      padding: 0 12px;
+      z-index: 50;
+    }
+
+    .elixir-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .elixir-text {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #cc88ff;
+    }
+
+    .elixir-count {
+      font-size: 20px;
+      font-weight: 800;
+      color: #cc88ff;
+    }
+
+    #elixir-bar {
+      height: 10px;
+      background: rgba(0, 0, 0, .4);
+      border-radius: 5px;
+      overflow: hidden;
+      border: 1px solid rgba(138, 43, 226, .3);
+    }
+
+    #elixir-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #9933dd, #cc66ff);
+      border-radius: 5px;
+      transition: width .2s;
+      box-shadow: 0 0 8px rgba(200, 100, 255, .5);
+    }
+
+    /* Card hand — fixed 4 troop cards */
+    #card-hand {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: rgba(10, 13, 20, .92);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 12px;
+      z-index: 50;
+    }
+
+    .card {
+      width: 54px;
+      height: 58px;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, .15);
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .15s;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .card:hover:not(.disabled) {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+      box-shadow: 0 4px 16px rgba(245, 197, 24, .25);
+    }
+
+    .card.selected {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px var(--gold), 0 0 20px rgba(245, 197, 24, .5);
+      transform: translateY(-6px);
+    }
+
+    .card.disabled {
+      opacity: .4;
+      cursor: not-allowed;
+      filter: grayscale(.5);
+    }
+
+    .card .card-emoji {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .card .card-name {
+      font-size: 8px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-top: 2px;
+    }
+
+    .card .card-cost {
+      position: absolute;
+      top: 2px;
+      left: 4px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #cc88ff;
+    }
+
+    /* Spell panel — bottom-right corner of arena */
+    #spell-panel {
+      position: absolute;
+      bottom: 72px;
+      right: 0;
+      width: 64px;
+      background: rgba(10, 13, 20, .88);
+      backdrop-filter: blur(6px);
+      border-top-left-radius: 10px;
+      border-left: 1px solid rgba(255, 255, 255, .08);
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 6px 4px 8px;
+      z-index: 52;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .spell-label {
+      font-size: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 2px;
+    }
+
+    .spell-btn {
+      width: 50px;
+      height: 52px;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, .15);
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .15s;
+      position: relative;
+    }
+
+    .spell-btn:hover:not(.disabled) {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+      box-shadow: 0 4px 16px rgba(245, 197, 24, .25);
+    }
+
+    .spell-btn.selected {
+      border-color: #cc88ff;
+      box-shadow: 0 0 0 2px #cc88ff, 0 0 16px rgba(200, 100, 255, .5);
+      transform: translateY(-4px);
+    }
+
+    .spell-btn.disabled {
+      opacity: .4;
+      cursor: not-allowed;
+      filter: grayscale(.5);
+    }
+
+    .spell-btn .s-emoji {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .spell-btn .s-name {
+      font-size: 7px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-top: 2px;
+    }
+
+    .spell-btn .s-cost {
+      position: absolute;
+      top: 2px;
+      left: 4px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #cc88ff;
+    }
+
+    .spell-cooldown-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, .65);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #cc88ff;
+      pointer-events: none;
+    }
+
+    /* Placement overlay */
+    #placement-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      cursor: crosshair;
+      display: none;
+    }
+
+    #placement-overlay.active {
+      display: block;
+    }
+
+    .placement-hint {
+      position: absolute;
+      bottom: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(245, 197, 24, .92);
+      color: #1a1200;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      pointer-events: none;
+      z-index: 55;
+      display: none;
+      white-space: nowrap;
+    }
+
+    .placement-hint.show {
+      display: block;
+    }
+
+    .placement-cursor {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border: 2px dashed var(--gold);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: rotateCursor 2s linear infinite;
+    }
+
+    @keyframes rotateCursor {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    .placement-cursor.spell {
+      border-color: #cc88ff;
+    }
+
+    /* Side panel */
+    #side-panel {
+      width: 220px;
+      background: var(--bg-mid);
+      border-left: 1px solid rgba(255, 255, 255, .06);
+      display: flex;
+      flex-direction: column;
+      padding: 16px 12px;
+      gap: 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .panel-title {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      font-size: 13px;
+    }
+
+    .stat-label {
+      color: var(--text-dim);
+    }
+
+    .stat-val {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .stat-val.blue {
+      color: var(--blue-light);
+    }
+
+    .stat-val.red {
+      color: var(--red-light);
+    }
+
+    .stat-val.gold {
+      color: var(--gold);
+    }
+
+    .tower-status {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ts-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .ts-bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: rgba(0, 0, 0, .4);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .ts-bar {
+      height: 100%;
+      border-radius: 4px;
+      transition: width .3s;
+    }
+
+    .ts-bar.blue {
+      background: linear-gradient(90deg, var(--blue), var(--blue-light));
+    }
+
+    .ts-bar.red {
+      background: linear-gradient(90deg, var(--red), var(--red-light));
+    }
+
+    .ts-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      min-width: 30px;
+      text-align: right;
+    }
+
+    #battle-log {
+      flex: 1;
+      overflow-y: auto;
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    #battle-log::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    #battle-log::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, .1);
+      border-radius: 2px;
+    }
+
+    .log-entry {
+      padding: 1px 0;
+    }
+
+    .log-entry.good {
+      color: #6ab8ff;
+    }
+
+    .log-entry.bad {
+      color: #ff8877;
+    }
+
+    .log-entry.gold {
+      color: var(--gold);
+    }
+
+    .log-entry.spell {
+      color: #cc88ff;
+    }
+
+    @media(max-width:600px) {
+      #side-panel {
+        width: 150px
+      }
+    }
+
+    @media(max-width:480px) {
+      #side-panel {
+        display: none
+      }
+
+      #arena {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0
+      }
+    }
+  </style>
+  <script type="text/javascript" data-cfasync="false" src="../scripts/ad-network.js"></script>
 </head>
+
 <body>
 
-<!-- ══ MENU ══ -->
-<div id="menu" class="screen active">
-  <div class="stars" id="stars-bg"></div>
-  <div class="menu-logo">Crown Clash</div>
-  <div class="menu-tagline">Deploy ✦ Destroy ✦ Dominate</div>
-  <button class="menu-btn" onclick="startGame()">⚔️ Battle!</button>
-  <div class="menu-info">
-    <div class="info-card"><div class="label">Troops</div><div class="value">4</div></div>
-    <div class="info-card"><div class="label">Spells</div><div class="value">3</div></div>
-    <div class="info-card"><div class="label">Time</div><div class="value">3:00</div></div>
-  </div>
-</div>
-
-<!-- ══ GAME ══ -->
-<div id="game" class="screen">
-  <div id="arena-wrap">
-    <div id="arena">
-      <div class="arena-half-top"></div>
-      <div class="arena-half-bot"></div>
-      <div class="lane-path left"></div>
-      <div class="lane-path right"></div>
-      <div class="lane-path center"></div>
-      <div class="arena-river"></div>
-      <div class="river-bridge"></div>
-
-      <div id="hud-top">
-        <div class="crown-row" id="player-crowns"></div>
-        <div id="timer">3:00</div>
-        <div class="crown-row" id="enemy-crowns"></div>
+  <!-- ══ MENU ══ -->
+  <div id="menu" class="screen active">
+    <div class="stars" id="stars-bg"></div>
+    <div class="menu-logo">Crown Clash</div>
+    <div class="menu-tagline">Deploy ✦ Destroy ✦ Dominate</div>
+    <button class="menu-btn" onclick="startGame()">⚔️ Battle!</button>
+    <div class="menu-info">
+      <div class="info-card">
+        <div class="label">Troops</div>
+        <div class="value">4</div>
       </div>
-
-      <div id="elixir-bar-wrap">
-        <div class="elixir-label">
-          <span class="elixir-text">Elixir</span>
-          <span class="elixir-count" id="elixir-num">5</span>
-        </div>
-        <div id="elixir-bar"><div id="elixir-fill" style="width:50%"></div></div>
+      <div class="info-card">
+        <div class="label">Spells</div>
+        <div class="value">3</div>
       </div>
-
-      <!-- Fixed 4 troop cards -->
-      <div id="card-hand"></div>
-
-      <!-- Spell panel corner -->
-      <div id="spell-panel">
-        <div class="spell-label">Spells</div>
+      <div class="info-card">
+        <div class="label">Time</div>
+        <div class="value">3:00</div>
       </div>
-
-      <div id="placement-overlay"></div>
-      <div class="placement-hint" id="placement-hint">Tap your half to place!</div>
     </div>
   </div>
 
-  <div id="side-panel">
-    <div class="panel-title">Battle Status</div>
-    <div class="stat-row"><span class="stat-label">Crowns</span><span class="stat-val gold" id="sp-crowns">0 – 0</span></div>
-    <div class="stat-row"><span class="stat-label">Units Out</span><span class="stat-val blue" id="sp-units">0 / 0</span></div>
-    <div class="stat-row"><span class="stat-label">Elixir Spent</span><span class="stat-val gold" id="sp-elixir">0</span></div>
-    <div class="panel-title" style="margin-top:4px">Towers</div>
-    <div class="tower-status" id="tower-status-wrap"></div>
-    <div class="panel-title" style="margin-top:4px">Battle Log</div>
-    <div id="battle-log"></div>
+  <!-- ══ GAME ══ -->
+  <div id="game" class="screen">
+    <div id="arena-wrap">
+      <div id="arena">
+        <div class="arena-half-top"></div>
+        <div class="arena-half-bot"></div>
+        <div class="lane-path left"></div>
+        <div class="lane-path right"></div>
+        <div class="lane-path center"></div>
+        <div class="arena-river"></div>
+        <div class="river-bridge"></div>
+
+        <div id="hud-top">
+          <div class="crown-row" id="player-crowns"></div>
+          <div id="timer">3:00</div>
+          <div class="crown-row" id="enemy-crowns"></div>
+        </div>
+
+        <div id="elixir-bar-wrap">
+          <div class="elixir-label">
+            <span class="elixir-text">Elixir</span>
+            <span class="elixir-count" id="elixir-num">5</span>
+          </div>
+          <div id="elixir-bar">
+            <div id="elixir-fill" style="width:50%"></div>
+          </div>
+        </div>
+
+        <!-- Fixed 4 troop cards -->
+        <div id="card-hand"></div>
+
+        <!-- Spell panel corner -->
+        <div id="spell-panel">
+          <div class="spell-label">Spells</div>
+        </div>
+
+        <div id="placement-overlay"></div>
+        <div class="placement-hint" id="placement-hint">Tap your half to place!</div>
+      </div>
+    </div>
+
+    <div id="side-panel">
+      <div class="panel-title">Battle Status</div>
+      <div class="stat-row"><span class="stat-label">Crowns</span><span class="stat-val gold" id="sp-crowns">0 –
+          0</span></div>
+      <div class="stat-row"><span class="stat-label">Units Out</span><span class="stat-val blue" id="sp-units">0 /
+          0</span></div>
+      <div class="stat-row"><span class="stat-label">Elixir Spent</span><span class="stat-val gold"
+          id="sp-elixir">0</span></div>
+      <div class="panel-title" style="margin-top:4px">Towers</div>
+      <div class="tower-status" id="tower-status-wrap"></div>
+      <div class="panel-title" style="margin-top:4px">Battle Log</div>
+      <div id="battle-log"></div>
+    </div>
   </div>
-</div>
 
-<!-- ══ GAME OVER ══ -->
-<div id="gameover" class="screen">
-  <div class="go-title" id="go-title">Victory!</div>
-  <div class="go-subtitle" id="go-sub">The enemy has been crushed</div>
-  <div class="go-stats">
-    <div class="go-stat"><div class="s-label">Crowns Won</div><div class="s-val" id="go-crowns">3</div></div>
-    <div class="go-stat"><div class="s-label">Elixir Used</div><div class="s-val" id="go-elixir">0</div></div>
-    <div class="go-stat"><div class="s-label">Units Deployed</div><div class="s-val" id="go-units">0</div></div>
+  <!-- ══ GAME OVER ══ -->
+  <div id="gameover" class="screen">
+    <div class="go-title" id="go-title">Victory!</div>
+    <div class="go-subtitle" id="go-sub">The enemy has been crushed</div>
+    <div class="go-stats">
+      <div class="go-stat">
+        <div class="s-label">Crowns Won</div>
+        <div class="s-val" id="go-crowns">3</div>
+      </div>
+      <div class="go-stat">
+        <div class="s-label">Elixir Used</div>
+        <div class="s-val" id="go-elixir">0</div>
+      </div>
+      <div class="go-stat">
+        <div class="s-label">Units Deployed</div>
+        <div class="s-val" id="go-units">0</div>
+      </div>
+    </div>
+    <div class="go-btns">
+      <button class="go-btn" onclick="startGame()">⚔️ Play Again</button>
+      <button class="go-btn secondary" onclick="showMenu()">🏠 Menu</button>
+    </div>
   </div>
-  <div class="go-btns">
-    <button class="go-btn" onclick="startGame()">⚔️ Play Again</button>
-    <button class="go-btn secondary" onclick="showMenu()">🏠 Menu</button>
-  </div>
-</div>
 
-<script>
-// ═══════════════════════════════════════════════════
-//  CROWN CLASH  v2  –  Fixed cards + Spell panel
-// ═══════════════════════════════════════════════════
+  <script>
+    // ═══════════════════════════════════════════════════
+    //  CROWN CLASH  v2  –  Fixed cards + Spell panel
+    // ═══════════════════════════════════════════════════
 
-// Stars
-(function(){
-  const bg = document.getElementById('stars-bg');
-  for(let i=0;i<80;i++){
-    const s=document.createElement('div'); s.className='star';
-    const z=Math.random()*2.5+.5;
-    s.style.cssText=`width:${z}px;height:${z}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${2+Math.random()*4}s;--delay:${Math.random()*4}s`;
-    bg.appendChild(s);
-  }
-})();
-
-// ── Card definitions (4 fixed troops) ─────────────
-const TROOP_CARDS = [
-  { id:'knight',  name:'Knight', emoji:'⚔️', cost:3, hp:320, dmg:85,  spd:1.2, range:32, atkSpd:900,  type:'melee' },
-  { id:'archers', name:'Archers',emoji:'🏹', cost:3, hp:140, dmg:45,  spd:1.0, range:85, atkSpd:1100, type:'ranged', count:2 },
-  { id:'giant',   name:'Giant',  emoji:'🗿', cost:5, hp:750, dmg:110, spd:0.6, range:32, atkSpd:1600, type:'melee', target:'tower' },
-  { id:'wizard',  name:'Wizard', emoji:'🧙', cost:5, hp:210, dmg:105, spd:0.9, range:95, atkSpd:1900, type:'splash', aoe:44 },
-];
-
-// ── Spell definitions ──────────────────────────────
-const SPELL_DEFS = [
-  { id:'fireball',  name:'Fireball',  emoji:'🔥', cost:4, dmg:200, aoe:55,  color:'rgba(255,80,0,.75)',   projType:'fireball'  },
-  { id:'lightning', name:'Lightning', emoji:'⚡', cost:3, dmg:280, aoe:0,   color:'rgba(255,255,80,.9)',  projType:'lightning', chainCount:3, chainDmg:0.5 },
-  { id:'freeze',    name:'Freeze',    emoji:'❄️', cost:4, dmg:0,   aoe:70,  color:'rgba(150,220,255,.6)', projType:'ice',       freezeDur:2500 },
-];
-
-// ── AI card pool (weaker units) ────────────────────
-const AI_CARDS = [
-  { id:'goblin',    name:'Goblin',   emoji:'👺', cost:2, hp:90,  dmg:55,  spd:1.6, range:25, atkSpd:750,  type:'melee', count:3 },
-  { id:'skeleton',  name:'Skeletons',emoji:'💀', cost:1, hp:60,  dmg:40,  spd:1.5, range:25, atkSpd:700,  type:'melee', count:3 },
-  { id:'mini',      name:'Mini P.',  emoji:'🤖', cost:4, hp:370, dmg:160, spd:1.0, range:30, atkSpd:1700, type:'melee' },
-  { id:'musket',    name:'Musketeer',emoji:'🔫', cost:4, hp:180, dmg:80,  spd:0.9, range:90, atkSpd:1400, type:'ranged' },
-  { id:'barbarian', name:'Barbarian',emoji:'🪓', cost:5, hp:250, dmg:90,  spd:1.1, range:28, atkSpd:900,  type:'melee', count:2 },
-];
-
-// ── Globals ────────────────────────────────────────
-let G = {};
-const arena           = document.getElementById('arena');
-const placementOverlay= document.getElementById('placement-overlay');
-const placementHint   = document.getElementById('placement-hint');
-const elixirFill      = document.getElementById('elixir-fill');
-const elixirNum       = document.getElementById('elixir-num');
-const timerEl         = document.getElementById('timer');
-const cardHand        = document.getElementById('card-hand');
-const spellPanel      = document.getElementById('spell-panel');
-const battleLog       = document.getElementById('battle-log');
-const ARENA_W=320, ARENA_H=560;
-
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-function showMenu(){ stopGame(); showScreen('menu'); }
-
-// ── Tower layout ───────────────────────────────────
-const TOWER_CFGS = [
-  {id:'e-left', team:'red',  x:75,  y:80,  isKing:false, maxHp:800 },
-  {id:'e-king', team:'red',  x:160, y:48,  isKing:true,  maxHp:1400},
-  {id:'e-right',team:'red',  x:245, y:80,  isKing:false, maxHp:800 },
-  {id:'p-left', team:'blue', x:75,  y:480, isKing:false, maxHp:800 },
-  {id:'p-king', team:'blue', x:160, y:512, isKing:true,  maxHp:1400},
-  {id:'p-right',team:'blue', x:245, y:480, isKing:false, maxHp:800 },
-];
-
-function buildTowers(){
-  const t={};
-  TOWER_CFGS.forEach(c=>{ t[c.id]={...c,hp:c.maxHp,destroyed:false,lastShot:0,shotCooldown:1800,dmg:c.isKing?90:65,range:c.isKing?105:88}; });
-  return t;
-}
-
-// ── Start / Stop ───────────────────────────────────
-function startGame(){
-  stopGame();
-  G={
-    running:true, time:180,
-    elixir:5, elixirMax:10, elixirRate:1/2.8,
-    selectedCard:null, selectedSpell:null, selectedSlot:null, isSpellMode:false,
-    units:[], projectiles:[],
-    nextId:1,
-    playerCrowns:0, enemyCrowns:0,
-    elixirSpent:0, unitsDeployed:0,
-    // AI — noticeably weaker & slower
-    aiElixir:3, aiElixirRate:1/4.5,
-    aiTimer:5 + Math.random()*4,  // wait before first move
-    aiMaxUnits:4,                  // cap AI units on field
-    lastTime:null, raf:null,
-    towers:buildTowers(),
-    spellCooldowns:{fireball:0,lightning:0,freeze:0},
-  };
-  showScreen('game');
-  clearArena();
-  buildTowerEls();
-  buildCardHandUI();
-  buildSpellPanelUI();
-  updateCrowns();
-  buildTowerStatusPanel();
-  updateSidePanel();
-  battleLog.innerHTML='';
-  addLog('Battle started! 👑','gold');
-  G.raf=requestAnimationFrame(gameLoop);
-}
-
-function stopGame(){
-  if(G.raf){cancelAnimationFrame(G.raf);G.raf=null;}
-  if(G) G.running=false;
-}
-
-function clearArena(){
-  arena.querySelectorAll('.tower,.unit,.projectile,.dmg-num,.spawn-flash,.explosion,.freeze-ring,.lightning-strike').forEach(e=>e.remove());
-}
-
-// ── Tower elements ─────────────────────────────────
-function buildTowerEls(){
-  Object.values(G.towers).forEach(t=>{
-    const el=document.createElement('div');
-    el.className=`tower ${t.team}`; el.id=`tower-${t.id}`;
-    el.style.left=(t.x-22)+'px'; el.style.top=(t.y-22)+'px';
-    el.innerHTML=`${t.isKing?'👑':(t.team==='blue'?'🏰':'🏯')}<div class="tower-hp-bar"><div class="tower-hp-fill" id="thp-${t.id}" style="width:100%"></div></div>`;
-    arena.appendChild(el);
-  });
-}
-function updateTowerEl(t){
-  const el=document.getElementById(`tower-${t.id}`); if(!el)return;
-  const fill=document.getElementById(`thp-${t.id}`);
-  if(fill) fill.style.width=Math.max(0,t.hp/t.maxHp*100)+'%';
-  if(t.destroyed) el.classList.add('destroyed');
-}
-
-// ── Card hand (fixed 4 troops, always same) ────────
-function buildCardHandUI(){
-  cardHand.innerHTML='';
-  TROOP_CARDS.forEach((card,i)=>{
-    const el=document.createElement('div');
-    el.className='card'; el.id=`card-slot-${i}`;
-    el.innerHTML=`<span class="card-cost">${card.cost}</span><span class="card-emoji">${card.emoji}</span><span class="card-name">${card.name}</span>`;
-    el.addEventListener('click',()=>selectTroopCard(i));
-    cardHand.appendChild(el);
-  });
-}
-
-function selectTroopCard(i){
-  const card=TROOP_CARDS[i];
-  if(G.elixir<card.cost){ shake(); return; }
-  // Toggle off
-  if(G.selectedSlot===i && !G.isSpellMode){ deselectAll(); return; }
-  deselectAll();
-  G.selectedSlot=i; G.selectedCard=card; G.isSpellMode=false;
-  document.getElementById(`card-slot-${i}`).className='card selected';
-  placementOverlay.classList.add('active');
-  placementHint.textContent='Tap your half to place!';
-  placementHint.classList.add('show');
-  updateCardStates();
-}
-
-function updateCardStates(){
-  TROOP_CARDS.forEach((card,i)=>{
-    const el=document.getElementById(`card-slot-${i}`); if(!el)return;
-    const sel=G.selectedSlot===i && !G.isSpellMode;
-    const dis=G.elixir<card.cost;
-    el.className=`card${sel?' selected':''}${dis?' disabled':''}`;
-  });
-  SPELL_DEFS.forEach(sp=>{
-    const el=document.getElementById(`spell-btn-${sp.id}`); if(!el)return;
-    const sel=G.isSpellMode && G.selectedSpell?.id===sp.id;
-    const dis=G.elixir<sp.cost || Date.now()<G.spellCooldowns[sp.id];
-    el.className=`spell-btn${sel?' selected':''}${dis?' disabled':''}`;
-    const ov=document.getElementById(`scd-${sp.id}`);
-    if(ov){
-      const rem=Math.ceil((G.spellCooldowns[sp.id]-Date.now())/1000);
-      ov.style.display= rem>0 ? 'flex':'none';
-      if(rem>0) ov.textContent=rem+'s';
-    }
-  });
-}
-
-// ── Spell panel ─────────────────────────────────────
-function buildSpellPanelUI(){
-  // Remove old spell btns
-  spellPanel.querySelectorAll('.spell-btn').forEach(e=>e.remove());
-  SPELL_DEFS.forEach(sp=>{
-    const btn=document.createElement('div');
-    btn.className='spell-btn'; btn.id=`spell-btn-${sp.id}`;
-    btn.innerHTML=`<span class="s-cost">${sp.cost}</span><span class="s-emoji">${sp.emoji}</span><span class="s-name">${sp.name}</span><div class="spell-cooldown-overlay" id="scd-${sp.id}" style="display:none"></div>`;
-    btn.addEventListener('click',()=>selectSpell(sp.id));
-    spellPanel.appendChild(btn);
-  });
-}
-
-function selectSpell(id){
-  const sp=SPELL_DEFS.find(s=>s.id===id);
-  if(!sp) return;
-  if(G.elixir<sp.cost){ shake(); return; }
-  if(Date.now()<G.spellCooldowns[id]){ shake(); return; }
-  // Toggle
-  if(G.isSpellMode && G.selectedSpell?.id===id){ deselectAll(); return; }
-  deselectAll();
-  G.selectedSpell=sp; G.isSpellMode=true;
-  document.getElementById(`spell-btn-${id}`).className='spell-btn selected';
-  placementOverlay.classList.add('active');
-  placementHint.textContent='Tap anywhere to cast!';
-  placementHint.classList.add('show');
-  // Purple cursor
-  const cur=document.createElement('div'); cur.className='placement-cursor spell'; placementOverlay.appendChild(cur);
-  updateCardStates();
-}
-
-function deselectAll(){
-  G.selectedSlot=null; G.selectedCard=null; G.selectedSpell=null; G.isSpellMode=false;
-  placementOverlay.classList.remove('active');
-  placementHint.classList.remove('show');
-  const cur=placementOverlay.querySelector('.placement-cursor'); if(cur) cur.remove();
-  updateCardStates();
-}
-
-// ── Placement overlay events ───────────────────────
-placementOverlay.addEventListener('click',function(e){
-  const rect=arena.getBoundingClientRect();
-  const x=e.clientX-rect.left, y=e.clientY-rect.top;
-  if(G.isSpellMode && G.selectedSpell){
-    castSpell(G.selectedSpell,x,y,'blue');
-    G.elixir-=G.selectedSpell.cost; G.elixirSpent+=G.selectedSpell.cost;
-    G.spellCooldowns[G.selectedSpell.id]=Date.now()+3000; // 3s cooldown
-    deselectAll(); updateElixir(); updateCardStates();
-  } else if(G.selectedCard){
-    if(y<ARENA_H*0.53){ addLog('Place in your half!','bad'); shake(); return; }
-    G.elixir-=G.selectedCard.cost; G.elixirSpent+=G.selectedCard.cost;
-    spawnUnit(G.selectedCard,x,y,'blue'); G.unitsDeployed++;
-    deselectAll(); updateElixir(); updateCardStates(); updateSidePanel();
-  }
-});
-
-placementOverlay.addEventListener('mousemove',function(e){
-  const rect=arena.getBoundingClientRect();
-  const x=e.clientX-rect.left, y=e.clientY-rect.top;
-  let cur=placementOverlay.querySelector('.placement-cursor');
-  if(!cur){ cur=document.createElement('div'); cur.className=`placement-cursor${G.isSpellMode?' spell':''}`; placementOverlay.appendChild(cur); }
-  cur.style.left=x+'px'; cur.style.top=y+'px';
-});
-placementOverlay.addEventListener('mouseleave',function(){
-  const cur=placementOverlay.querySelector('.placement-cursor'); if(cur) cur.remove();
-});
-
-function shake(){
-  arena.style.transform='translateX(-4px)';
-  setTimeout(()=>{arena.style.transform='translateX(4px)';},80);
-  setTimeout(()=>{arena.style.transform='';},160);
-}
-
-// ── Unit spawning ──────────────────────────────────
-function spawnUnit(card,x,y,team){
-  const count=card.count||1;
-  for(let c=0;c<count;c++){
-    const ox=(c-(count-1)/2)*18;
-    const uid=G.nextId++;
-    const unit={
-      id:uid, cardId:card.id, emoji:card.emoji, team,
-      x:Math.max(14,Math.min(ARENA_W-14,x+ox)),
-      y:Math.max(50,Math.min(ARENA_H-80,y)),
-      hp:card.hp, maxHp:card.hp,
-      dmg:card.dmg, spd:card.spd*25, range:card.range,
-      atkSpd:card.atkSpd, type:card.type,
-      target:card.target||'any', aoe:card.aoe||0,
-      lastAtk:0, state:'march',
-      frozen:false, frozenUntil:0,
-      el:null,
-    };
-    const el=document.createElement('div');
-    el.className=`unit ${team}`; el.id=`unit-${uid}`;
-    el.innerHTML=`${card.emoji}<div class="unit-hp-bar"><div class="unit-hp-fill" id="uhp-${uid}" style="width:100%"></div></div>`;
-    el.style.left=(unit.x-14)+'px'; el.style.top=(unit.y-14)+'px';
-    arena.appendChild(el); unit.el=el;
-    G.units.push(unit);
-    const flash=document.createElement('div');
-    flash.className=`spawn-flash ${team}`;
-    flash.style.left=(unit.x-20)+'px'; flash.style.top=(unit.y-20)+'px';
-    arena.appendChild(flash); setTimeout(()=>flash.remove(),500);
-  }
-  addLog(`${team==='blue'?'🔵':'🔴'} ${card.name} deployed!`,team==='blue'?'good':'bad');
-}
-
-// ── Spell casting ──────────────────────────────────
-function castSpell(sp,x,y,team){
-  const enemyTeam=team==='blue'?'red':'blue';
-
-  if(sp.id==='fireball'){
-    spawnExplosion(x,y,sp.aoe,sp.color);
-    G.units.forEach(u=>{
-      if(u.team===team)return;
-      const d=dist2d(u.x,u.y,x,y);
-      if(d<sp.aoe) dealDamage(u,sp.dmg*(1-d/sp.aoe*.5));
-    });
-    Object.values(G.towers).forEach(t=>{
-      if(t.team===team||t.destroyed)return;
-      if(dist2d(t.x,t.y,x,y)<sp.aoe) damageTower(t,sp.dmg*.55);
-    });
-    addLog(`🔥 Fireball cast!`,'spell');
-  }
-
-  if(sp.id==='lightning'){
-    // Hits closest enemy unit or tower, then chains
-    let targets=[];
-    // Collect enemy units
-    G.units.filter(u=>u.team===enemyTeam).forEach(u=>targets.push({x:u.x,y:u.y,unit:u}));
-    // Sort by nearest to click
-    targets.sort((a,b)=>dist2d(a.x,a.y,x,y)-dist2d(b.x,b.y,x,y));
-    const hit=targets.slice(0,sp.chainCount);
-    hit.forEach((h,i)=>{
-      const dmg=i===0?sp.dmg:sp.dmg*sp.chainDmg;
-      setTimeout(()=>{
-        showLightningStrike(x,y,h.x,h.y);
-        dealDamage(h.unit,dmg);
-      },i*120);
-    });
-    // Also zap a tower if fewer than chainCount units
-    if(hit.length<sp.chainCount){
-      const t=getNearestEnemyTower(team);
-      if(t) { setTimeout(()=>{ showLightningStrike(x,y,t.x,t.y); damageTower(t,sp.dmg*.4); },hit.length*120); }
-    }
-    addLog(`⚡ Lightning strikes!`,'spell');
-  }
-
-  if(sp.id==='freeze'){
-    spawnFreezeRing(x,y,sp.aoe);
-    const now=Date.now();
-    G.units.forEach(u=>{
-      if(u.team===team)return;
-      if(dist2d(u.x,u.y,x,y)<sp.aoe){
-        u.frozen=true; u.frozenUntil=now+sp.freezeDur;
-        if(u.el) u.el.classList.add('frozen');
+    // Stars
+    (function () {
+      const bg = document.getElementById('stars-bg');
+      for (let i = 0; i < 80; i++) {
+        const s = document.createElement('div'); s.className = 'star';
+        const z = Math.random() * 2.5 + .5;
+        s.style.cssText = `width:${z}px;height:${z}px;top:${Math.random() * 100}%;left:${Math.random() * 100}%;--dur:${2 + Math.random() * 4}s;--delay:${Math.random() * 4}s`;
+        bg.appendChild(s);
       }
-    });
-    addLog(`❄️ Freeze!`,'spell');
-  }
-}
-
-function spawnExplosion(x,y,aoe,color){
-  const el=document.createElement('div'); el.className='explosion';
-  el.style.left=(x-aoe/2)+'px'; el.style.top=(y-aoe/2)+'px';
-  el.style.width=aoe+'px'; el.style.height=aoe+'px';
-  el.style.background=color; arena.appendChild(el);
-  setTimeout(()=>el.remove(),600);
-}
-
-function spawnFreezeRing(x,y,aoe){
-  const el=document.createElement('div'); el.className='freeze-ring';
-  el.style.left=(x-aoe/2)+'px'; el.style.top=(y-aoe/2)+'px';
-  el.style.width=aoe+'px'; el.style.height=aoe+'px';
-  arena.appendChild(el); setTimeout(()=>el.remove(),700);
-}
-
-function showLightningStrike(x1,y1,x2,y2){
-  const dx=x2-x1, dy=y2-y1;
-  const len=Math.sqrt(dx*dx+dy*dy);
-  const angle=Math.atan2(dy,dx)*180/Math.PI;
-  const el=document.createElement('div'); el.className='lightning-strike';
-  el.style.left=x1+'px'; el.style.top=y1+'px';
-  el.style.height=len+'px'; el.style.transformOrigin='top center';
-  el.style.transform=`rotate(${angle+90}deg)`;
-  arena.appendChild(el); setTimeout(()=>el.remove(),350);
-}
-
-function getNearestEnemyTower(myTeam){
-  const order=myTeam==='blue'?['e-left','e-right','e-king']:['p-left','p-right','p-king'];
-  for(const id of order){ const t=G.towers[id]; if(t&&!t.destroyed)return t; }
-  return null;
-}
-
-function dist2d(ax,ay,bx,by){ const dx=ax-bx,dy=ay-by; return Math.sqrt(dx*dx+dy*dy); }
-
-// ── Game loop ──────────────────────────────────────
-function gameLoop(ts){
-  if(!G.running)return;
-  const dt=G.lastTime?(ts-G.lastTime)/1000:0;
-  G.lastTime=ts;
-
-  G.time-=dt;
-  if(G.time<=0){G.time=0;endGame(null);return;}
-
-  const m=Math.floor(G.time/60), s=Math.floor(G.time%60);
-  timerEl.textContent=`${m}:${s.toString().padStart(2,'0')}`;
-  timerEl.classList.toggle('urgent',G.time<=30);
-
-  G.elixir=Math.min(G.elixirMax,G.elixir+G.elixirRate*dt);
-  G.aiElixir=Math.min(G.elixirMax,G.aiElixir+G.aiElixirRate*dt);
-  updateElixir();
-  updateCardStates();
-
-  G.aiTimer-=dt;
-  if(G.aiTimer<=0) aiTick();
-
-  updateUnits(ts,dt);
-  towerFire(ts);
-  updateProjectiles(dt);
-  updateSidePanel();
-  updateTowerStatusPanel();
-
-  G.raf=requestAnimationFrame(gameLoop);
-}
-
-function updateElixir(){
-  elixirFill.style.width=(G.elixir/G.elixirMax*100)+'%';
-  elixirNum.textContent=Math.floor(G.elixir);
-}
-
-// ── Unit AI & movement ─────────────────────────────
-function updateUnits(ts,dt){
-  const now=Date.now();
-  const toRemove=[];
-  G.units.forEach(unit=>{
-    if(unit.hp<=0){toRemove.push(unit);return;}
-    // Unfreeze
-    if(unit.frozen && now>=unit.frozenUntil){
-      unit.frozen=false;
-      if(unit.el) unit.el.classList.remove('frozen');
-    }
-    if(unit.frozen) return; // frozen units don't move or attack
-
-    const tgt=findTarget(unit);
-    if(tgt){
-      const dx=tgt.x-unit.x, dy=tgt.y-unit.y;
-      const d=dist2d(unit.x,unit.y,tgt.x,tgt.y);
-      if(d<=unit.range){
-        unit.state='attack';
-        if(ts-unit.lastAtk>=unit.atkSpd){
-          unit.lastAtk=ts;
-          if(tgt.maxHp!==undefined && tgt.isKing!==undefined){
-            damageTower(tgt,unit.dmg);
-            shootProjectile(unit,tgt);
-          } else {
-            dealDamage(tgt,unit.dmg);
-            if(unit.type==='ranged'||unit.type==='splash') shootProjectile(unit,tgt);
-            if(unit.type==='splash'){
-              G.units.forEach(u=>{
-                if(u.team===unit.team||u.id===tgt.id)return;
-                if(dist2d(u.x,u.y,tgt.x,tgt.y)<(unit.aoe||44)) dealDamage(u,unit.dmg*.6);
-              });
-            }
-          }
-        }
-      } else {
-        unit.state='march';
-        const spd=unit.spd*dt;
-        unit.x+=dx/d*spd; unit.y+=dy/d*spd;
-      }
-    } else {
-      unit.state='march';
-      const ty=unit.team==='blue'?55:ARENA_H-55;
-      const dy2=ty-unit.y;
-      if(Math.abs(dy2)>5) unit.y+=Math.sign(dy2)*unit.spd*dt;
-    }
-
-    unit.x=Math.max(14,Math.min(ARENA_W-14,unit.x));
-    unit.y=Math.max(50,Math.min(ARENA_H-80,unit.y));
-
-    if(unit.el){
-      unit.el.style.left=(unit.x-14)+'px';
-      unit.el.style.top=(unit.y-14)+'px';
-      const fill=document.getElementById(`uhp-${unit.id}`);
-      if(fill) fill.style.width=Math.max(0,unit.hp/unit.maxHp*100)+'%';
-    }
-  });
-  toRemove.forEach(u=>removeUnit(u));
-}
-
-function findTarget(unit){
-  const et=unit.team==='blue'?'red':'blue';
-  if(unit.target!=='tower'){
-    let best=null,bd=Infinity;
-    G.units.forEach(u=>{
-      if(u.team!==et||u.hp<=0)return;
-      const d=dist2d(u.x,u.y,unit.x,unit.y);
-      if(d<bd){bd=d;best=u;}
-    });
-    if(best&&bd<130)return best;
-  }
-  const order=unit.team==='blue'?['e-left','e-right','e-king']:['p-left','p-right','p-king'];
-  for(const id of order){
-    const t=G.towers[id]; if(!t||t.destroyed)continue;
-    if(t.isKing){
-      const sidesDead=order.filter(i=>!G.towers[i]?.isKing).every(i=>G.towers[i]?.destroyed);
-      if(!sidesDead)continue;
-    }
-    return t;
-  }
-  return null;
-}
-
-function dealDamage(unit,dmg){
-  if(!unit||unit.hp<=0)return;
-  unit.hp-=dmg; showDmgNum(unit.x,unit.y,Math.round(dmg),unit.team);
-  if(unit.hp<=0) unit.hp=0;
-}
-
-function removeUnit(unit){
-  const i=G.units.indexOf(unit); if(i>=0)G.units.splice(i,1);
-  if(unit.el)unit.el.remove();
-}
-
-function damageTower(tower,dmg){
-  if(!tower||tower.destroyed)return;
-  tower.hp-=dmg; showDmgNum(tower.x,tower.y,Math.round(dmg),tower.team);
-  updateTowerEl(tower);
-  if(tower.hp<=0){tower.hp=0;destroyTower(tower);}
-}
-
-function destroyTower(tower){
-  tower.destroyed=true; updateTowerEl(tower);
-  addLog(tower.team==='red'?'👑 Crown!':'💀 Tower lost!',tower.team==='red'?'gold':'bad');
-  if(tower.team==='red'){
-    G.playerCrowns++; updateCrowns();
-    if(G.playerCrowns>=3){endGame('blue');return;}
-  } else {
-    G.enemyCrowns++; updateCrowns();
-    if(G.enemyCrowns>=3){endGame('red');return;}
-  }
-}
-
-// ── Tower fire ─────────────────────────────────────
-function towerFire(ts){
-  Object.values(G.towers).forEach(tower=>{
-    if(tower.destroyed)return;
-    if(ts-tower.lastShot<tower.shotCooldown)return;
-    const et=tower.team==='blue'?'red':'blue';
-    let tgt=null,bd=tower.range;
-    G.units.forEach(u=>{
-      if(u.team!==et)return;
-      const d=dist2d(u.x,u.y,tower.x,tower.y);
-      if(d<bd){bd=d;tgt=u;}
-    });
-    if(tgt){tower.lastShot=ts;dealDamage(tgt,tower.dmg);shootProjectile({x:tower.x,y:tower.y,type:'ranged'},tgt);}
-  });
-}
-
-// ── Projectiles ────────────────────────────────────
-function shootProjectile(from,to){
-  const proj={id:G.nextId++,x:from.x,y:from.y,tx:to.x,ty:to.y,spd:280,
-              type:from.type==='ranged'?'arrow':from.type==='splash'?'fireball':'arrow',done:false};
-  const el=document.createElement('div'); el.className=`projectile ${proj.type}`;
-  el.style.left=proj.x+'px'; el.style.top=proj.y+'px';
-  arena.appendChild(el); proj.el=el; G.projectiles.push(proj);
-}
-
-function updateProjectiles(dt){
-  const tr=[];
-  G.projectiles.forEach(p=>{
-    const dx=p.tx-p.x,dy=p.ty-p.y,d=dist2d(p.x,p.y,p.tx,p.ty);
-    if(d<5){tr.push(p);return;}
-    const spd=p.spd*dt;
-    p.x+=dx/d*Math.min(spd,d); p.y+=dy/d*Math.min(spd,d);
-    if(p.el){p.el.style.left=p.x+'px';p.el.style.top=p.y+'px';}
-  });
-  tr.forEach(p=>{if(p.el)p.el.remove();G.projectiles.splice(G.projectiles.indexOf(p),1);});
-}
-
-// ── Damage floaters ────────────────────────────────
-function showDmgNum(x,y,dmg,team){
-  const el=document.createElement('div'); el.className='dmg-num';
-  el.textContent=dmg;
-  el.style.left=(x-10+Math.random()*10-5)+'px';
-  el.style.top=(y-10)+'px';
-  el.style.color=team==='blue'?'#ff6655':'#6ab8ff';
-  arena.appendChild(el); setTimeout(()=>el.remove(),900);
-}
-
-// ── Crowns ─────────────────────────────────────────
-function updateCrowns(){
-  ['player-crowns','enemy-crowns'].forEach((id,ti)=>{
-    const row=document.getElementById(id); row.innerHTML='';
-    const count=ti===0?G.playerCrowns:G.enemyCrowns;
-    for(let i=0;i<3;i++){
-      const s=document.createElement('span');
-      s.className=`crown-icon${i<count?' earned':''}`;
-      s.textContent='👑'; row.appendChild(s);
-    }
-  });
-}
-
-// ── Side panel ─────────────────────────────────────
-function buildTowerStatusPanel(){
-  const wrap=document.getElementById('tower-status-wrap'); wrap.innerHTML='';
-  const order=['p-king','p-left','p-right','e-king','e-left','e-right'];
-  const labels={'p-king':'👑 King','p-left':'🏰 Left','p-right':'🏰 Right','e-king':'👑 E.King','e-left':'🏯 E.Left','e-right':'🏯 E.Right'};
-  order.forEach(id=>{
-    const t=G.towers[id];
-    const row=document.createElement('div'); row.className='ts-row';
-    row.innerHTML=`<span style="font-size:11px;color:var(--text-dim);min-width:60px">${labels[id]}</span><div class="ts-bar-wrap"><div class="ts-bar ${t.team}" id="spthp-${id}" style="width:100%"></div></div><span class="ts-label" id="sptxt-${id}">${t.hp}</span>`;
-    wrap.appendChild(row);
-  });
-}
-function updateTowerStatusPanel(){
-  ['p-king','p-left','p-right','e-king','e-left','e-right'].forEach(id=>{
-    const t=G.towers[id];
-    const bar=document.getElementById(`spthp-${id}`);
-    const txt=document.getElementById(`sptxt-${id}`);
-    if(bar)bar.style.width=Math.max(0,t.hp/t.maxHp*100)+'%';
-    if(txt)txt.textContent=t.destroyed?'💀':Math.max(0,Math.round(t.hp));
-  });
-}
-function updateSidePanel(){
-  const sc=document.getElementById('sp-crowns'); if(sc)sc.textContent=`${G.playerCrowns} – ${G.enemyCrowns}`;
-  const su=document.getElementById('sp-units');
-  if(su){const p=G.units.filter(u=>u.team==='blue').length,a=G.units.filter(u=>u.team==='red').length;su.textContent=`${p} / ${a}`;}
-  const se=document.getElementById('sp-elixir'); if(se)se.textContent=G.elixirSpent;
-}
-
-// ── Battle log ─────────────────────────────────────
-function addLog(msg,cls=''){
-  const el=document.createElement('div'); el.className=`log-entry ${cls}`;
-  el.textContent=msg; battleLog.prepend(el);
-  while(battleLog.children.length>20)battleLog.lastChild.remove();
-}
-
-// ── AI (nerfed) ────────────────────────────────────
-function aiTick(){
-  const aliveAI=G.units.filter(u=>u.team==='red').length;
-  // Cap AI units on field — prevents swarm overwhelming
-  if(aliveAI>=G.aiMaxUnits){G.aiTimer=2+Math.random()*2;return;}
-
-  // Only deploy if has enough elixir for chosen card
-  const affordable=AI_CARDS.filter(c=>G.aiElixir>=c.cost);
-  if(!affordable.length){G.aiTimer=1.5+Math.random()*2.5;return;}
-
-  // Weighted random: prefer cheaper cards (less aggression)
-  // Sort by cost ascending, pick from first half more often
-  const sorted=[...affordable].sort((a,b)=>a.cost-b.cost);
-  const idx=Math.random()<0.65 ? Math.floor(Math.random()*Math.ceil(sorted.length/2)) : Math.floor(Math.random()*sorted.length);
-  const card=sorted[idx];
-
-  G.aiElixir-=card.cost;
-
-  // Lane choice: slightly biased toward lanes where player has fewer units
-  const laneXs=[70,160,250];
-  const laneX=laneXs[Math.floor(Math.random()*laneXs.length)];
-  const y=75+Math.random()*175;
-  spawnUnit(card,laneX+(Math.random()*24-12),y,'red');
-
-  // AI base delay: 5–9s (much slower than before)
-  G.aiTimer=5+Math.random()*4;
-  // Slight speed-up in last 30s (still slower than original)
-  if(G.time<30) G.aiTimer*=0.65;
-}
-
-// ── End game ───────────────────────────────────────
-function endGame(winner){
-  stopGame();
-  if(!winner){
-    if(G.playerCrowns>G.enemyCrowns)winner='blue';
-    else if(G.enemyCrowns>G.playerCrowns)winner='red';
-    else winner='draw';
-  }
-  let title,sub;
-  if(winner==='blue'){title='🏆 Victory!';sub='The enemy has been crushed';}
-  else if(winner==='red'){title='💀 Defeat!';sub='Your kingdom fell';}
-  else{title='🤝 Draw!';sub='An equal battle ends';}
-  const gt=document.getElementById('go-title');
-  gt.textContent=title; gt.className=`go-title ${winner==='blue'?'win':'lose'}`;
-  document.getElementById('go-sub').textContent=sub;
-  document.getElementById('go-crowns').textContent=`${G.playerCrowns} – ${G.enemyCrowns}`;
-  document.getElementById('go-elixir').textContent=G.elixirSpent;
-  document.getElementById('go-units').textContent=G.unitsDeployed;
-  setTimeout(()=>showScreen('gameover'),800);
-}
-</script>
-    <script>
-    // Fire popunder on first user click (game interaction)
-    (function(){
-        var fired = false;
-        document.addEventListener('click', function handler(){
-            if(!fired){
-                fired = true;
-                document.removeEventListener('click', handler);
-            }
-        });
     })();
-    </script>
+
+    // ── Card definitions (4 fixed troops) ─────────────
+    const TROOP_CARDS = [
+      { id: 'knight', name: 'Knight', emoji: '⚔️', cost: 3, hp: 320, dmg: 85, spd: 1.2, range: 32, atkSpd: 900, type: 'melee' },
+      { id: 'archers', name: 'Archers', emoji: '🏹', cost: 3, hp: 140, dmg: 45, spd: 1.0, range: 85, atkSpd: 1100, type: 'ranged', count: 2 },
+      { id: 'giant', name: 'Giant', emoji: '🗿', cost: 5, hp: 750, dmg: 110, spd: 0.6, range: 32, atkSpd: 1600, type: 'melee', target: 'tower' },
+      { id: 'wizard', name: 'Wizard', emoji: '🧙', cost: 5, hp: 210, dmg: 105, spd: 0.9, range: 95, atkSpd: 1900, type: 'splash', aoe: 44 },
+    ];
+
+    // ── Spell definitions ──────────────────────────────
+    const SPELL_DEFS = [
+      { id: 'fireball', name: 'Fireball', emoji: '🔥', cost: 4, dmg: 200, aoe: 55, color: 'rgba(255,80,0,.75)', projType: 'fireball' },
+      { id: 'lightning', name: 'Lightning', emoji: '⚡', cost: 3, dmg: 280, aoe: 0, color: 'rgba(255,255,80,.9)', projType: 'lightning', chainCount: 3, chainDmg: 0.5 },
+      { id: 'freeze', name: 'Freeze', emoji: '❄️', cost: 4, dmg: 0, aoe: 70, color: 'rgba(150,220,255,.6)', projType: 'ice', freezeDur: 2500 },
+    ];
+
+    // ── AI card pool (weaker units) ────────────────────
+    const AI_CARDS = [
+      { id: 'goblin', name: 'Goblin', emoji: '👺', cost: 2, hp: 90, dmg: 55, spd: 1.6, range: 25, atkSpd: 750, type: 'melee', count: 3 },
+      { id: 'skeleton', name: 'Skeletons', emoji: '💀', cost: 1, hp: 60, dmg: 40, spd: 1.5, range: 25, atkSpd: 700, type: 'melee', count: 3 },
+      { id: 'mini', name: 'Mini P.', emoji: '🤖', cost: 4, hp: 370, dmg: 160, spd: 1.0, range: 30, atkSpd: 1700, type: 'melee' },
+      { id: 'musket', name: 'Musketeer', emoji: '🔫', cost: 4, hp: 180, dmg: 80, spd: 0.9, range: 90, atkSpd: 1400, type: 'ranged' },
+      { id: 'barbarian', name: 'Barbarian', emoji: '🪓', cost: 5, hp: 250, dmg: 90, spd: 1.1, range: 28, atkSpd: 900, type: 'melee', count: 2 },
+    ];
+
+    // ── Globals ────────────────────────────────────────
+    let G = {};
+    const arena = document.getElementById('arena');
+    const placementOverlay = document.getElementById('placement-overlay');
+    const placementHint = document.getElementById('placement-hint');
+    const elixirFill = document.getElementById('elixir-fill');
+    const elixirNum = document.getElementById('elixir-num');
+    const timerEl = document.getElementById('timer');
+    const cardHand = document.getElementById('card-hand');
+    const spellPanel = document.getElementById('spell-panel');
+    const battleLog = document.getElementById('battle-log');
+    const ARENA_W = 320, ARENA_H = 560;
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+    function showMenu() { stopGame(); showScreen('menu'); }
+
+    // ── Tower layout ───────────────────────────────────
+    const TOWER_CFGS = [
+      { id: 'e-left', team: 'red', x: 75, y: 80, isKing: false, maxHp: 800 },
+      { id: 'e-king', team: 'red', x: 160, y: 48, isKing: true, maxHp: 1400 },
+      { id: 'e-right', team: 'red', x: 245, y: 80, isKing: false, maxHp: 800 },
+      { id: 'p-left', team: 'blue', x: 75, y: 480, isKing: false, maxHp: 800 },
+      { id: 'p-king', team: 'blue', x: 160, y: 512, isKing: true, maxHp: 1400 },
+      { id: 'p-right', team: 'blue', x: 245, y: 480, isKing: false, maxHp: 800 },
+    ];
+
+    function buildTowers() {
+      const t = {};
+      TOWER_CFGS.forEach(c => { t[c.id] = { ...c, hp: c.maxHp, destroyed: false, lastShot: 0, shotCooldown: 1800, dmg: c.isKing ? 90 : 65, range: c.isKing ? 105 : 88 }; });
+      return t;
+    }
+
+    // ── Start / Stop ───────────────────────────────────
+    function startGame() {
+      stopGame();
+      G = {
+        running: true, time: 180,
+        elixir: 5, elixirMax: 10, elixirRate: 1 / 2.8,
+        selectedCard: null, selectedSpell: null, selectedSlot: null, isSpellMode: false,
+        units: [], projectiles: [],
+        nextId: 1,
+        playerCrowns: 0, enemyCrowns: 0,
+        elixirSpent: 0, unitsDeployed: 0,
+        // AI — noticeably weaker & slower
+        aiElixir: 3, aiElixirRate: 1 / 4.5,
+        aiTimer: 5 + Math.random() * 4,  // wait before first move
+        aiMaxUnits: 4,                  // cap AI units on field
+        lastTime: null, raf: null,
+        towers: buildTowers(),
+        spellCooldowns: { fireball: 0, lightning: 0, freeze: 0 },
+      };
+      showScreen('game');
+      clearArena();
+      buildTowerEls();
+      buildCardHandUI();
+      buildSpellPanelUI();
+      updateCrowns();
+      buildTowerStatusPanel();
+      updateSidePanel();
+      battleLog.innerHTML = '';
+      addLog('Battle started! 👑', 'gold');
+      G.raf = requestAnimationFrame(gameLoop);
+    }
+
+    function stopGame() {
+      if (G.raf) { cancelAnimationFrame(G.raf); G.raf = null; }
+      if (G) G.running = false;
+    }
+
+    function clearArena() {
+      arena.querySelectorAll('.tower,.unit,.projectile,.dmg-num,.spawn-flash,.explosion,.freeze-ring,.lightning-strike').forEach(e => e.remove());
+    }
+
+    // ── Tower elements ─────────────────────────────────
+    function buildTowerEls() {
+      Object.values(G.towers).forEach(t => {
+        const el = document.createElement('div');
+        el.className = `tower ${t.team}`; el.id = `tower-${t.id}`;
+        el.style.left = (t.x - 22) + 'px'; el.style.top = (t.y - 22) + 'px';
+        el.innerHTML = `${t.isKing ? '👑' : (t.team === 'blue' ? '🏰' : '🏯')}<div class="tower-hp-bar"><div class="tower-hp-fill" id="thp-${t.id}" style="width:100%"></div></div>`;
+        arena.appendChild(el);
+      });
+    }
+    function updateTowerEl(t) {
+      const el = document.getElementById(`tower-${t.id}`); if (!el) return;
+      const fill = document.getElementById(`thp-${t.id}`);
+      if (fill) fill.style.width = Math.max(0, t.hp / t.maxHp * 100) + '%';
+      if (t.destroyed) el.classList.add('destroyed');
+    }
+
+    // ── Card hand (fixed 4 troops, always same) ────────
+    function buildCardHandUI() {
+      cardHand.innerHTML = '';
+      TROOP_CARDS.forEach((card, i) => {
+        const el = document.createElement('div');
+        el.className = 'card'; el.id = `card-slot-${i}`;
+        el.innerHTML = `<span class="card-cost">${card.cost}</span><span class="card-emoji">${card.emoji}</span><span class="card-name">${card.name}</span>`;
+        el.addEventListener('click', () => selectTroopCard(i));
+        cardHand.appendChild(el);
+      });
+    }
+
+    function selectTroopCard(i) {
+      const card = TROOP_CARDS[i];
+      if (G.elixir < card.cost) { shake(); return; }
+      // Toggle off
+      if (G.selectedSlot === i && !G.isSpellMode) { deselectAll(); return; }
+      deselectAll();
+      G.selectedSlot = i; G.selectedCard = card; G.isSpellMode = false;
+      document.getElementById(`card-slot-${i}`).className = 'card selected';
+      placementOverlay.classList.add('active');
+      placementHint.textContent = 'Tap your half to place!';
+      placementHint.classList.add('show');
+      updateCardStates();
+    }
+
+    function updateCardStates() {
+      TROOP_CARDS.forEach((card, i) => {
+        const el = document.getElementById(`card-slot-${i}`); if (!el) return;
+        const sel = G.selectedSlot === i && !G.isSpellMode;
+        const dis = G.elixir < card.cost;
+        el.className = `card${sel ? ' selected' : ''}${dis ? ' disabled' : ''}`;
+      });
+      SPELL_DEFS.forEach(sp => {
+        const el = document.getElementById(`spell-btn-${sp.id}`); if (!el) return;
+        const sel = G.isSpellMode && G.selectedSpell?.id === sp.id;
+        const dis = G.elixir < sp.cost || Date.now() < G.spellCooldowns[sp.id];
+        el.className = `spell-btn${sel ? ' selected' : ''}${dis ? ' disabled' : ''}`;
+        const ov = document.getElementById(`scd-${sp.id}`);
+        if (ov) {
+          const rem = Math.ceil((G.spellCooldowns[sp.id] - Date.now()) / 1000);
+          ov.style.display = rem > 0 ? 'flex' : 'none';
+          if (rem > 0) ov.textContent = rem + 's';
+        }
+      });
+    }
+
+    // ── Spell panel ─────────────────────────────────────
+    function buildSpellPanelUI() {
+      // Remove old spell btns
+      spellPanel.querySelectorAll('.spell-btn').forEach(e => e.remove());
+      SPELL_DEFS.forEach(sp => {
+        const btn = document.createElement('div');
+        btn.className = 'spell-btn'; btn.id = `spell-btn-${sp.id}`;
+        btn.innerHTML = `<span class="s-cost">${sp.cost}</span><span class="s-emoji">${sp.emoji}</span><span class="s-name">${sp.name}</span><div class="spell-cooldown-overlay" id="scd-${sp.id}" style="display:none"></div>`;
+        btn.addEventListener('click', () => selectSpell(sp.id));
+        spellPanel.appendChild(btn);
+      });
+    }
+
+    function selectSpell(id) {
+      const sp = SPELL_DEFS.find(s => s.id === id);
+      if (!sp) return;
+      if (G.elixir < sp.cost) { shake(); return; }
+      if (Date.now() < G.spellCooldowns[id]) { shake(); return; }
+      // Toggle
+      if (G.isSpellMode && G.selectedSpell?.id === id) { deselectAll(); return; }
+      deselectAll();
+      G.selectedSpell = sp; G.isSpellMode = true;
+      document.getElementById(`spell-btn-${id}`).className = 'spell-btn selected';
+      placementOverlay.classList.add('active');
+      placementHint.textContent = 'Tap anywhere to cast!';
+      placementHint.classList.add('show');
+      // Purple cursor
+      const cur = document.createElement('div'); cur.className = 'placement-cursor spell'; placementOverlay.appendChild(cur);
+      updateCardStates();
+    }
+
+    function deselectAll() {
+      G.selectedSlot = null; G.selectedCard = null; G.selectedSpell = null; G.isSpellMode = false;
+      placementOverlay.classList.remove('active');
+      placementHint.classList.remove('show');
+      const cur = placementOverlay.querySelector('.placement-cursor'); if (cur) cur.remove();
+      updateCardStates();
+    }
+
+    // ── Placement overlay events ───────────────────────
+    placementOverlay.addEventListener('click', function (e) {
+      const rect = arena.getBoundingClientRect();
+      const x = e.clientX - rect.left, y = e.clientY - rect.top;
+      if (G.isSpellMode && G.selectedSpell) {
+        castSpell(G.selectedSpell, x, y, 'blue');
+        G.elixir -= G.selectedSpell.cost; G.elixirSpent += G.selectedSpell.cost;
+        G.spellCooldowns[G.selectedSpell.id] = Date.now() + 3000; // 3s cooldown
+        deselectAll(); updateElixir(); updateCardStates();
+      } else if (G.selectedCard) {
+        if (y < ARENA_H * 0.53) { addLog('Place in your half!', 'bad'); shake(); return; }
+        G.elixir -= G.selectedCard.cost; G.elixirSpent += G.selectedCard.cost;
+        spawnUnit(G.selectedCard, x, y, 'blue'); G.unitsDeployed++;
+        deselectAll(); updateElixir(); updateCardStates(); updateSidePanel();
+      }
+    });
+
+    placementOverlay.addEventListener('mousemove', function (e) {
+      const rect = arena.getBoundingClientRect();
+      const x = e.clientX - rect.left, y = e.clientY - rect.top;
+      let cur = placementOverlay.querySelector('.placement-cursor');
+      if (!cur) { cur = document.createElement('div'); cur.className = `placement-cursor${G.isSpellMode ? ' spell' : ''}`; placementOverlay.appendChild(cur); }
+      cur.style.left = x + 'px'; cur.style.top = y + 'px';
+    });
+    placementOverlay.addEventListener('mouseleave', function () {
+      const cur = placementOverlay.querySelector('.placement-cursor'); if (cur) cur.remove();
+    });
+
+    function shake() {
+      arena.style.transform = 'translateX(-4px)';
+      setTimeout(() => { arena.style.transform = 'translateX(4px)'; }, 80);
+      setTimeout(() => { arena.style.transform = ''; }, 160);
+    }
+
+    // ── Unit spawning ──────────────────────────────────
+    function spawnUnit(card, x, y, team) {
+      const count = card.count || 1;
+      for (let c = 0; c < count; c++) {
+        const ox = (c - (count - 1) / 2) * 18;
+        const uid = G.nextId++;
+        const unit = {
+          id: uid, cardId: card.id, emoji: card.emoji, team,
+          x: Math.max(14, Math.min(ARENA_W - 14, x + ox)),
+          y: Math.max(50, Math.min(ARENA_H - 80, y)),
+          hp: card.hp, maxHp: card.hp,
+          dmg: card.dmg, spd: card.spd * 25, range: card.range,
+          atkSpd: card.atkSpd, type: card.type,
+          target: card.target || 'any', aoe: card.aoe || 0,
+          lastAtk: 0, state: 'march',
+          frozen: false, frozenUntil: 0,
+          el: null,
+        };
+        const el = document.createElement('div');
+        el.className = `unit ${team}`; el.id = `unit-${uid}`;
+        el.innerHTML = `${card.emoji}<div class="unit-hp-bar"><div class="unit-hp-fill" id="uhp-${uid}" style="width:100%"></div></div>`;
+        el.style.left = (unit.x - 14) + 'px'; el.style.top = (unit.y - 14) + 'px';
+        arena.appendChild(el); unit.el = el;
+        G.units.push(unit);
+        const flash = document.createElement('div');
+        flash.className = `spawn-flash ${team}`;
+        flash.style.left = (unit.x - 20) + 'px'; flash.style.top = (unit.y - 20) + 'px';
+        arena.appendChild(flash); setTimeout(() => flash.remove(), 500);
+      }
+      addLog(`${team === 'blue' ? '🔵' : '🔴'} ${card.name} deployed!`, team === 'blue' ? 'good' : 'bad');
+    }
+
+    // ── Spell casting ──────────────────────────────────
+    function castSpell(sp, x, y, team) {
+      const enemyTeam = team === 'blue' ? 'red' : 'blue';
+
+      if (sp.id === 'fireball') {
+        spawnExplosion(x, y, sp.aoe, sp.color);
+        G.units.forEach(u => {
+          if (u.team === team) return;
+          const d = dist2d(u.x, u.y, x, y);
+          if (d < sp.aoe) dealDamage(u, sp.dmg * (1 - d / sp.aoe * .5));
+        });
+        Object.values(G.towers).forEach(t => {
+          if (t.team === team || t.destroyed) return;
+          if (dist2d(t.x, t.y, x, y) < sp.aoe) damageTower(t, sp.dmg * .55);
+        });
+        addLog(`🔥 Fireball cast!`, 'spell');
+      }
+
+      if (sp.id === 'lightning') {
+        // Hits closest enemy unit or tower, then chains
+        let targets = [];
+        // Collect enemy units
+        G.units.filter(u => u.team === enemyTeam).forEach(u => targets.push({ x: u.x, y: u.y, unit: u }));
+        // Sort by nearest to click
+        targets.sort((a, b) => dist2d(a.x, a.y, x, y) - dist2d(b.x, b.y, x, y));
+        const hit = targets.slice(0, sp.chainCount);
+        hit.forEach((h, i) => {
+          const dmg = i === 0 ? sp.dmg : sp.dmg * sp.chainDmg;
+          setTimeout(() => {
+            showLightningStrike(x, y, h.x, h.y);
+            dealDamage(h.unit, dmg);
+          }, i * 120);
+        });
+        // Also zap a tower if fewer than chainCount units
+        if (hit.length < sp.chainCount) {
+          const t = getNearestEnemyTower(team);
+          if (t) { setTimeout(() => { showLightningStrike(x, y, t.x, t.y); damageTower(t, sp.dmg * .4); }, hit.length * 120); }
+        }
+        addLog(`⚡ Lightning strikes!`, 'spell');
+      }
+
+      if (sp.id === 'freeze') {
+        spawnFreezeRing(x, y, sp.aoe);
+        const now = Date.now();
+        G.units.forEach(u => {
+          if (u.team === team) return;
+          if (dist2d(u.x, u.y, x, y) < sp.aoe) {
+            u.frozen = true; u.frozenUntil = now + sp.freezeDur;
+            if (u.el) u.el.classList.add('frozen');
+          }
+        });
+        addLog(`❄️ Freeze!`, 'spell');
+      }
+    }
+
+    function spawnExplosion(x, y, aoe, color) {
+      const el = document.createElement('div'); el.className = 'explosion';
+      el.style.left = (x - aoe / 2) + 'px'; el.style.top = (y - aoe / 2) + 'px';
+      el.style.width = aoe + 'px'; el.style.height = aoe + 'px';
+      el.style.background = color; arena.appendChild(el);
+      setTimeout(() => el.remove(), 600);
+    }
+
+    function spawnFreezeRing(x, y, aoe) {
+      const el = document.createElement('div'); el.className = 'freeze-ring';
+      el.style.left = (x - aoe / 2) + 'px'; el.style.top = (y - aoe / 2) + 'px';
+      el.style.width = aoe + 'px'; el.style.height = aoe + 'px';
+      arena.appendChild(el); setTimeout(() => el.remove(), 700);
+    }
+
+    function showLightningStrike(x1, y1, x2, y2) {
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.sqrt(dx * dx + dy * dy);
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      const el = document.createElement('div'); el.className = 'lightning-strike';
+      el.style.left = x1 + 'px'; el.style.top = y1 + 'px';
+      el.style.height = len + 'px'; el.style.transformOrigin = 'top center';
+      el.style.transform = `rotate(${angle + 90}deg)`;
+      arena.appendChild(el); setTimeout(() => el.remove(), 350);
+    }
+
+    function getNearestEnemyTower(myTeam) {
+      const order = myTeam === 'blue' ? ['e-left', 'e-right', 'e-king'] : ['p-left', 'p-right', 'p-king'];
+      for (const id of order) { const t = G.towers[id]; if (t && !t.destroyed) return t; }
+      return null;
+    }
+
+    function dist2d(ax, ay, bx, by) { const dx = ax - bx, dy = ay - by; return Math.sqrt(dx * dx + dy * dy); }
+
+    // ── Game loop ──────────────────────────────────────
+    function gameLoop(ts) {
+      if (!G.running) return;
+      const dt = G.lastTime ? (ts - G.lastTime) / 1000 : 0;
+      G.lastTime = ts;
+
+      G.time -= dt;
+      if (G.time <= 0) { G.time = 0; endGame(null); return; }
+
+      const m = Math.floor(G.time / 60), s = Math.floor(G.time % 60);
+      timerEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+      timerEl.classList.toggle('urgent', G.time <= 30);
+
+      G.elixir = Math.min(G.elixirMax, G.elixir + G.elixirRate * dt);
+      G.aiElixir = Math.min(G.elixirMax, G.aiElixir + G.aiElixirRate * dt);
+      updateElixir();
+      updateCardStates();
+
+      G.aiTimer -= dt;
+      if (G.aiTimer <= 0) aiTick();
+
+      updateUnits(ts, dt);
+      towerFire(ts);
+      updateProjectiles(dt);
+      updateSidePanel();
+      updateTowerStatusPanel();
+
+      G.raf = requestAnimationFrame(gameLoop);
+    }
+
+    function updateElixir() {
+      elixirFill.style.width = (G.elixir / G.elixirMax * 100) + '%';
+      elixirNum.textContent = Math.floor(G.elixir);
+    }
+
+    // ── Unit AI & movement ─────────────────────────────
+    function updateUnits(ts, dt) {
+      const now = Date.now();
+      const toRemove = [];
+      G.units.forEach(unit => {
+        if (unit.hp <= 0) { toRemove.push(unit); return; }
+        // Unfreeze
+        if (unit.frozen && now >= unit.frozenUntil) {
+          unit.frozen = false;
+          if (unit.el) unit.el.classList.remove('frozen');
+        }
+        if (unit.frozen) return; // frozen units don't move or attack
+
+        const tgt = findTarget(unit);
+        if (tgt) {
+          const dx = tgt.x - unit.x, dy = tgt.y - unit.y;
+          const d = dist2d(unit.x, unit.y, tgt.x, tgt.y);
+          if (d <= unit.range) {
+            unit.state = 'attack';
+            if (ts - unit.lastAtk >= unit.atkSpd) {
+              unit.lastAtk = ts;
+              if (tgt.maxHp !== undefined && tgt.isKing !== undefined) {
+                damageTower(tgt, unit.dmg);
+                shootProjectile(unit, tgt);
+              } else {
+                dealDamage(tgt, unit.dmg);
+                if (unit.type === 'ranged' || unit.type === 'splash') shootProjectile(unit, tgt);
+                if (unit.type === 'splash') {
+                  G.units.forEach(u => {
+                    if (u.team === unit.team || u.id === tgt.id) return;
+                    if (dist2d(u.x, u.y, tgt.x, tgt.y) < (unit.aoe || 44)) dealDamage(u, unit.dmg * .6);
+                  });
+                }
+              }
+            }
+          } else {
+            unit.state = 'march';
+            const spd = unit.spd * dt;
+            unit.x += dx / d * spd; unit.y += dy / d * spd;
+          }
+        } else {
+          unit.state = 'march';
+          const ty = unit.team === 'blue' ? 55 : ARENA_H - 55;
+          const dy2 = ty - unit.y;
+          if (Math.abs(dy2) > 5) unit.y += Math.sign(dy2) * unit.spd * dt;
+        }
+
+        unit.x = Math.max(14, Math.min(ARENA_W - 14, unit.x));
+        unit.y = Math.max(50, Math.min(ARENA_H - 80, unit.y));
+
+        if (unit.el) {
+          unit.el.style.left = (unit.x - 14) + 'px';
+          unit.el.style.top = (unit.y - 14) + 'px';
+          const fill = document.getElementById(`uhp-${unit.id}`);
+          if (fill) fill.style.width = Math.max(0, unit.hp / unit.maxHp * 100) + '%';
+        }
+      });
+      toRemove.forEach(u => removeUnit(u));
+    }
+
+    function findTarget(unit) {
+      const et = unit.team === 'blue' ? 'red' : 'blue';
+      if (unit.target !== 'tower') {
+        let best = null, bd = Infinity;
+        G.units.forEach(u => {
+          if (u.team !== et || u.hp <= 0) return;
+          const d = dist2d(u.x, u.y, unit.x, unit.y);
+          if (d < bd) { bd = d; best = u; }
+        });
+        if (best && bd < 130) return best;
+      }
+      const order = unit.team === 'blue' ? ['e-left', 'e-right', 'e-king'] : ['p-left', 'p-right', 'p-king'];
+      for (const id of order) {
+        const t = G.towers[id]; if (!t || t.destroyed) continue;
+        if (t.isKing) {
+          const sidesDead = order.filter(i => !G.towers[i]?.isKing).every(i => G.towers[i]?.destroyed);
+          if (!sidesDead) continue;
+        }
+        return t;
+      }
+      return null;
+    }
+
+    function dealDamage(unit, dmg) {
+      if (!unit || unit.hp <= 0) return;
+      unit.hp -= dmg; showDmgNum(unit.x, unit.y, Math.round(dmg), unit.team);
+      if (unit.hp <= 0) unit.hp = 0;
+    }
+
+    function removeUnit(unit) {
+      const i = G.units.indexOf(unit); if (i >= 0) G.units.splice(i, 1);
+      if (unit.el) unit.el.remove();
+    }
+
+    function damageTower(tower, dmg) {
+      if (!tower || tower.destroyed) return;
+      tower.hp -= dmg; showDmgNum(tower.x, tower.y, Math.round(dmg), tower.team);
+      updateTowerEl(tower);
+      if (tower.hp <= 0) { tower.hp = 0; destroyTower(tower); }
+    }
+
+    function destroyTower(tower) {
+      tower.destroyed = true; updateTowerEl(tower);
+      addLog(tower.team === 'red' ? '👑 Crown!' : '💀 Tower lost!', tower.team === 'red' ? 'gold' : 'bad');
+      if (tower.team === 'red') {
+        G.playerCrowns++; updateCrowns();
+        if (G.playerCrowns >= 3) { endGame('blue'); return; }
+      } else {
+        G.enemyCrowns++; updateCrowns();
+        if (G.enemyCrowns >= 3) { endGame('red'); return; }
+      }
+    }
+
+    // ── Tower fire ─────────────────────────────────────
+    function towerFire(ts) {
+      Object.values(G.towers).forEach(tower => {
+        if (tower.destroyed) return;
+        if (ts - tower.lastShot < tower.shotCooldown) return;
+        const et = tower.team === 'blue' ? 'red' : 'blue';
+        let tgt = null, bd = tower.range;
+        G.units.forEach(u => {
+          if (u.team !== et) return;
+          const d = dist2d(u.x, u.y, tower.x, tower.y);
+          if (d < bd) { bd = d; tgt = u; }
+        });
+        if (tgt) { tower.lastShot = ts; dealDamage(tgt, tower.dmg); shootProjectile({ x: tower.x, y: tower.y, type: 'ranged' }, tgt); }
+      });
+    }
+
+    // ── Projectiles ────────────────────────────────────
+    function shootProjectile(from, to) {
+      const proj = {
+        id: G.nextId++, x: from.x, y: from.y, tx: to.x, ty: to.y, spd: 280,
+        type: from.type === 'ranged' ? 'arrow' : from.type === 'splash' ? 'fireball' : 'arrow', done: false
+      };
+      const el = document.createElement('div'); el.className = `projectile ${proj.type}`;
+      el.style.left = proj.x + 'px'; el.style.top = proj.y + 'px';
+      arena.appendChild(el); proj.el = el; G.projectiles.push(proj);
+    }
+
+    function updateProjectiles(dt) {
+      const tr = [];
+      G.projectiles.forEach(p => {
+        const dx = p.tx - p.x, dy = p.ty - p.y, d = dist2d(p.x, p.y, p.tx, p.ty);
+        if (d < 5) { tr.push(p); return; }
+        const spd = p.spd * dt;
+        p.x += dx / d * Math.min(spd, d); p.y += dy / d * Math.min(spd, d);
+        if (p.el) { p.el.style.left = p.x + 'px'; p.el.style.top = p.y + 'px'; }
+      });
+      tr.forEach(p => { if (p.el) p.el.remove(); G.projectiles.splice(G.projectiles.indexOf(p), 1); });
+    }
+
+    // ── Damage floaters ────────────────────────────────
+    function showDmgNum(x, y, dmg, team) {
+      const el = document.createElement('div'); el.className = 'dmg-num';
+      el.textContent = dmg;
+      el.style.left = (x - 10 + Math.random() * 10 - 5) + 'px';
+      el.style.top = (y - 10) + 'px';
+      el.style.color = team === 'blue' ? '#ff6655' : '#6ab8ff';
+      arena.appendChild(el); setTimeout(() => el.remove(), 900);
+    }
+
+    // ── Crowns ─────────────────────────────────────────
+    function updateCrowns() {
+      ['player-crowns', 'enemy-crowns'].forEach((id, ti) => {
+        const row = document.getElementById(id); row.innerHTML = '';
+        const count = ti === 0 ? G.playerCrowns : G.enemyCrowns;
+        for (let i = 0; i < 3; i++) {
+          const s = document.createElement('span');
+          s.className = `crown-icon${i < count ? ' earned' : ''}`;
+          s.textContent = '👑'; row.appendChild(s);
+        }
+      });
+    }
+
+    // ── Side panel ─────────────────────────────────────
+    function buildTowerStatusPanel() {
+      const wrap = document.getElementById('tower-status-wrap'); wrap.innerHTML = '';
+      const order = ['p-king', 'p-left', 'p-right', 'e-king', 'e-left', 'e-right'];
+      const labels = { 'p-king': '👑 King', 'p-left': '🏰 Left', 'p-right': '🏰 Right', 'e-king': '👑 E.King', 'e-left': '🏯 E.Left', 'e-right': '🏯 E.Right' };
+      order.forEach(id => {
+        const t = G.towers[id];
+        const row = document.createElement('div'); row.className = 'ts-row';
+        row.innerHTML = `<span style="font-size:11px;color:var(--text-dim);min-width:60px">${labels[id]}</span><div class="ts-bar-wrap"><div class="ts-bar ${t.team}" id="spthp-${id}" style="width:100%"></div></div><span class="ts-label" id="sptxt-${id}">${t.hp}</span>`;
+        wrap.appendChild(row);
+      });
+    }
+    function updateTowerStatusPanel() {
+      ['p-king', 'p-left', 'p-right', 'e-king', 'e-left', 'e-right'].forEach(id => {
+        const t = G.towers[id];
+        const bar = document.getElementById(`spthp-${id}`);
+        const txt = document.getElementById(`sptxt-${id}`);
+        if (bar) bar.style.width = Math.max(0, t.hp / t.maxHp * 100) + '%';
+        if (txt) txt.textContent = t.destroyed ? '💀' : Math.max(0, Math.round(t.hp));
+      });
+    }
+    function updateSidePanel() {
+      const sc = document.getElementById('sp-crowns'); if (sc) sc.textContent = `${G.playerCrowns} – ${G.enemyCrowns}`;
+      const su = document.getElementById('sp-units');
+      if (su) { const p = G.units.filter(u => u.team === 'blue').length, a = G.units.filter(u => u.team === 'red').length; su.textContent = `${p} / ${a}`; }
+      const se = document.getElementById('sp-elixir'); if (se) se.textContent = G.elixirSpent;
+    }
+
+    // ── Battle log ─────────────────────────────────────
+    function addLog(msg, cls = '') {
+      const el = document.createElement('div'); el.className = `log-entry ${cls}`;
+      el.textContent = msg; battleLog.prepend(el);
+      while (battleLog.children.length > 20) battleLog.lastChild.remove();
+    }
+
+    // ── AI (nerfed) ────────────────────────────────────
+    function aiTick() {
+      const aliveAI = G.units.filter(u => u.team === 'red').length;
+      // Cap AI units on field — prevents swarm overwhelming
+      if (aliveAI >= G.aiMaxUnits) { G.aiTimer = 2 + Math.random() * 2; return; }
+
+      // Only deploy if has enough elixir for chosen card
+      const affordable = AI_CARDS.filter(c => G.aiElixir >= c.cost);
+      if (!affordable.length) { G.aiTimer = 1.5 + Math.random() * 2.5; return; }
+
+      // Weighted random: prefer cheaper cards (less aggression)
+      // Sort by cost ascending, pick from first half more often
+      const sorted = [...affordable].sort((a, b) => a.cost - b.cost);
+      const idx = Math.random() < 0.65 ? Math.floor(Math.random() * Math.ceil(sorted.length / 2)) : Math.floor(Math.random() * sorted.length);
+      const card = sorted[idx];
+
+      G.aiElixir -= card.cost;
+
+      // Lane choice: slightly biased toward lanes where player has fewer units
+      const laneXs = [70, 160, 250];
+      const laneX = laneXs[Math.floor(Math.random() * laneXs.length)];
+      const y = 75 + Math.random() * 175;
+      spawnUnit(card, laneX + (Math.random() * 24 - 12), y, 'red');
+
+      // AI base delay: 5–9s (much slower than before)
+      G.aiTimer = 5 + Math.random() * 4;
+      // Slight speed-up in last 30s (still slower than original)
+      if (G.time < 30) G.aiTimer *= 0.65;
+    }
+
+    // ── End game ───────────────────────────────────────
+    function endGame(winner) {
+      stopGame();
+      if (!winner) {
+        if (G.playerCrowns > G.enemyCrowns) winner = 'blue';
+        else if (G.enemyCrowns > G.playerCrowns) winner = 'red';
+        else winner = 'draw';
+      }
+      let title, sub;
+      if (winner === 'blue') { title = '🏆 Victory!'; sub = 'The enemy has been crushed'; }
+      else if (winner === 'red') { title = '💀 Defeat!'; sub = 'Your kingdom fell'; }
+      else { title = '🤝 Draw!'; sub = 'An equal battle ends'; }
+      const gt = document.getElementById('go-title');
+      gt.textContent = title; gt.className = `go-title ${winner === 'blue' ? 'win' : 'lose'}`;
+      document.getElementById('go-sub').textContent = sub;
+      document.getElementById('go-crowns').textContent = `${G.playerCrowns} – ${G.enemyCrowns}`;
+      document.getElementById('go-elixir').textContent = G.elixirSpent;
+      document.getElementById('go-units').textContent = G.unitsDeployed;
+      setTimeout(() => showScreen('gameover'), 800);
+    }
+  </script>
+  <script>
+    // Fire popunder on first user click (game interaction)
+    (function () {
+      var fired = false;
+      document.addEventListener('click', function handler() {
+        if (!fired) {
+          fired = true;
+          document.removeEventListener('click', handler);
+        }
+      });
+    })();
+  </script>
 </body>
+
 </html>

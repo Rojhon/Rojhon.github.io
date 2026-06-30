@@ -1,351 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lucky Slots</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Slots</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    padding:20px;
-}
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            padding: 20px;
+        }
 
-.container{
-    width:100%;
-    max-width:700px;
-    background:#111827;
-    border-radius:25px;
-    padding:30px;
-    text-align:center;
-    color:white;
-    box-shadow:0 15px 40px rgba(0,0,0,.5);
-}
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: #111827;
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .5);
+        }
 
-h1{
-    margin-bottom:20px;
-    color:#facc15;
-}
+        h1 {
+            margin-bottom: 20px;
+            color: #facc15;
+        }
 
-.balance{
-    font-size:24px;
-    margin-bottom:25px;
-    font-weight:bold;
-}
+        .balance {
+            font-size: 24px;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
 
-.slot-machine{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    margin:30px 0;
-}
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
 
-.reel{
-    width:120px;
-    height:120px;
-    background:white;
-    color:black;
-    font-size:60px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-radius:15px;
-    overflow:hidden;
-    border:5px solid #facc15;
-}
+        .reel {
+            width: 120px;
+            height: 120px;
+            background: white;
+            color: black;
+            font-size: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 5px solid #facc15;
+        }
 
-.spinning{
-    animation:spin .1s linear infinite;
-}
+        .spinning {
+            animation: spin .1s linear infinite;
+        }
 
-@keyframes spin{
-    0%{transform:translateY(-5px);}
-    50%{transform:translateY(5px);}
-    100%{transform:translateY(-5px);}
-}
+        @keyframes spin {
+            0% {
+                transform: translateY(-5px);
+            }
 
-.controls{
-    margin-top:20px;
-}
+            50% {
+                transform: translateY(5px);
+            }
 
-input{
-    width:120px;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    text-align:center;
-    font-size:18px;
-}
+            100% {
+                transform: translateY(-5px);
+            }
+        }
 
-button{
-    padding:12px 25px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:18px;
-    margin:5px;
-    font-weight:bold;
-}
+        .controls {
+            margin-top: 20px;
+        }
 
-.spin-btn{
-    background:#22c55e;
-    color:white;
-}
+        input {
+            width: 120px;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+        }
 
-.reset-btn{
-    background:#ef4444;
-    color:white;
-}
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 5px;
+            font-weight: bold;
+        }
 
-.message{
-    min-height:40px;
-    margin-top:20px;
-    font-size:24px;
-    font-weight:bold;
-}
+        .spin-btn {
+            background: #22c55e;
+            color: white;
+        }
 
-.payout{
-    margin-top:20px;
-    background:#1f2937;
-    padding:15px;
-    border-radius:10px;
-}
+        .reset-btn {
+            background: #ef4444;
+            color: white;
+        }
 
-@media(max-width:600px){
+        .message {
+            min-height: 40px;
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-    .reel{
-        width:90px;
-        height:90px;
-        font-size:45px;
-    }
+        .payout {
+            margin-top: 20px;
+            background: #1f2937;
+            padding: 15px;
+            border-radius: 10px;
+        }
 
-    .slot-machine{
-        gap:8px;
-    }
-}
-</style>
-    <script type="text/javascript" data-cfasync="false">
-    /*<![CDATA[/* */
-    (function(){var o=window,d="cdd460bd6a700a2b233fdb056a1b7f41",u=[["siteId",976-32+370+9+5308814],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],w=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZmV4Ti9tanNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdlBkcFMvclhLdHBiL29yZXNwb25zaXZlLW5hdi5taW4uY3Nz"],b=-1,p,z,y=function(){clearTimeout(z);b++;if(w[b]&&!(1808207535000<(new Date).getTime()&&1<b)){p=o.document.createElement("script");p.type="text/javascript";p.async=!0;var r=o.document.getElementsByTagName("script")[0];p.src="https://"+atob(w[b]);p.crossOrigin="anonymous";p.onerror=y;p.onload=function(){clearTimeout(z);o[d.slice(0,16)+d.slice(0,16)]||y()};z=setTimeout(y,5E3);r.parentNode.insertBefore(p,r)}};if(!o[d]){try{Object.freeze(o[d]=u)}catch(e){}y()}})();
-    /*]]>/* */
-    </script>
+        @media(max-width:600px) {
+
+            .reel {
+                width: 90px;
+                height: 90px;
+                font-size: 45px;
+            }
+
+            .slot-machine {
+                gap: 8px;
+            }
+        }
+    </style>
+    <script type="text/javascript" data-cfasync="false" src="../scripts/ad-network.js"></script>
 </head>
+
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>🎰 Lucky Slots</h1>
+        <h1>🎰 Lucky Slots</h1>
 
-    <div class="balance">
-        💰 Balance: $<span id="balance">1000</span>
+        <div class="balance">
+            💰 Balance: $<span id="balance">1000</span>
+        </div>
+
+        <div class="slot-machine">
+            <div class="reel" id="reel1">🍒</div>
+            <div class="reel" id="reel2">🍋</div>
+            <div class="reel" id="reel3">🍇</div>
+        </div>
+
+        <div class="controls">
+            <input type="number" id="bet" value="50" min="10">
+            <br><br>
+
+            <button class="spin-btn" onclick="spin()">
+                🎲 SPIN
+            </button>
+
+            <button class="reset-btn" onclick="resetGame()">
+                🔄 RESET
+            </button>
+        </div>
+
+        <div class="message" id="message"></div>
+
+        <div class="payout">
+            <h3>🏆 Payout Table</h3>
+            <p>3️⃣ Same Symbols = 10x Bet</p>
+            <p>2️⃣ Same Symbols = 2x Bet</p>
+            <p>💎💎💎 Jackpot = 25x Bet</p>
+        </div>
+
     </div>
-
-    <div class="slot-machine">
-        <div class="reel" id="reel1">🍒</div>
-        <div class="reel" id="reel2">🍋</div>
-        <div class="reel" id="reel3">🍇</div>
-    </div>
-
-    <div class="controls">
-        <input type="number" id="bet" value="50" min="10">
-        <br><br>
-
-        <button class="spin-btn" onclick="spin()">
-            🎲 SPIN
-        </button>
-
-        <button class="reset-btn" onclick="resetGame()">
-            🔄 RESET
-        </button>
-    </div>
-
-    <div class="message" id="message"></div>
-
-    <div class="payout">
-        <h3>🏆 Payout Table</h3>
-        <p>3️⃣ Same Symbols = 10x Bet</p>
-        <p>2️⃣ Same Symbols = 2x Bet</p>
-        <p>💎💎💎 Jackpot = 25x Bet</p>
-    </div>
-
-</div>
-
-<script>
-
-const symbols = [
-    "🍒",
-    "🍋",
-    "🍇",
-    "🍊",
-    "🍉",
-    "⭐",
-    "💎"
-];
-
-let balance = 1000;
-
-const reel1 = document.getElementById("reel1");
-const reel2 = document.getElementById("reel2");
-const reel3 = document.getElementById("reel3");
-
-const balanceDisplay =
-    document.getElementById("balance");
-
-const message =
-    document.getElementById("message");
-
-function randomSymbol(){
-    return symbols[
-        Math.floor(Math.random()*symbols.length)
-    ];
-}
-
-function spin(){
-
-    const bet =
-        parseInt(document.getElementById("bet").value);
-
-    if(bet <= 0 || isNaN(bet)){
-        alert("Enter a valid bet.");
-        return;
-    }
-
-    if(balance < bet){
-        alert("Not enough balance!");
-        return;
-    }
-
-    balance -= bet;
-    updateBalance();
-
-    const reels = [reel1,reel2,reel3];
-
-    reels.forEach(reel=>{
-        reel.classList.add("spinning");
-    });
-
-    let animation = setInterval(()=>{
-
-        reel1.textContent = randomSymbol();
-        reel2.textContent = randomSymbol();
-        reel3.textContent = randomSymbol();
-
-    },100);
-
-    setTimeout(()=>{
-
-        clearInterval(animation);
-
-        reels.forEach(reel=>{
-            reel.classList.remove("spinning");
-        });
-
-        const r1 = randomSymbol();
-        const r2 = randomSymbol();
-        const r3 = randomSymbol();
-
-        reel1.textContent = r1;
-        reel2.textContent = r2;
-        reel3.textContent = r3;
-
-        calculateWin(r1,r2,r3,bet);
-
-    },1500);
-}
-
-function calculateWin(r1,r2,r3,bet){
-
-    let winnings = 0;
-
-    if(r1==="💎" && r2==="💎" && r3==="💎"){
-
-        winnings = bet * 25;
-
-        message.innerHTML =
-            "💎 JACKPOT! +" + winnings;
-
-    }
-    else if(r1===r2 && r2===r3){
-
-        winnings = bet * 10;
-
-        message.innerHTML =
-            "🎉 BIG WIN! +" + winnings;
-
-    }
-    else if(
-        r1===r2 ||
-        r1===r3 ||
-        r2===r3
-    ){
-
-        winnings = bet * 2;
-
-        message.innerHTML =
-            "✨ Small Win! +" + winnings;
-
-    }
-    else{
-
-        message.innerHTML =
-            "😢 Try Again!";
-    }
-
-    balance += winnings;
-
-    updateBalance();
-
-    if(balance <= 0){
-
-        message.innerHTML =
-            "💀 Game Over! Press Reset";
-    }
-}
-
-function updateBalance(){
-
-    balanceDisplay.textContent =
-        balance.toLocaleString();
-}
-
-function resetGame(){
-
-    balance = 1000;
-
-    reel1.textContent = "🍒";
-    reel2.textContent = "🍋";
-    reel3.textContent = "🍇";
-
-    updateBalance();
-
-    message.innerHTML =
-        "🎰 New Game Started!";
-}
-
-</script>
 
     <script>
-    // Fire popunder on first user click (game interaction)
-    (function(){
-        var fired = false;
-        document.addEventListener('click', function handler(){
-            if(!fired){
-                fired = true;
-                document.removeEventListener('click', handler);
+
+        const symbols = [
+            "🍒",
+            "🍋",
+            "🍇",
+            "🍊",
+            "🍉",
+            "⭐",
+            "💎"
+        ];
+
+        let balance = 1000;
+
+        const reel1 = document.getElementById("reel1");
+        const reel2 = document.getElementById("reel2");
+        const reel3 = document.getElementById("reel3");
+
+        const balanceDisplay =
+            document.getElementById("balance");
+
+        const message =
+            document.getElementById("message");
+
+        function randomSymbol() {
+            return symbols[
+                Math.floor(Math.random() * symbols.length)
+            ];
+        }
+
+        function spin() {
+
+            const bet =
+                parseInt(document.getElementById("bet").value);
+
+            if (bet <= 0 || isNaN(bet)) {
+                alert("Enter a valid bet.");
+                return;
             }
-        });
-    })();
+
+            if (balance < bet) {
+                alert("Not enough balance!");
+                return;
+            }
+
+            balance -= bet;
+            updateBalance();
+
+            const reels = [reel1, reel2, reel3];
+
+            reels.forEach(reel => {
+                reel.classList.add("spinning");
+            });
+
+            let animation = setInterval(() => {
+
+                reel1.textContent = randomSymbol();
+                reel2.textContent = randomSymbol();
+                reel3.textContent = randomSymbol();
+
+            }, 100);
+
+            setTimeout(() => {
+
+                clearInterval(animation);
+
+                reels.forEach(reel => {
+                    reel.classList.remove("spinning");
+                });
+
+                const r1 = randomSymbol();
+                const r2 = randomSymbol();
+                const r3 = randomSymbol();
+
+                reel1.textContent = r1;
+                reel2.textContent = r2;
+                reel3.textContent = r3;
+
+                calculateWin(r1, r2, r3, bet);
+
+            }, 1500);
+        }
+
+        function calculateWin(r1, r2, r3, bet) {
+
+            let winnings = 0;
+
+            if (r1 === "💎" && r2 === "💎" && r3 === "💎") {
+
+                winnings = bet * 25;
+
+                message.innerHTML =
+                    "💎 JACKPOT! +" + winnings;
+
+            }
+            else if (r1 === r2 && r2 === r3) {
+
+                winnings = bet * 10;
+
+                message.innerHTML =
+                    "🎉 BIG WIN! +" + winnings;
+
+            }
+            else if (
+                r1 === r2 ||
+                r1 === r3 ||
+                r2 === r3
+            ) {
+
+                winnings = bet * 2;
+
+                message.innerHTML =
+                    "✨ Small Win! +" + winnings;
+
+            }
+            else {
+
+                message.innerHTML =
+                    "😢 Try Again!";
+            }
+
+            balance += winnings;
+
+            updateBalance();
+
+            if (balance <= 0) {
+
+                message.innerHTML =
+                    "💀 Game Over! Press Reset";
+            }
+        }
+
+        function updateBalance() {
+
+            balanceDisplay.textContent =
+                balance.toLocaleString();
+        }
+
+        function resetGame() {
+
+            balance = 1000;
+
+            reel1.textContent = "🍒";
+            reel2.textContent = "🍋";
+            reel3.textContent = "🍇";
+
+            updateBalance();
+
+            message.innerHTML =
+                "🎰 New Game Started!";
+        }
+
+    </script>
+
+    <script>
+        // Fire popunder on first user click (game interaction)
+        (function () {
+            var fired = false;
+            document.addEventListener('click', function handler() {
+                if (!fired) {
+                    fired = true;
+                    document.removeEventListener('click', handler);
+                }
+            });
+        })();
     </script>
 </body>
+
 </html>

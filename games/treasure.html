@@ -1,286 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lucky Treasure Hunt</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Treasure Hunt</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-body{
-    min-height:100vh;
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-}
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-.container{
-    max-width:900px;
-    width:100%;
-    text-align:center;
-}
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
 
-h1{
-    color:#facc15;
-    margin-bottom:10px;
-}
+        h1 {
+            color: #facc15;
+            margin-bottom: 10px;
+        }
 
-.coins{
-    font-size:24px;
-    margin-bottom:20px;
-}
+        .coins {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
-.message{
-    min-height:40px;
-    font-size:22px;
-    margin-bottom:20px;
-}
+        .message {
+            min-height: 40px;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
 
-.chest{
-    background:#7c3aed;
-    border-radius:15px;
-    height:120px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:55px;
-    cursor:pointer;
-    transition:.3s;
-    user-select:none;
-}
+        .chest {
+            background: #7c3aed;
+            border-radius: 15px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 55px;
+            cursor: pointer;
+            transition: .3s;
+            user-select: none;
+        }
 
-.chest:hover{
-    transform:translateY(-5px);
-}
+        .chest:hover {
+            transform: translateY(-5px);
+        }
 
-.chest.open{
-    background:#111827;
-    cursor:not-allowed;
-}
+        .chest.open {
+            background: #111827;
+            cursor: not-allowed;
+        }
 
-.controls{
-    margin-top:25px;
-}
+        .controls {
+            margin-top: 25px;
+        }
 
-button{
-    padding:14px 28px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:18px;
-    font-weight:bold;
-}
+        button {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
 
-.new-game{
-    background:#22c55e;
-    color:white;
-}
+        .new-game {
+            background: #22c55e;
+            color: white;
+        }
 
-.stats{
-    margin-top:20px;
-    display:flex;
-    justify-content:center;
-    gap:30px;
-    flex-wrap:wrap;
-    font-size:18px;
-}
+        .stats {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 18px;
+        }
 
-@media(max-width:700px){
-    .grid{
-        grid-template-columns:repeat(3,1fr);
-    }
-}
+        @media(max-width:700px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
 
-@media(max-width:500px){
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+        @media(max-width:500px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
 
-    .chest{
-        height:100px;
-        font-size:45px;
-    }
-}
-</style>
-    <script type="text/javascript" data-cfasync="false">
-    /*<![CDATA[/* */
-    (function(){var o=window,d="cdd460bd6a700a2b233fdb056a1b7f41",u=[["siteId",976-32+370+9+5308814],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],w=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vZmV4Ti9tanNlbC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvdlBkcFMvclhLdHBiL29yZXNwb25zaXZlLW5hdi5taW4uY3Nz"],b=-1,p,z,y=function(){clearTimeout(z);b++;if(w[b]&&!(1808207535000<(new Date).getTime()&&1<b)){p=o.document.createElement("script");p.type="text/javascript";p.async=!0;var r=o.document.getElementsByTagName("script")[0];p.src="https://"+atob(w[b]);p.crossOrigin="anonymous";p.onerror=y;p.onload=function(){clearTimeout(z);o[d.slice(0,16)+d.slice(0,16)]||y()};z=setTimeout(y,5E3);r.parentNode.insertBefore(p,r)}};if(!o[d]){try{Object.freeze(o[d]=u)}catch(e){}y()}})();
-    /*]]>/* */
-    </script>
+            .chest {
+                height: 100px;
+                font-size: 45px;
+            }
+        }
+    </style>
+    <script type="text/javascript" data-cfasync="false" src="../scripts/ad-network.js"></script>
 </head>
+
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>🏴‍☠️ Lucky Treasure Hunt</h1>
+        <h1>🏴‍☠️ Lucky Treasure Hunt</h1>
 
-    <div class="coins">
-        💰 Coins: <span id="coins">1000</span>
+        <div class="coins">
+            💰 Coins: <span id="coins">1000</span>
+        </div>
+
+        <div class="message" id="message">
+            Open a treasure chest!
+        </div>
+
+        <div class="grid" id="grid"></div>
+
+        <div class="stats">
+            <div>🏆 Treasures Found: <span id="wins">0</span></div>
+            <div>💣 Bombs Found: <span id="bombs">0</span></div>
+        </div>
+
+        <div class="controls">
+            <button class="new-game" onclick="newRound()">
+                🔄 New Round
+            </button>
+        </div>
+
     </div>
-
-    <div class="message" id="message">
-        Open a treasure chest!
-    </div>
-
-    <div class="grid" id="grid"></div>
-
-    <div class="stats">
-        <div>🏆 Treasures Found: <span id="wins">0</span></div>
-        <div>💣 Bombs Found: <span id="bombs">0</span></div>
-    </div>
-
-    <div class="controls">
-        <button class="new-game" onclick="newRound()">
-            🔄 New Round
-        </button>
-    </div>
-
-</div>
-
-<script>
-
-const rewards = [
-    {icon:"💎", value:500},
-    {icon:"💰", value:250},
-    {icon:"🪙", value:100},
-    {icon:"🎁", value:750},
-    {icon:"⭐", value:300},
-    {icon:"💣", value:-200}
-];
-
-let coins = 1000;
-let treasuresFound = 0;
-let bombsFound = 0;
-
-const grid =
-    document.getElementById("grid");
-
-const coinDisplay =
-    document.getElementById("coins");
-
-const message =
-    document.getElementById("message");
-
-const winsDisplay =
-    document.getElementById("wins");
-
-const bombsDisplay =
-    document.getElementById("bombs");
-
-function generateChestReward(){
-
-    const chance = Math.random();
-
-    if(chance < 0.15)
-        return {icon:"💣", value:-200};
-
-    if(chance < 0.25)
-        return {icon:"🎁", value:1000};
-
-    return rewards[
-        Math.floor(
-            Math.random() *
-            (rewards.length - 1)
-        )
-    ];
-}
-
-function newRound(){
-
-    grid.innerHTML = "";
-
-    message.textContent =
-        "Open a treasure chest!";
-
-    for(let i=0;i<12;i++){
-
-        const reward =
-            generateChestReward();
-
-        const chest =
-            document.createElement("div");
-
-        chest.classList.add("chest");
-
-        chest.textContent = "📦";
-
-        chest.addEventListener("click",()=>{
-
-            if(chest.classList.contains("open"))
-                return;
-
-            chest.classList.add("open");
-
-            chest.textContent =
-                reward.icon;
-
-            coins += reward.value;
-
-            if(reward.value > 0){
-
-                treasuresFound++;
-
-                message.innerHTML =
-                    `🎉 Found ${reward.icon} (+${reward.value})`;
-
-            }else{
-
-                bombsFound++;
-
-                message.innerHTML =
-                    `💣 Trap! ${reward.value}`;
-
-            }
-
-            updateStats();
-        });
-
-        grid.appendChild(chest);
-    }
-}
-
-function updateStats(){
-
-    coinDisplay.textContent =
-        coins.toLocaleString();
-
-    winsDisplay.textContent =
-        treasuresFound;
-
-    bombsDisplay.textContent =
-        bombsFound;
-}
-
-newRound();
-
-</script>
 
     <script>
-    // Fire popunder on first user click (game interaction)
-    (function(){
-        var fired = false;
-        document.addEventListener('click', function handler(){
-            if(!fired){
-                fired = true;
-                document.removeEventListener('click', handler);
+
+        const rewards = [
+            { icon: "💎", value: 500 },
+            { icon: "💰", value: 250 },
+            { icon: "🪙", value: 100 },
+            { icon: "🎁", value: 750 },
+            { icon: "⭐", value: 300 },
+            { icon: "💣", value: -200 }
+        ];
+
+        let coins = 1000;
+        let treasuresFound = 0;
+        let bombsFound = 0;
+
+        const grid =
+            document.getElementById("grid");
+
+        const coinDisplay =
+            document.getElementById("coins");
+
+        const message =
+            document.getElementById("message");
+
+        const winsDisplay =
+            document.getElementById("wins");
+
+        const bombsDisplay =
+            document.getElementById("bombs");
+
+        function generateChestReward() {
+
+            const chance = Math.random();
+
+            if (chance < 0.15)
+                return { icon: "💣", value: -200 };
+
+            if (chance < 0.25)
+                return { icon: "🎁", value: 1000 };
+
+            return rewards[
+                Math.floor(
+                    Math.random() *
+                    (rewards.length - 1)
+                )
+            ];
+        }
+
+        function newRound() {
+
+            grid.innerHTML = "";
+
+            message.textContent =
+                "Open a treasure chest!";
+
+            for (let i = 0; i < 12; i++) {
+
+                const reward =
+                    generateChestReward();
+
+                const chest =
+                    document.createElement("div");
+
+                chest.classList.add("chest");
+
+                chest.textContent = "📦";
+
+                chest.addEventListener("click", () => {
+
+                    if (chest.classList.contains("open"))
+                        return;
+
+                    chest.classList.add("open");
+
+                    chest.textContent =
+                        reward.icon;
+
+                    coins += reward.value;
+
+                    if (reward.value > 0) {
+
+                        treasuresFound++;
+
+                        message.innerHTML =
+                            `🎉 Found ${reward.icon} (+${reward.value})`;
+
+                    } else {
+
+                        bombsFound++;
+
+                        message.innerHTML =
+                            `💣 Trap! ${reward.value}`;
+
+                    }
+
+                    updateStats();
+                });
+
+                grid.appendChild(chest);
             }
-        });
-    })();
+        }
+
+        function updateStats() {
+
+            coinDisplay.textContent =
+                coins.toLocaleString();
+
+            winsDisplay.textContent =
+                treasuresFound;
+
+            bombsDisplay.textContent =
+                bombsFound;
+        }
+
+        newRound();
+
+    </script>
+
+    <script>
+        // Fire popunder on first user click (game interaction)
+        (function () {
+            var fired = false;
+            document.addEventListener('click', function handler() {
+                if (!fired) {
+                    fired = true;
+                    document.removeEventListener('click', handler);
+                }
+            });
+        })();
     </script>
 </body>
+
 </html>
