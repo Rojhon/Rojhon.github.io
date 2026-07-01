@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rojhon's Arcade</title>
 
-    <script type="text/javascript" data-cfasync="false" src="ad-network.js"></script>
+    <!-- <script type="text/javascript" data-cfasync="false" src="ad-network.js"></script> -->
+
+    <script src="https://pl30134955.effectivecpmnetwork.com/91/34/e9/9134e96ae448bd873fbf14d77619e8c2.js"></script>
 
     <style>
         * {
@@ -208,29 +210,6 @@
             Rojhon.</p>
     </header>
 
-    <!-- Banner Ad -->
-    <!-- <div style="display:flex; justify-content:center; margin:20px 0;">
-        <script>
-            atOptions = {
-                'key': '6c5610573a4becfe3ce5d2e43afb64ab',
-                'format': 'iframe',
-                'height': 50,
-                'width': 320,
-                'params': {}
-            };
-        </script>
-        <script src="https://www.highperformanceformat.com/6c5610573a4becfe3ce5d2e43afb64ab/invoke.js"></script>
-
-    </div> -->
-
-    <!-- Native Banner -->
-    <!-- <div style="margin:20px 0;">
-        <script async="async" data-cfasync="false"
-            src="https://pl30134959.effectivecpmnetwork.com/3094edfb2197348337d2bc2f1951421e/invoke.js">
-            </script>
-        <div id="container-3094edfb2197348337d2bc2f1951421e"></div>
-    </div> -->
-
     <div class="search-container">
         <input type="text" id="search" class="search" placeholder="Search games...">
     </div>
@@ -384,32 +363,14 @@
             });
         });
 
-        // ── Play button: 1st click = ad fires (popunder auto-triggers on real click)
-        //                2nd click = navigate to game ──────────────────────────
-        const clickedButtons = new WeakSet();
-
+        // ── Play button: click navigates straight to the game ─────────────
         document.querySelectorAll(".play-btn:not(.disabled)").forEach(btn => {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
-                const gameUrl = this.dataset.game;
-
-                if (!clickedButtons.has(this)) {
-                    // ── FIRST CLICK ──
-                    // Real click event → ad network popunder fires automatically
-                    clickedButtons.add(this);
-
-                    // Auto-reset after 20 seconds
-                    setTimeout(() => clickedButtons.delete(this), 20000);
-
-                } else {
-                    // ── SECOND CLICK ── go to game
-                    clickedButtons.delete(this);
-                    window.location.href = gameUrl;
-                }
+                window.location.href = this.dataset.game;
             });
         });
     </script>
-
 </body>
 
 </html>
