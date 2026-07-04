@@ -16,12 +16,7 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
         }
 
         .container {
@@ -117,36 +112,440 @@
                 font-size: 45px;
             }
         }
+
+        /* ══════════════ CrazyGames-style site chrome ══════════════ */
+        html, body {
+            background: #0b0b13;
+        }
+
+        .cg-layout {
+            display: grid;
+            grid-template-columns: 64px 1fr 300px;
+            grid-template-rows: 64px 1fr;
+            grid-template-areas:
+                "header header header"
+                "sidebar main   aside";
+            min-height: 100vh;
+        }
+
+        .cg-header {
+            grid-area: header;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 0 24px;
+            background: #15151f;
+            border-bottom: 1px solid #23232f;
+        }
+
+        .cg-logo {
+            color: #fff;
+            font-weight: 800;
+            font-size: 19px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .cg-search {
+            flex: 1;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .cg-search input {
+            width: 100%;
+            padding: 10px 40px 10px 14px;
+            border: none;
+            border-radius: 8px;
+            background: #23232f;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .cg-search input::placeholder {
+            color: #6b7280;
+        }
+
+        .cg-search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            pointer-events: none;
+        }
+
+        .cg-header-icons {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-left: auto;
+            color: #cbd5e1;
+            font-size: 17px;
+        }
+
+        .cg-login {
+            background: #7c3aed;
+            color: #fff !important;
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .cg-sidebar {
+            grid-area: sidebar;
+            background: #101018;
+            border-right: 1px solid #23232f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            padding-top: 20px;
+        }
+
+        .cg-sidebar a {
+            color: #94a3b8;
+            font-size: 19px;
+            text-decoration: none;
+        }
+
+        .cg-sidebar a:hover {
+            color: #fff;
+        }
+
+        .cg-main {
+            grid-area: main;
+            padding: 24px;
+            min-width: 0;
+        }
+
+        .cg-viewport {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .5);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 640px;
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            padding: 30px 15px;
+        }
+
+        .cg-controlbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #15151f;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cg-game-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .cg-actions {
+            display: flex;
+            gap: 16px;
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        .cg-actions span {
+            cursor: pointer;
+        }
+
+        .cg-actions span:hover {
+            color: #fff;
+        }
+
+        .cg-ad-banner,
+        .cg-ad-box {
+            background: #f4f7ff;
+            border: 2px solid #dbe4ff;
+            border-radius: 12px;
+            padding: 10px 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .cg-ad-label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: #7a86a8;
+            margin-bottom: 6px;
+        }
+
+        .cg-breadcrumb {
+            font-size: 13px;
+            color: #7c8aa5;
+            margin-bottom: 10px;
+        }
+
+        .cg-breadcrumb a {
+            color: #a78bfa;
+            text-decoration: none;
+        }
+
+        .cg-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .cg-desc {
+            color: #94a3b8;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+
+        .cg-aside {
+            grid-area: aside;
+            padding: 24px;
+            border-left: 1px solid #23232f;
+            background: #101018;
+        }
+
+        .cg-playnext-title {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 14px;
+        }
+
+        .cg-playnext-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .cg-play-card {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: #1a1a26;
+            border-radius: 12px;
+            padding: 10px;
+            text-decoration: none;
+            color: #fff;
+            transition: .2s;
+            border: 1px solid #23232f;
+        }
+
+        .cg-play-card:hover {
+            background: #23232f;
+            transform: translateY(-2px);
+        }
+
+        .cg-play-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+
+        .cg-play-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 900px) {
+            .cg-layout {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "main"
+                    "aside";
+            }
+
+            .cg-sidebar {
+                display: none;
+            }
+
+            .cg-aside {
+                border-left: none;
+                border-top: 1px solid #23232f;
+            }
+
+            .cg-header-icons span {
+                display: none;
+            }
+        }
+
     </style>
-    <script type="text/javascript" data-cfasync="false" src="../ad-network.js"></script>
+    <!-- <script type="text/javascript" data-cfasync="false" src="../ad-network.js"></script> -->
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="cg-layout">
 
-        <h1>🏴‍☠️ Lucky Treasure Hunt</h1>
+        <header class="cg-header">
+            <a class="cg-logo" href="../index.html">🎮 Rojhon's Arcade</a>
+            <div class="cg-search">
+                <input type="text" placeholder="Search games...">
+                <span class="cg-search-icon">🔍</span>
+            </div>
+            <div class="cg-header-icons">
+                <span title="Notifications">🔔</span>
+                <span title="Favorites">🤍</span>
+                <span title="Friends">👥</span>
+                <a class="cg-login" href="../index.html">Home</a>
+            </div>
+        </header>
 
-        <div class="coins">
-            💰 Coins: <span id="coins">1000</span>
-        </div>
+        <nav class="cg-sidebar">
+            <a href="../index.html" title="Home">🏠</a>
+            <a href="../index.html" title="Trending">🔥</a>
+            <a href="../index.html" title="New">🆕</a>
+            <a href="../index.html" title="Arcade">🕹️</a>
+            <a href="../index.html" title="Puzzle">🧩</a>
+        </nav>
 
-        <div class="message" id="message">
-            Open a treasure chest!
-        </div>
+        <main class="cg-main">
 
-        <div class="grid" id="grid"></div>
+            <div class="cg-viewport">
+                <div class="container">
 
-        <div class="stats">
-            <div>🏆 Treasures Found: <span id="wins">0</span></div>
-            <div>💣 Bombs Found: <span id="bombs">0</span></div>
-        </div>
+                    <h1>🏴‍☠️ Lucky Treasure Hunt</h1>
 
-        <div class="controls">
-            <button class="new-game" onclick="newRound()">
-                🔄 New Round
-            </button>
-        </div>
+                    <div class="coins">
+                        💰 Coins: <span id="coins">1000</span>
+                    </div>
+
+                    <div class="message" id="message">
+                        Open a treasure chest!
+                    </div>
+
+                    <div class="grid" id="grid"></div>
+
+                    <div class="stats">
+                        <div>🏆 Treasures Found: <span id="wins">0</span></div>
+                        <div>💣 Bombs Found: <span id="bombs">0</span></div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="new-game" onclick="newRound()">
+                            🔄 New Round
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cg-controlbar">
+                <div class="cg-game-title-row">
+                    <span>🏴‍☠️</span>
+                    <span>Lucky Treasure Hunt</span>
+                </div>
+                <div class="cg-actions">
+                    <span>👍</span>
+                    <span>👎</span>
+                    <span>❤️</span>
+                    <span>💬</span>
+                    <span>⛶</span>
+                </div>
+            </div>
+
+            <div class="cg-ad-banner">
+                <span class="cg-ad-label">Advertisement</span>
+                <script type="text/javascript">
+                    atOptions = {
+                        'key': 'dddd11ffb6382b0578daac32142b2f7d',
+                        'format': 'iframe',
+                        'height': 90,
+                        'width': 728,
+                        'params': {}
+                    };
+                </script>
+                <script type="text/javascript"
+                    src="https://www.highperformanceformat.com/dddd11ffb6382b0578daac32142b2f7d/invoke.js"></script>
+            </div>
+
+            <div class="cg-breadcrumb">
+                <a href="../index.html">Games</a> » Casino » Lucky Treasure Hunt
+            </div>
+            <h1 class="cg-title">Lucky Treasure Hunt</h1>
+            <p class="cg-desc">Open treasure chests to reveal coins, gems, and bonus prizes — but watch out for
+                bombs hiding among the loot!</p>
+
+        </main>
+
+        <aside class="cg-aside">
+            <h3 class="cg-playnext-title">Play next</h3>
+            <div class="cg-playnext-list">
+                <a class="cg-play-card" href="../crown-clash/index.html">
+                    <div class="cg-play-thumb">👑</div>
+                    <div class="cg-play-name">Crown Clash</div>
+                </a>
+                <a class="cg-play-card" href="hangman.html">
+                    <div class="cg-play-thumb">🎯</div>
+                    <div class="cg-play-name">Hangman</div>
+                </a>
+                <a class="cg-play-card" href="slots.html">
+                    <div class="cg-play-thumb">🎰</div>
+                    <div class="cg-play-name">Slot Machine</div>
+                </a>
+                <a class="cg-play-card" href="fortune.html">
+                    <div class="cg-play-thumb">🎡</div>
+                    <div class="cg-play-name">Wheel of Fortune</div>
+                </a>
+                <a class="cg-play-card" href="fish.html">
+                    <div class="cg-play-thumb">🐟</div>
+                    <div class="cg-play-name">Fishing Frenzy</div>
+                </a>
+                <a class="cg-play-card" href="fruit.html">
+                    <div class="cg-play-thumb">🍉</div>
+                    <div class="cg-play-name">Fruit Ninja</div>
+                </a>
+                <a class="cg-play-card" href="shooter.html">
+                    <div class="cg-play-thumb">🚀</div>
+                    <div class="cg-play-name">Space Shooter</div>
+                </a>
+                <a class="cg-play-card" href="zombie.html">
+                    <div class="cg-play-thumb">🧟</div>
+                    <div class="cg-play-name">Zombie Survival</div>
+                </a>
+                <a class="cg-play-card" href="mole.html">
+                    <div class="cg-play-thumb">🐹</div>
+                    <div class="cg-play-name">Whack-a-Mole</div>
+                </a>
+            </div>
+
+            <div class="cg-ad-box">
+                <span class="cg-ad-label">Advertisement</span>
+                <script type="text/javascript">
+                    atOptions = {
+                        'key': 'ea479a3d345eafc7c019b6466a4dd578',
+                        'format': 'iframe',
+                        'height': 250,
+                        'width': 300,
+                        'params': {}
+                    };
+                </script>
+                <script type="text/javascript"
+                    src="https://www.highperformanceformat.com/ea479a3d345eafc7c019b6466a4dd578/invoke.js"></script>
+            </div>
+        </aside>
 
     </div>
 
